@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Guest {
+  id                  String      @id @default(cuid())
+  code                String      @unique
+  name                String
+  email               String?
+  attending           Boolean?
+  plusOneName          String?     @map("plus_one_name")
+  dietaryRequirements String?     @map("dietary_requirements")
+  rsvpSubmittedAt     DateTime?   @map("rsvp_submitted_at")
+  createdAt           DateTime    @default(now()) @map("created_at")
+  updatedAt           DateTime    @updatedAt @map("updated_at")
+  drinkVotes          DrinkVote[]
+
+  @@map("guests")
+}
+
+model Question {
+  id         String   @id @default(cuid())
+  name       String
+  email      String?
+  question   String
+  answer     String?
+  category   String
+  isAnswered Boolean  @default(false) @map("is_answered")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("questions")
+}
+
+model DrinkOption {
+  id    String      @id @default(cuid())
+  name  String
+  emoji String      @default("🥂")
+  color String      @default("#C9A84C")
+  votes DrinkVote[]
+
+  @@map("drink_options")
+}
+
+model DrinkVote {
+  id        String      @id @default(cuid())
+  guestId   String      @map("guest_id")
+  guest     Guest       @relation(fields: [guestId], references: [id])
+  drinkId   String      @map("drink_id")
+  drink     DrinkOption @relation(fields: [drinkId], references: [id])
+  createdAt DateTime    @default(now()) @map("created_at")
+
+  @@unique([guestId, drinkId])
+  @@map("drink_votes")
+}

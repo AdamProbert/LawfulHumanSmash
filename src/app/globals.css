@@ -1,0 +1,559 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════
+   LAWFUL HUMAN SMASH — Art Nouveau Wedding Theme
+   Adam & Mady · July 10th, 2027 · Tall Johns House
+   ═══════════════════════════════════════════════════════ */
+
+/* ── CSS Custom Properties ─────────────────────────────── */
+:root {
+  /* Primary palette */
+  --ivy: #2D5016;
+  --ivy-dark: #1B3A1A;
+  --ivy-light: #3B6B24;
+  --leaf: #4A7C2E;
+  --leaf-light: #5C9A38;
+  --orange: #D4760A;
+  --orange-light: #E8941E;
+
+  /* Secondary palette */
+  --burgundy: #722F37;
+  --yellow: #E6B422;
+  --purple: #6B3FA0;
+  --red: #9B2335;
+
+  /* Gold accents */
+  --gold-dark: #A88734;
+  --gold: #C9A84C;
+  --gold-light: #D4B96A;
+  --gold-pale: #E8D5A0;
+
+  /* Neutrals */
+  --ivory: #FDF6E3;
+  --ivory-mid: #F5ECD7;
+  --ivory-dark: #EDE0C8;
+  --parchment: #F5ECD7;
+  --parchment-dark: #E8D5B0;
+  --bark: #4A3728;
+  --bark-light: #6B5344;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(27, 58, 26, 0.08);
+  --shadow-md: 0 4px 12px rgba(27, 58, 26, 0.12);
+  --shadow-lg: 0 8px 30px rgba(27, 58, 26, 0.16);
+  --shadow-gold: 0 4px 20px rgba(201, 168, 76, 0.25);
+}
+
+/* ── Base Reset & Typography ───────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--ivory);
+  color: var(--bark);
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-size: 18px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ivory-mid);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 5px;
+  border: 2px solid var(--ivory-mid);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dark);
+}
+
+/* ── Selection ─────────────────────────────────────────── */
+::selection {
+  background: var(--gold-pale);
+  color: var(--ivy-dark);
+}
+
+/* ── Headings ──────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
+  color: var(--ivy-dark);
+  line-height: 1.2;
+}
+
+/* ═══════════════════════════════════════════════════════
+   COMPONENT STYLES
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Art Nouveau Ornamental Heading ────────────────────── */
+@layer components {
+  .heading-ornament {
+    @apply relative inline-block pb-4 mb-6;
+  }
+  .heading-ornament::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--gold),
+      var(--gold-light),
+      var(--gold),
+      transparent
+    );
+    border-radius: 2px;
+  }
+  .heading-ornament::before {
+    content: "❧";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gold);
+    font-size: 16px;
+    background: var(--ivory);
+    padding: 0 8px;
+    z-index: 1;
+  }
+
+  /* ── Gold Gradient Text ────────────────────────────────── */
+  .text-gold-gradient {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Art Nouveau Card ──────────────────────────────────── */
+  .card-nouveau {
+    @apply relative rounded-lg overflow-hidden;
+    background: white;
+    border: 1px solid var(--gold-pale);
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .card-nouveau:hover {
+    box-shadow: var(--shadow-gold);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .card-nouveau::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ivy), var(--gold), var(--orange));
+  }
+
+  /* ── Art Nouveau Button (Primary) ──────────────────────── */
+  .btn-nouveau {
+    @apply relative inline-flex items-center justify-center px-8 py-3 font-heading text-lg tracking-wide;
+    color: var(--ivory);
+    background: linear-gradient(135deg, var(--ivy), var(--ivy-light));
+    border: 2px solid var(--gold);
+    border-radius: 2px 16px 2px 16px;
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .btn-nouveau::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .btn-nouveau:hover {
+    background: linear-gradient(135deg, var(--ivy-light), var(--leaf));
+    box-shadow: var(--shadow-gold);
+    transform: translateY(-1px);
+  }
+  .btn-nouveau:hover::before {
+    opacity: 1;
+  }
+  .btn-nouveau:active {
+    transform: translateY(0);
+  }
+
+  /* ── Secondary Button ──────────────────────────────────── */
+  .btn-nouveau-outline {
+    @apply relative inline-flex items-center justify-center px-8 py-3 font-heading text-lg tracking-wide;
+    color: var(--ivy);
+    background: transparent;
+    border: 2px solid var(--gold);
+    border-radius: 2px 16px 2px 16px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+  .btn-nouveau-outline:hover {
+    background: var(--gold);
+    color: var(--ivory);
+    box-shadow: var(--shadow-gold);
+  }
+
+  /* ── Form Inputs ───────────────────────────────────────── */
+  .input-nouveau {
+    @apply w-full px-4 py-3 text-lg font-body;
+    background: white;
+    border: 1px solid var(--gold-pale);
+    border-radius: 4px;
+    color: var(--bark);
+    transition: all 0.3s;
+  }
+  .input-nouveau:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
+  }
+  .input-nouveau::placeholder {
+    color: var(--bark-light);
+    opacity: 0.6;
+  }
+
+  /* ── Select ────────────────────────────────────────────── */
+  .select-nouveau {
+    @apply input-nouveau appearance-none cursor-pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23C9A84C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+  }
+
+  /* ── Art Nouveau Divider ───────────────────────────────── */
+  .divider-nouveau {
+    @apply relative my-12 mx-auto;
+    width: 300px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .divider-nouveau::before,
+  .divider-nouveau::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--gold),
+      var(--gold-light)
+    );
+  }
+  .divider-nouveau::after {
+    background: linear-gradient(
+      90deg,
+      var(--gold-light),
+      var(--gold),
+      transparent
+    );
+  }
+  .divider-nouveau span {
+    @apply px-4;
+    color: var(--gold);
+    font-size: 20px;
+  }
+
+  /* ── Art Nouveau Frame Border ──────────────────────────── */
+  .frame-nouveau {
+    @apply relative p-8;
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    background: rgba(253, 246, 227, 0.6);
+    backdrop-filter: blur(8px);
+  }
+  .frame-nouveau::before,
+  .frame-nouveau::after {
+    content: "✦";
+    position: absolute;
+    color: var(--gold);
+    font-size: 14px;
+  }
+  .frame-nouveau::before {
+    top: -9px;
+    left: 20px;
+    background: var(--ivory);
+    padding: 0 6px;
+  }
+  .frame-nouveau::after {
+    bottom: -9px;
+    right: 20px;
+    background: var(--ivory);
+    padding: 0 6px;
+  }
+
+  /* ── Parchment Scroll ──────────────────────────────────── */
+  .parchment-scroll {
+    background: linear-gradient(
+      180deg,
+      #FBF5EA 0%,
+      #F5ECD7 5%,
+      #F5ECD7 95%,
+      #E8D5B0 100%
+    );
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    box-shadow:
+      var(--shadow-lg),
+      inset 0 0 40px rgba(232, 213, 176, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .parchment-scroll::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(
+      180deg,
+      rgba(232, 213, 176, 0.6),
+      transparent
+    );
+    border-radius: 8px 8px 0 0;
+  }
+
+  /* ── Category Pill ─────────────────────────────────────── */
+  .pill-nouveau {
+    @apply inline-flex items-center px-4 py-1.5 text-sm font-heading rounded-full transition-all duration-300 cursor-pointer;
+    border: 1px solid var(--gold-pale);
+    color: var(--bark);
+    background: white;
+  }
+  .pill-nouveau:hover,
+  .pill-nouveau.active {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+    box-shadow: var(--shadow-gold);
+  }
+
+  /* ── Page Section ──────────────────────────────────────── */
+  .section-nouveau {
+    @apply relative py-16 px-4;
+  }
+  .section-nouveau > .section-inner {
+    @apply max-w-4xl mx-auto;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   BACKGROUND PATTERNS
+   ═══════════════════════════════════════════════════════ */
+
+/* Subtle vine pattern overlay */
+.bg-vine-pattern {
+  position: relative;
+}
+.bg-vine-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 5 C25 15, 15 25, 10 40 C5 55, 15 70, 40 75 C65 70, 75 55, 70 40 C65 25, 55 15, 40 5Z' fill='none' stroke='%232D5016' stroke-width='1'/%3E%3Cpath d='M40 20 C32 28, 28 32, 25 40 C22 48, 28 56, 40 60 C52 56, 58 48, 55 40 C52 32, 48 28, 40 20Z' fill='none' stroke='%232D5016' stroke-width='0.5'/%3E%3C/svg%3E");
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════ */
+
+@keyframes gentlePulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes vineGrow {
+  0% {
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes scrollUnfurl {
+  0% {
+    max-height: 0;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    max-height: 2000px;
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+@keyframes entranceReveal {
+  0% {
+    opacity: 0;
+    filter: blur(20px);
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE UTILITIES
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  .heading-ornament::after {
+    width: 80px;
+  }
+
+  .frame-nouveau {
+    padding: 1.5rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PAGE TRANSITIONS
+   ═══════════════════════════════════════════════════════ */
+
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════════
+   DRINK WHEEL STYLES
+   ═══════════════════════════════════════════════════════ */
+
+.drink-wheel {
+  border-radius: 50%;
+  position: relative;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 0 0 4px var(--gold),
+    0 0 0 6px var(--ivory),
+    0 0 0 8px var(--gold-light),
+    var(--shadow-lg);
+}
+.drink-wheel::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+  background: var(--ivory);
+  border: 3px solid var(--gold);
+  box-shadow: inset var(--shadow-sm);
+}
+
+/* ═══════════════════════════════════════════════════════
+   SPLASH PAGE
+   ═══════════════════════════════════════════════════════ */
+
+.splash-bg {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(45, 80, 22, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(212, 118, 10, 0.06) 0%, transparent 60%),
+    linear-gradient(180deg, #FDF6E3 0%, #F5ECD7 40%, #EDE0C8 100%);
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════════════════ */
+
+.nav-nouveau {
+  background: rgba(253, 246, 227, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gold-pale);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-link {
+  @apply relative font-heading text-sm tracking-wider uppercase;
+  color: var(--ivy);
+  transition: color 0.3s;
+  padding: 4px 0;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-link:hover {
+  color: var(--gold-dark);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+.nav-link.active {
+  color: var(--gold-dark);
+}
+
+/* ═══════════════════════════════════════════════════════
+   COLOR SWATCHES (Dress Code)
+   ═══════════════════════════════════════════════════════ */
+
+.swatch {
+  @apply w-16 h-16 rounded-full border-2 border-white cursor-pointer transition-all duration-300;
+  box-shadow: var(--shadow-sm);
+}
+.swatch:hover {
+  transform: scale(1.15);
+  box-shadow: var(--shadow-md);
+}
