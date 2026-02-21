@@ -507,6 +507,12 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 100vh;
 }
 
+/* Splash page with invite image — matches PNG background */
+.splash-invite-bg {
+  background: #EAE8DC;
+  min-height: 100vh;
+}
+
 /* ═══════════════════════════════════════════════════════
    NAVIGATION
    ═══════════════════════════════════════════════════════ */
