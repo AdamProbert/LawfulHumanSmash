@@ -108,7 +108,8 @@ export default function Navigation() {
                     <Link
                       href={item.href}
                       onClick={() => setMobileOpen(false)}
-                      className={`block py-3 px-4 font-heading text-base tracking-wider rounded-md transition-all ${
+                      style={{ fontFamily: "'Rivanna', serif" }}
+                      className={`block py-3 px-4 text-base tracking-wider rounded-md transition-all ${
                         pathname === item.href
                           ? "bg-gold/10 text-gold-dark border-l-2 border-gold"
                           : "text-ivy hover:bg-gold/5 hover:text-gold-dark"

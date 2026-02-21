@@ -45,8 +45,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["var(--font-cinzel-decorative)", "serif"],
-        heading: ["var(--font-playfair)", "serif"],
+        display: ["'Rivanna'", "serif"],
+        heading: ["'Rivanna'", "serif"],
         body: ["var(--font-cormorant)", "serif"],
       },
       backgroundImage: {
