@@ -31,11 +31,11 @@
   --gold-pale: #E8D5A0;
 
   /* Neutrals */
-  --ivory: #FDF6E3;
-  --ivory-mid: #F5ECD7;
-  --ivory-dark: #EDE0C8;
-  --parchment: #F5ECD7;
-  --parchment-dark: #E8D5B0;
+  --ivory: #EAE8DC;
+  --ivory-mid: #E2E0D4;
+  --ivory-dark: #D9D7CB;
+  --parchment: #E2E0D4;
+  --parchment-dark: #D5D0C0;
   --bark: #4A3728;
   --bark-light: #6B5344;
 
@@ -289,7 +289,7 @@ h1, h2, h3, h4, h5, h6 {
     @apply relative p-8;
     border: 2px solid var(--gold);
     border-radius: 4px;
-    background: rgba(253, 246, 227, 0.6);
+    background: rgba(234, 232, 220, 0.6);
     backdrop-filter: blur(8px);
   }
   .frame-nouveau::before,
@@ -509,7 +509,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Splash page with invite image — matches PNG background */
 .splash-invite-bg {
-  background: #EAE8DC;
+  background: var(--ivory);
   min-height: 100vh;
 }
 
@@ -518,7 +518,7 @@ h1, h2, h3, h4, h5, h6 {
    ═══════════════════════════════════════════════════════ */
 
 .nav-nouveau {
-  background: rgba(253, 246, 227, 0.92);
+  background: rgba(234, 232, 220, 0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--gold-pale);
   box-shadow: var(--shadow-sm);

@@ -85,8 +85,7 @@ export default function SplashPage() {
       {/* Exit overlay */}
       {isExiting && (
         <motion.div
-          className="fixed inset-0 z-50"
-          style={{ backgroundColor: "#EAE8DC" }}
+          className="fixed inset-0 z-50 bg-[var(--ivory)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
