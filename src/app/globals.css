@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Custom Font ────────────────────────────────────────── */
+@font-face {
+  font-family: 'Rivanna';
+  src: url('/fonts/Rivanna.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ═══════════════════════════════════════════════════════
    LAWFUL HUMAN SMASH — Art Nouveau Wedding Theme
    Adam & Mady · July 10th, 2027 · Tall Johns House
@@ -17,6 +26,8 @@
   --leaf-light: #A88040;
   --orange: #D4760A;
   --orange-light: #E8941E;
+  --mayds-leaf-green: #73a859;
+  --madys-letter-green: #12651c;
 
   /* Secondary palette */
   --burgundy: #722F37;
@@ -178,6 +189,47 @@ h1, h2, h3, h4, h5, h6 {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     cursor: pointer;
+  }
+
+  /* ── Splash Page Enter Button (scales with viewport) ─── */
+  .btn-nouveau-splash {
+    @apply relative inline-flex items-center justify-center tracking-wide;
+    font-family: 'Rivanna', serif;
+    padding: clamp(0.3rem, 1.2vh, 0.7rem) clamp(1rem, 3.6vh, 2.4rem);
+    font-size: clamp(1.4rem, 4vh, 2.4rem);
+    line-height: 1.1;
+    color: var(--ivory);
+    background: linear-gradient(175deg, var(--mayds-leaf-green), #689d4d);
+    border: 2px solid var(--madys-letter-green);
+    border-radius: 8px;
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .btn-nouveau-splash::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .btn-nouveau-splash:hover {
+    background: linear-gradient(135deg, var(--ivy-light), var(--leaf));
+    box-shadow: var(--shadow-gold);
+    transform: translateY(-1px);
+  }
+  .btn-nouveau-splash:hover::before {
+    opacity: 1;
+  }
+  .btn-nouveau-splash:active {
+    transform: translateY(0);
   }
   .btn-nouveau::before {
     content: "";

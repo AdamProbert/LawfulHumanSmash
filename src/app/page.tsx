@@ -19,15 +19,15 @@ export default function SplashPage() {
     <AnimatePresence>
       {!isExiting && (
         <motion.div
-          className="splash-invite-bg flex flex-col items-center justify-center min-h-screen px-4 py-8"
+          className="splash-invite-bg flex items-center justify-center min-h-screen px-4 py-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 0.98, filter: "blur(10px)" }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
         >
-          {/* Wedding Invite Image */}
+          {/* Wedding Invite Image with overlaid button */}
           <motion.div
-            className="relative w-full max-w-[540px] mx-auto"
+            className="relative h-[calc(100vh-2rem)]"
             initial={{ opacity: 0, y: 30, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
@@ -38,47 +38,25 @@ export default function SplashPage() {
               width={770}
               height={1024}
               priority
-              className="w-full h-auto"
-              sizes="(max-width: 540px) 100vw, 540px"
+              className="h-full w-auto object-contain"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
-          </motion.div>
 
-          {/* Enter Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
-            className="mt-8"
-          >
-            <button
-              onClick={handleEnter}
-              className="btn-nouveau group"
+            {/* Enter Button - bottom right of invite, over the empty space */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4, duration: 1.4 }}
+              className="absolute bottom-[21%] right-[21%] flex flex-col items-center gap-[1vh]"
             >
-              <span className="relative z-10 flex items-center gap-3">
-                <span>Enter Here</span>
-                <motion.span
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 1.5,
-                    ease: "easeInOut",
-                  }}
-                >
-                  →
-                </motion.span>
-              </span>
-            </button>
+              <button
+                onClick={handleEnter}
+                className="btn-nouveau-splash group"
+              >
+                <span className="relative z-10">Enter</span>
+              </button>
+            </motion.div>
           </motion.div>
-
-          {/* Small Leonard Teaser */}
-          <motion.p
-            className="mt-4 text-sm text-gold opacity-60 font-body italic"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.6 }}
-            transition={{ delay: 2.0, duration: 1.0 }}
-          >
-            🐾 Leonard is waiting for you inside
-          </motion.p>
         </motion.div>
       )}
 
