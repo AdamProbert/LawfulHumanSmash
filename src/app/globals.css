@@ -9,19 +9,18 @@
 
 /* ── CSS Custom Properties ─────────────────────────────── */
 :root {
-  /* Primary palette */
-  --ivy: #2D5016;
-  --ivy-dark: #1B3A1A;
-  --ivy-light: #3B6B24;
-  --leaf: #4A7C2E;
-  --leaf-light: #5C9A38;
+  /* Primary palette — warm browns inspired by invite */
+  --ivy: #7A5B30;
+  --ivy-dark: #523D1E;
+  --ivy-light: #96743A;
+  --leaf: #8B6830;
+  --leaf-light: #A88040;
   --orange: #D4760A;
   --orange-light: #E8941E;
 
   /* Secondary palette */
   --burgundy: #722F37;
   --yellow: #E6B422;
-  --purple: #6B3FA0;
   --red: #9B2335;
 
   /* Gold accents */
@@ -40,9 +39,9 @@
   --bark-light: #6B5344;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(27, 58, 26, 0.08);
-  --shadow-md: 0 4px 12px rgba(27, 58, 26, 0.12);
-  --shadow-lg: 0 8px 30px rgba(27, 58, 26, 0.16);
+  --shadow-sm: 0 1px 3px rgba(74, 53, 32, 0.08);
+  --shadow-md: 0 4px 12px rgba(74, 53, 32, 0.12);
+  --shadow-lg: 0 8px 30px rgba(74, 53, 32, 0.16);
   --shadow-gold: 0 4px 20px rgba(201, 168, 76, 0.25);
 }
 
@@ -164,8 +163,8 @@ h1, h2, h3, h4, h5, h6 {
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--ivy), var(--gold), var(--orange));
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ivy), var(--gold), var(--ivy), transparent);
   }
 
   /* ── Art Nouveau Button (Primary) ──────────────────────── */
@@ -266,60 +265,61 @@ h1, h2, h3, h4, h5, h6 {
     background: linear-gradient(
       90deg,
       transparent,
-      var(--gold),
-      var(--gold-light)
+      var(--ivy),
+      var(--gold)
     );
   }
   .divider-nouveau::after {
     background: linear-gradient(
       90deg,
-      var(--gold-light),
       var(--gold),
+      var(--ivy),
       transparent
     );
   }
   .divider-nouveau span {
     @apply px-4;
-    color: var(--gold);
+    color: var(--ivy);
     font-size: 20px;
   }
 
   /* ── Art Nouveau Frame Border ──────────────────────────── */
   .frame-nouveau {
     @apply relative p-8;
-    border: 2px solid var(--gold);
-    border-radius: 4px;
-    background: rgba(234, 232, 220, 0.6);
+    border: 1px solid var(--ivy);
+    border-radius: 2px;
+    background: rgba(234, 232, 220, 0.5);
     backdrop-filter: blur(8px);
   }
   .frame-nouveau::before,
   .frame-nouveau::after {
-    content: "✦";
+    content: "❧";
     position: absolute;
-    color: var(--gold);
-    font-size: 14px;
+    color: var(--ivy);
+    font-size: 16px;
   }
   .frame-nouveau::before {
-    top: -9px;
+    top: -10px;
     left: 20px;
     background: var(--ivory);
     padding: 0 6px;
   }
   .frame-nouveau::after {
-    bottom: -9px;
+    bottom: -10px;
     right: 20px;
     background: var(--ivory);
     padding: 0 6px;
+    transform: scaleX(-1);
   }
 
   /* ── Parchment Scroll ──────────────────────────────────── */
   .parchment-scroll {
     background: linear-gradient(
       180deg,
-      #FBF5EA 0%,
-      #F5ECD7 5%,
-      #F5ECD7 95%,
-      #E8D5B0 100%
+      #F0EEE3 0%,
+      #E8E6DA 5%,
+      #E8E6DA 95%,
+      #D9D7CB 100%
     );
     border: 2px solid var(--gold);
     border-radius: 8px;
@@ -372,7 +372,7 @@ h1, h2, h3, h4, h5, h6 {
    BACKGROUND PATTERNS
    ═══════════════════════════════════════════════════════ */
 
-/* Subtle vine pattern overlay */
+/* Subtle botanical vine pattern overlay */
 .bg-vine-pattern {
   position: relative;
 }
@@ -380,9 +380,9 @@ h1, h2, h3, h4, h5, h6 {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 5 C25 15, 15 25, 10 40 C5 55, 15 70, 40 75 C65 70, 75 55, 70 40 C65 25, 55 15, 40 5Z' fill='none' stroke='%232D5016' stroke-width='1'/%3E%3Cpath d='M40 20 C32 28, 28 32, 25 40 C22 48, 28 56, 40 60 C52 56, 58 48, 55 40 C52 32, 48 28, 40 20Z' fill='none' stroke='%232D5016' stroke-width='0.5'/%3E%3C/svg%3E");
-  background-size: 80px 80px;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M10 110 C10 80, 20 50, 40 30 C50 20, 65 15, 80 12' fill='none' stroke='%237A5B30' stroke-width='1'/%3E%3Cpath d='M40 30 C35 22, 28 18, 24 20 C28 24, 34 28, 40 30' fill='none' stroke='%237A5B30' stroke-width='0.7'/%3E%3Cpath d='M55 22 C58 14, 62 10, 68 12 C64 16, 58 20, 55 22' fill='none' stroke='%237A5B30' stroke-width='0.7'/%3E%3Cpath d='M60 20 C64 28, 62 38, 58 44' fill='none' stroke='%237A5B30' stroke-width='0.5'/%3E%3Cpath d='M58 44 C56 48, 54 50, 56 52' fill='none' stroke='%237A5B30' stroke-width='0.4'/%3E%3Cpath d='M30 55 C24 48, 20 38, 24 30' fill='none' stroke='%237A5B30' stroke-width='0.6'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
   pointer-events: none;
 }
 
@@ -501,9 +501,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .splash-bg {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(45, 80, 22, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 50%, rgba(212, 118, 10, 0.06) 0%, transparent 60%),
-    linear-gradient(180deg, #FDF6E3 0%, #F5ECD7 40%, #EDE0C8 100%);
+    radial-gradient(ellipse at 20% 50%, rgba(122, 91, 48, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(201, 168, 76, 0.06) 0%, transparent 60%),
+    linear-gradient(180deg, var(--ivory) 0%, var(--ivory-mid) 40%, var(--ivory-dark) 100%);
   min-height: 100vh;
 }
 

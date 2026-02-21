@@ -10,27 +10,26 @@ const config: Config = {
     extend: {
       colors: {
         ivory: {
-          50: "#FFFDF7",
-          100: "#FDF6E3",
-          200: "#F5ECD7",
-          300: "#EDE0C8",
+          50: "#F5F3E8",
+          100: "#EAE8DC",
+          200: "#E2E0D4",
+          300: "#D9D7CB",
         },
         ivy: {
-          DEFAULT: "#2D5016",
-          dark: "#1B3A1A",
-          light: "#3B6B24",
+          DEFAULT: "#7A5B30",
+          dark: "#523D1E",
+          light: "#96743A",
         },
         leaf: {
-          DEFAULT: "#4A7C2E",
-          light: "#5C9A38",
-          pale: "#7AB856",
+          DEFAULT: "#8B6830",
+          light: "#A88040",
+          pale: "#C0985A",
         },
         accent: {
           orange: "#D4760A",
           "orange-light": "#E8941E",
           burgundy: "#722F37",
           yellow: "#E6B422",
-          purple: "#6B3FA0",
           red: "#9B2335",
         },
         gold: {
@@ -40,9 +39,9 @@ const config: Config = {
           pale: "#E8D5A0",
         },
         parchment: {
-          DEFAULT: "#F5ECD7",
-          light: "#FBF5EA",
-          dark: "#E8D5B0",
+          DEFAULT: "#E8E6DA",
+          light: "#F0EEE3",
+          dark: "#D9D7CB",
         },
       },
       fontFamily: {
@@ -52,11 +51,11 @@ const config: Config = {
       },
       backgroundImage: {
         "art-nouveau-gradient":
-          "linear-gradient(135deg, #1B3A1A 0%, #2D5016 30%, #4A7C2E 70%, #3B6B24 100%)",
+          "linear-gradient(135deg, #523D1E 0%, #7A5B30 30%, #96743A 70%, #8B6830 100%)",
         "gold-shimmer":
           "linear-gradient(90deg, #A88734, #C9A84C, #D4B96A, #C9A84C, #A88734)",
         "parchment-gradient":
-          "linear-gradient(180deg, #FDF6E3 0%, #F5ECD7 50%, #EDE0C8 100%)",
+          "linear-gradient(180deg, #EAE8DC 0%, #E2E0D4 50%, #D9D7CB 100%)",
       },
       animation: {
         shimmer: "shimmer 3s ease-in-out infinite",
