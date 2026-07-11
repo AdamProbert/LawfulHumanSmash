@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import ArtNouveauFrame from "@/components/ArtNouveauFrame";
 
 const FEATURED_VENUE = {
@@ -92,14 +93,22 @@ export default function AccommodationPage() {
                 {FEATURED_VENUE.name}
               </h2>
 
-              {/* Placeholder for venue image */}
-              <div className="w-full h-48 sm:h-64 rounded-lg bg-gradient-to-br from-ivy/10 to-leaf/10 flex items-center justify-center border border-gold/20">
-                <div className="text-center">
-                  <p className="text-5xl mb-2">🏡</p>
-                  <p className="font-body text-sm text-bark-light italic">
-                    Venue photo placeholder
-                  </p>
-                </div>
+              {/* Venue image */}
+              <div className="relative w-11/12 max-w-md mx-auto h-48 sm:h-64 rounded-lg overflow-hidden border border-gold/20">
+                <Image
+                  src="/dji_fly_20230607_162016_74_1686151222973_photo_optimized.webp"
+                  alt="Aerial view of Tall Johns House and its grounds"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, 42rem"
+                />
+                {/* Vignette */}
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    boxShadow: "inset 0 0 60px 20px rgba(0, 0, 0, 0.35)",
+                  }}
+                />
               </div>
 
               <p className="font-body text-lg text-bark-light max-w-lg mx-auto">
