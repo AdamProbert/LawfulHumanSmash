@@ -7,11 +7,11 @@ import ArtNouveauFrame from "@/components/ArtNouveauFrame";
 
 export default function TLDRPage() {
   return (
-    <section className="section-nouveau min-h-[80vh] flex items-center">
+    <section className="section-nouveau min-h-[calc(100svh-7rem)]">
       <div className="section-inner w-full">
         {/* Page heading */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-10 sm:mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -30,10 +30,10 @@ export default function TLDRPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <ArtNouveauFrame className="max-w-2xl mx-auto">
-            <div className="text-center space-y-6">
+          <ArtNouveauFrame variant="simple" className="w-full max-w-2xl mx-auto">
+            <div className="text-center space-y-5 sm:space-y-6">
               <div>
-                <p className="font-heading text-sm tracking-[0.2em] uppercase text-gold-dark mb-2">
+                <p className="font-heading text-xs sm:text-sm tracking-[0.2em] uppercase text-gold-dark mb-2">
                   When
                 </p>
                 <p className="font-display text-2xl sm:text-3xl text-ivy-dark">
@@ -41,12 +41,12 @@ export default function TLDRPage() {
                 </p>
               </div>
 
-              <div className="divider-nouveau !my-6">
+              <div className="divider-nouveau !my-4 sm:!my-6">
                 <span>✦</span>
               </div>
 
               <div>
-                <p className="font-heading text-sm tracking-[0.2em] uppercase text-gold-dark mb-2">
+                <p className="font-heading text-xs sm:text-sm tracking-[0.2em] uppercase text-gold-dark mb-2">
                   Where
                 </p>
                 <p className="font-display text-2xl sm:text-3xl text-ivy-dark">
@@ -62,12 +62,12 @@ export default function TLDRPage() {
                 </a>
               </div>
 
-              <div className="divider-nouveau !my-6">
+              <div className="divider-nouveau !my-4 sm:!my-6">
                 <span>✦</span>
               </div>
 
               <div>
-                <p className="font-heading text-sm tracking-[0.2em] uppercase text-gold-dark mb-2">
+                <p className="font-heading text-xs sm:text-sm tracking-[0.2em] uppercase text-gold-dark mb-2">
                   Dress Code
                 </p>
                 <p className="font-heading text-xl text-ivy-dark">
@@ -78,12 +78,12 @@ export default function TLDRPage() {
                 </p>
               </div>
 
-              <div className="divider-nouveau !my-6">
+              <div className="divider-nouveau !my-4 sm:!my-6">
                 <span>✦</span>
               </div>
 
               <div>
-                <p className="font-heading text-sm tracking-[0.2em] uppercase text-gold-dark mb-2">
+                <p className="font-heading text-xs sm:text-sm tracking-[0.2em] uppercase text-gold-dark mb-2">
                   RSVP By
                 </p>
                 <p className="font-heading text-xl text-accent-burgundy font-semibold">

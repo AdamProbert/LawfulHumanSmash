@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 
 const STROKE = "#7A5B30";
 const STROKE_LIGHT = "#96743A";
+const FRAME_IMAGE = "/border2.png";
 
 interface ArtNouveauFrameProps {
   children: ReactNode;
@@ -22,8 +23,18 @@ export default function ArtNouveauFrame({
 }: ArtNouveauFrameProps) {
   if (variant === "simple") {
     return (
-      <div className={`frame-nouveau ${className}`}>
-        {children}
+      <div
+        className={`relative overflow-hidden rounded-sm bg-[rgba(234,232,220,0.5)] backdrop-blur-[8px] ${className}`}
+        style={{
+          backgroundImage: `url(${FRAME_IMAGE})`,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "100% 100%",
+        }}
+      >
+        <div className="relative z-10 px-16 py-16 sm:px-20 sm:py-20 md:px-24 md:py-24">
+          {children}
+        </div>
       </div>
     );
   }

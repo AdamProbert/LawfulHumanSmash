@@ -79,7 +79,7 @@ export default function AccommodationPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <ArtNouveauFrame>
+          <ArtNouveauFrame variant="simple" className="max-w-2xl mx-auto">
             <div className="text-center space-y-4">
               <div className="inline-flex items-center gap-2 px-4 py-1 bg-gold/10 rounded-full border border-gold/30 mb-2">
                 <span>⭐</span>
