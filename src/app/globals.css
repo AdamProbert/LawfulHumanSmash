@@ -624,3 +624,189 @@ h1, h2, h3, h4, h5, h6 {
   transform: scale(1.15);
   box-shadow: var(--shadow-md);
 }
+
+/* ═══════════════════════════════════════════════════════
+   BOOK SHELL — fixed frame + horizontal page turning
+   ═══════════════════════════════════════════════════════ */
+
+.book-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(62, 94, 52, 0.10) 0%, transparent 70%),
+    var(--ivory-dark);
+}
+
+/* The "book" — a portrait page, full-bleed on phones, centred on desktop */
+.book {
+  position: relative;
+  width: min(100vw, 30rem);
+  height: 100dvh;
+  background: var(--ivory);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* Fixed ornamental border — never scrolls or moves */
+.book-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  background-image: url("/border2.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  filter: hue-rotate(58deg) saturate(0.85) brightness(0.9);
+}
+
+/* Content stage sits inside the frame's clear centre; clips overflow */
+.book-stage {
+  position: absolute;
+  top: clamp(2.75rem, 7.5vh, 4rem);
+  left: clamp(1.85rem, 8vw, 2.75rem);
+  right: clamp(1.85rem, 8vw, 2.75rem);
+  bottom: clamp(4.75rem, 12vh, 6rem);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.book-chapter {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.book-page-wrap {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+}
+
+.book-page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.book-page::-webkit-scrollbar {
+  display: none;
+}
+
+.book-page-inner {
+  width: 100%;
+  margin: auto;
+  padding: 0.25rem 0.25rem;
+  text-align: center;
+}
+
+/* Page-turn arrows */
+.book-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 15;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Rivanna", serif;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--ivy);
+  background: rgba(234, 232, 220, 0.65);
+  border: 1px solid var(--gold-pale);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s;
+  padding-bottom: 3px;
+}
+.book-arrow:hover:not(:disabled) {
+  color: var(--terracotta);
+  background: var(--ivory);
+  box-shadow: var(--shadow-sm);
+}
+.book-arrow:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+.book-arrow-left {
+  left: -0.35rem;
+}
+.book-arrow-right {
+  right: -0.35rem;
+}
+
+/* Page dots */
+.book-dots {
+  position: absolute;
+  bottom: 0.15rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  display: flex;
+  gap: 0.4rem;
+}
+.book-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--gold-pale);
+  transition: all 0.3s;
+}
+.book-dot.active {
+  background: var(--terracotta);
+  transform: scale(1.35);
+}
+
+/* Bottom chapter strip */
+.bottom-nav {
+  position: absolute;
+  left: clamp(1.5rem, 7vw, 2.5rem);
+  right: clamp(1.5rem, 7vw, 2.5rem);
+  bottom: clamp(1.4rem, 4vh, 2.2rem);
+  z-index: 30;
+}
+.bottom-nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0.4rem 0.55rem;
+  background: rgba(234, 232, 220, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--gold-pale);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+}
+.bottom-nav-inner::-webkit-scrollbar {
+  display: none;
+}
+.bottom-nav-link {
+  flex: 0 0 auto;
+  font-family: "Rivanna", serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--ivy);
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  transition: all 0.25s;
+}
+.bottom-nav-link:hover {
+  color: var(--terracotta);
+  background: rgba(196, 85, 43, 0.08);
+}
+.bottom-nav-link.active {
+  color: var(--ivory);
+  background: var(--ivy);
+}

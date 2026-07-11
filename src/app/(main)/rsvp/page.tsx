@@ -3,6 +3,8 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Leonard from "@/components/Leonard";
+import BookChapter from "@/components/BookChapter";
+import BookPage from "@/components/BookPage";
 
 type RSVPStep = "code" | "form" | "success";
 
@@ -106,33 +108,30 @@ export default function RSVPPage() {
   };
 
   return (
-    <section className="section-nouveau min-h-[80vh]">
-      <div className="section-inner">
+    <BookChapter>
+      <BookPage>
         {/* Header */}
-        <motion.div
-          className="text-center mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1 className="font-display text-4xl sm:text-5xl text-gold-gradient mb-2">
+        <div className="text-center mb-4">
+          <h1 className="font-display text-3xl sm:text-4xl text-gold-gradient mb-1">
             RSVP
           </h1>
-          <p className="font-heading text-lg text-bark-light">
-            Please respond by <strong className="text-accent-burgundy">January 1st, 2027</strong>
+          <p className="font-heading text-sm text-bark-light">
+            Please respond by{" "}
+            <span className="text-accent-burgundy">January 1st, 2027</span>
           </p>
-        </motion.div>
+        </div>
 
         {/* Leonard + Scroll Area */}
-        <div className="flex flex-col lg:flex-row items-start justify-center gap-8 lg:gap-4">
+        <div className="flex flex-col items-center gap-4">
           {/* Leonard */}
           <motion.div
-            className="flex-shrink-0 self-center lg:self-start lg:mt-8"
+            className="flex-shrink-0"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
           >
             <Leonard
-              size={200}
+              size={120}
               showSpeech={step === "code"}
               speechText="Enter your code! 📜"
               animate={step !== "form"}
@@ -140,7 +139,7 @@ export default function RSVPPage() {
           </motion.div>
 
           {/* Scroll Form Area */}
-          <div className="flex-1 max-w-xl w-full">
+          <div className="flex-1 max-w-sm w-full">
             <AnimatePresence mode="wait">
               {/* ── Step 1: Enter Code ────────────── */}
               {step === "code" && (
@@ -408,7 +407,7 @@ export default function RSVPPage() {
             </AnimatePresence>
           </div>
         </div>
-      </div>
-    </section>
+      </BookPage>
+    </BookChapter>
   );
 }

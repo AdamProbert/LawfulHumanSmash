@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
-import ArtNouveauFrame from "@/components/ArtNouveauFrame";
+import BookChapter from "@/components/BookChapter";
+import BookPage from "@/components/BookPage";
 import DrinkWheel from "@/components/DrinkWheel";
 
 const FOOD_TRUCKS = [
@@ -61,130 +61,85 @@ export default function FoodDrinksPage() {
   }, [fetchDrinks]);
 
   return (
-    <section className="section-nouveau">
-      <div className="section-inner">
-        {/* Header */}
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1 className="font-display text-4xl sm:text-5xl text-gold-gradient mb-4">
-            Food &amp; Drinks
-          </h1>
-          <p className="font-heading text-lg text-bark-light max-w-xl mx-auto">
-            Three incredible food trucks and a bar stocked based on YOUR votes
-          </p>
-        </motion.div>
+    <BookChapter>
+      {/* Page 1 — food trucks */}
+      <BookPage>
+        <h1 className="font-display text-3xl sm:text-4xl text-gold-gradient mb-1">
+          Food &amp; Drinks
+        </h1>
+        <p className="font-heading text-sm text-bark-light max-w-xs mx-auto mb-5">
+          Three incredible food trucks and a bar stocked by your votes
+        </p>
 
-        {/* ── Food Trucks ──────────────────── */}
-        <div className="mb-16">
-          <h2 className="font-heading text-2xl text-ivy-dark text-center heading-ornament mb-10">
-            The Food Trucks
-          </h2>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            {FOOD_TRUCKS.map((truck, i) => (
-              <motion.div
-                key={truck.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + i * 0.15 }}
-              >
-                <div className="card-nouveau p-6 h-full flex flex-col text-center">
-                  <div className="text-5xl mb-4">{truck.emoji}</div>
-                  <h3 className="font-heading text-xl text-ivy-dark mb-3">
-                    {truck.name}
-                  </h3>
-                  <p className="font-body text-bark-light flex-1 mb-4">
-                    {truck.description}
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-2">
-                    {truck.tags.map((tag) => (
-                      <span key={tag} className="pill-nouveau !text-xs">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="divider-nouveau">
-          <span>🍸</span>
-        </div>
-
-        {/* ── Drinks Wheel ──────────────────── */}
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          <h2 className="font-heading text-2xl text-ivy-dark text-center heading-ornament mb-4">
-            The Drinks Vote
-          </h2>
-          <p className="font-body text-bark-light text-center max-w-lg mx-auto mb-10">
-            Pick your top 3 drinks when you RSVP. We&apos;ll use the results
-            to stock the bar — democracy in action! 🗳️
-          </p>
-
-          <ArtNouveauFrame variant="simple" className="max-w-xl mx-auto">
-            <div className="py-4">
-              {loadingDrinks ? (
-                <div className="text-center py-12">
-                  <motion.div
-                    className="text-4xl"
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 2,
-                      ease: "linear",
-                    }}
-                  >
-                    🍸
-                  </motion.div>
-                  <p className="font-body text-bark-light mt-4">
-                    Loading drink votes...
-                  </p>
-                </div>
-              ) : (
-                <DrinkWheel drinks={drinks} size={280} />
-              )}
+        <div className="space-y-3 max-w-xs mx-auto text-left">
+          {FOOD_TRUCKS.map((truck) => (
+            <div key={truck.name} className="card-nouveau p-4">
+              <div className="flex items-center gap-3 mb-1">
+                <span className="text-3xl">{truck.emoji}</span>
+                <h3 className="font-heading text-lg text-ivy-dark">
+                  {truck.name}
+                </h3>
+              </div>
+              <p className="font-body text-sm text-bark-light mb-2">
+                {truck.description}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {truck.tags.map((tag) => (
+                  <span key={tag} className="pill-nouveau !text-xs">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
-          </ArtNouveauFrame>
+          ))}
+        </div>
+      </BookPage>
 
-          <p className="text-center mt-6">
-            <a
-              href="/rsvp"
-              className="font-heading text-sm text-gold-dark hover:text-gold transition-colors underline underline-offset-4 decoration-gold/30"
-            >
-              Cast your votes on the RSVP page →
-            </a>
-          </p>
-        </motion.div>
+      {/* Page 2 — drinks vote */}
+      <BookPage>
+        <h2 className="font-heading text-2xl text-ivy-dark mb-2">
+          The Drinks Vote
+        </h2>
+        <p className="font-body text-sm text-bark-light max-w-xs mx-auto mb-4">
+          Pick your top 3 drinks when you RSVP — we&apos;ll stock the bar by the
+          results. 🗳️
+        </p>
 
-        {/* ── Dietary Note ──────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-        >
-          <div className="card-nouveau p-6 text-center max-w-lg mx-auto">
-            <h3 className="font-heading text-lg text-ivy-dark mb-2">
-              🌱 Dietary Requirements
-            </h3>
-            <p className="font-body text-bark-light">
-              Please let us know about any dietary requirements or allergies
-              when you RSVP. Our food trucks can accommodate most dietary
-              needs — we want everyone to eat well!
+        {loadingDrinks ? (
+          <div className="py-10">
+            <div className="text-4xl">🍸</div>
+            <p className="font-body text-sm text-bark-light mt-3">
+              Loading drink votes…
             </p>
           </div>
-        </motion.div>
-      </div>
-    </section>
+        ) : (
+          <div className="flex justify-center">
+            <DrinkWheel drinks={drinks} size={230} />
+          </div>
+        )}
+
+        <p className="mt-5">
+          <a
+            href="/rsvp"
+            className="font-heading text-sm text-gold-dark hover:text-gold transition-colors underline underline-offset-4 decoration-gold/30"
+          >
+            Cast your votes on the RSVP page →
+          </a>
+        </p>
+      </BookPage>
+
+      {/* Page 3 — dietary note */}
+      <BookPage>
+        <div className="text-5xl mb-4">🌱</div>
+        <h3 className="font-heading text-2xl text-ivy-dark mb-3">
+          Dietary Requirements
+        </h3>
+        <p className="font-body text-base text-bark-light max-w-xs mx-auto">
+          Please let us know about any dietary requirements or allergies when
+          you RSVP. Our food trucks can accommodate most needs — we want
+          everyone to eat well!
+        </p>
+      </BookPage>
+    </BookChapter>
   );
 }

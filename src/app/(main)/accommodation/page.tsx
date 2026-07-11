@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
-import ArtNouveauFrame from "@/components/ArtNouveauFrame";
+import BookChapter from "@/components/BookChapter";
+import BookPage from "@/components/BookPage";
 
 const FEATURED_VENUE = {
   name: "Tall Johns House",
@@ -57,167 +57,108 @@ const RECOMMENDED_PLACES = [
 
 export default function AccommodationPage() {
   return (
-    <section className="section-nouveau">
-      <div className="section-inner">
-        {/* Header */}
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1 className="font-display text-4xl sm:text-5xl text-gold-gradient mb-4">
-            Accommodation
-          </h1>
-          <p className="font-heading text-lg text-bark-light max-w-xl mx-auto">
-            Where to rest your head before and after the celebrations
-          </p>
-        </motion.div>
+    <BookChapter>
+      {/* Page 1 — the venue */}
+      <BookPage>
+        <h1 className="font-display text-3xl sm:text-4xl text-gold-gradient mb-1">
+          Accommodation
+        </h1>
+        <p className="font-heading text-sm text-bark-light max-w-xs mx-auto mb-4">
+          Where to rest your head before and after the celebrations
+        </p>
 
-        {/* Featured: Tall Johns House */}
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <ArtNouveauFrame variant="simple" className="max-w-2xl mx-auto">
-            <div className="text-center space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-1 bg-gold/10 rounded-full border border-gold/30 mb-2">
-                <span>⭐</span>
-                <span className="font-heading text-xs tracking-wider uppercase text-gold-dark">
-                  The Venue
-                </span>
-              </div>
-
-              <h2 className="font-display text-3xl sm:text-4xl text-ivy-dark">
-                {FEATURED_VENUE.name}
-              </h2>
-
-              {/* Venue image */}
-              <div className="relative w-11/12 max-w-md mx-auto h-48 sm:h-64 rounded-lg overflow-hidden border border-gold/20">
-                <Image
-                  src="/dji_fly_20230607_162016_74_1686151222973_photo_optimized.webp"
-                  alt="Aerial view of Tall Johns House and its grounds"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 100vw, 42rem"
-                />
-                {/* Vignette */}
-                <div
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    boxShadow: "inset 0 0 60px 20px rgba(0, 0, 0, 0.35)",
-                  }}
-                />
-              </div>
-
-              <p className="font-body text-lg text-bark-light max-w-lg mx-auto">
-                {FEATURED_VENUE.description}
-              </p>
-
-              <div className="flex flex-wrap justify-center gap-2 mt-2">
-                {FEATURED_VENUE.tags.map((tag) => (
-                  <span key={tag} className="pill-nouveau !text-xs">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <a
-                href={FEATURED_VENUE.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-nouveau inline-flex mt-4"
-              >
-                Visit Venue Website →
-              </a>
-            </div>
-          </ArtNouveauFrame>
-        </motion.div>
-
-        {/* Divider */}
-        <div className="divider-nouveau">
-          <span>🏡</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-gold/10 rounded-full border border-gold/30 mb-2">
+          <span>⭐</span>
+          <span className="font-heading text-xs tracking-wider uppercase text-gold-dark">
+            The Venue
+          </span>
         </div>
 
-        {/* Recommended Places */}
-        <motion.div
-          className="mb-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
+        <h2 className="font-display text-2xl sm:text-3xl text-ivy-dark mb-3">
+          {FEATURED_VENUE.name}
+        </h2>
+
+        <div className="relative w-full max-w-xs mx-auto h-40 rounded-lg overflow-hidden border border-gold/20">
+          <Image
+            src="/dji_fly_20230607_162016_74_1686151222973_photo_optimized.webp"
+            alt="Aerial view of Tall Johns House and its grounds"
+            fill
+            className="object-cover"
+            sizes="20rem"
+          />
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{ boxShadow: "inset 0 0 60px 20px rgba(0, 0, 0, 0.35)" }}
+          />
+        </div>
+
+        <p className="font-body text-sm text-bark-light max-w-xs mx-auto mt-3">
+          {FEATURED_VENUE.description}
+        </p>
+
+        <a
+          href={FEATURED_VENUE.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-nouveau inline-flex mt-4"
         >
-          <h2 className="font-heading text-2xl text-ivy-dark text-center mb-2">
-            Recommended Places to Stay
+          Visit Venue Website →
+        </a>
+      </BookPage>
+
+      {/* Pages 2–3 — recommended places, three per page */}
+      {[0, 3].map((start) => (
+        <BookPage key={start}>
+          <h2 className="font-heading text-2xl text-ivy-dark mb-1">
+            Where to Stay
           </h2>
-          <p className="font-body text-bark-light text-center mb-8">
+          <p className="font-body text-sm text-bark-light mb-4">
             We&apos;ve scouted the area so you don&apos;t have to
           </p>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            {RECOMMENDED_PLACES.map((place, i) => (
-              <motion.div
-                key={place.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + i * 0.1 }}
-              >
-                <div className="card-nouveau p-6 h-full flex flex-col">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-heading text-lg text-ivy-dark">
-                      {place.name}
-                    </h3>
-                    <span className="font-body text-sm text-gold-dark">
-                      {place.priceRange}
-                    </span>
-                  </div>
-
-                  <p className="font-body text-bark-light flex-1 mb-4">
-                    {place.description}
-                  </p>
-
-                  <div className="flex items-center justify-between">
-                    <span className="font-body text-sm text-leaf flex items-center gap-1">
-                      📍 {place.distance}
-                    </span>
-                    <a
-                      href={place.bookingUrl}
-                      className="font-heading text-sm text-gold-dark hover:text-gold transition-colors underline underline-offset-4 decoration-gold/30"
-                    >
-                      Book now →
-                    </a>
-                  </div>
+          <div className="space-y-3 max-w-xs mx-auto text-left">
+            {RECOMMENDED_PLACES.slice(start, start + 3).map((place) => (
+              <div key={place.name} className="card-nouveau p-4">
+                <div className="flex items-start justify-between mb-1">
+                  <h3 className="font-heading text-base text-ivy-dark">
+                    {place.name}
+                  </h3>
+                  <span className="font-body text-sm text-gold-dark">
+                    {place.priceRange}
+                  </span>
                 </div>
-              </motion.div>
+                <p className="font-body text-sm text-bark-light mb-2">
+                  {place.description}
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="font-body text-xs text-leaf flex items-center gap-1">
+                    📍 {place.distance}
+                  </span>
+                  <a
+                    href={place.bookingUrl}
+                    className="font-heading text-xs text-gold-dark hover:text-gold transition-colors underline underline-offset-4 decoration-gold/30"
+                  >
+                    Book now →
+                  </a>
+                </div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </BookPage>
+      ))}
 
-        {/* Map placeholder */}
-        <motion.div
-          className="mt-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-        >
-          <div className="card-nouveau p-6">
-            <h3 className="font-heading text-lg text-ivy-dark text-center mb-4">
-              📍 Area Map
-            </h3>
-            <div className="w-full h-64 sm:h-80 rounded-lg bg-gradient-to-br from-leaf/5 to-ivy/5 flex items-center justify-center border border-gold/20">
-              <div className="text-center">
-                <p className="text-4xl mb-2">🗺️</p>
-                <p className="font-body text-bark-light">
-                  Google Maps embed placeholder
-                </p>
-                <p className="font-body text-sm text-bark-light/60 mt-1">
-                  Replace with an embedded Google Map of the area
-                </p>
-              </div>
-            </div>
+      {/* Page 4 — area map */}
+      <BookPage>
+        <h3 className="font-heading text-2xl text-ivy-dark mb-4">📍 Area Map</h3>
+        <div className="w-full max-w-xs mx-auto h-64 rounded-lg bg-gradient-to-br from-leaf/5 to-ivy/5 flex items-center justify-center border border-gold/20">
+          <div className="text-center">
+            <p className="text-4xl mb-2">🗺️</p>
+            <p className="font-body text-sm text-bark-light">
+              Google Maps embed placeholder
+            </p>
           </div>
-        </motion.div>
-      </div>
-    </section>
+        </div>
+      </BookPage>
+    </BookChapter>
   );
 }
