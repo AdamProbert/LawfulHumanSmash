@@ -3,39 +3,38 @@
 import { motion } from "framer-motion";
 import ArtNouveauFrame from "@/components/ArtNouveauFrame";
 
-/* Woodland-inspired bright summer colour swatches */
+/* Wedding palette — leafy green & terracotta led, with warm tertiaries */
 const COLOUR_SWATCHES = [
-  { name: "Fern",           color: "#4A7C2E", textColor: "white" },
-  { name: "Moss",           color: "#6B8F3C", textColor: "white" },
-  { name: "Sunflower",      color: "#F2C94C", textColor: "#2C1810" },
-  { name: "Marigold",       color: "#E8941E", textColor: "white" },
-  { name: "Bluebell",       color: "#5B8FD4", textColor: "white" },
-  { name: "Wild Rose",      color: "#E74C6F", textColor: "white" },
-  { name: "Poppy",          color: "#E74C3C", textColor: "white" },
-  { name: "Bramble",        color: "#722F37", textColor: "white" },
-  { name: "Cornflower",     color: "#6495ED", textColor: "white" },
-  { name: "Buttercup",      color: "#FFD700", textColor: "#2C1810" },
-  { name: "Meadow Pink",    color: "#FF8A9E", textColor: "#2C1810" },
-  { name: "Tangerine",      color: "#FF6F3C", textColor: "white" },
-  { name: "Sage",           color: "#87A96B", textColor: "white" },
-  { name: "Coral",          color: "#FF7F50", textColor: "white" },
+  { name: "Leaf Green",     color: "#3E5E34", textColor: "white" },
+  { name: "Deep Forest",    color: "#263A1E", textColor: "white" },
+  { name: "Olive",          color: "#5F7E3F", textColor: "white" },
+  { name: "Sage",           color: "#7E9C57", textColor: "#283121" },
+  { name: "Terracotta",     color: "#C4552B", textColor: "white" },
+  { name: "Burnt Rust",     color: "#9C3D1C", textColor: "white" },
+  { name: "Ochre",          color: "#C08A2E", textColor: "#283121" },
+  { name: "Mustard",        color: "#DDA22B", textColor: "#283121" },
+  { name: "Amber",          color: "#B87333", textColor: "white" },
+  { name: "Chestnut",       color: "#6B4A2B", textColor: "white" },
+  { name: "Cocoa",          color: "#4E3520", textColor: "white" },
+  { name: "Burgundy",       color: "#7A2E3A", textColor: "white" },
+  { name: "Garnet",         color: "#9B2335", textColor: "white" },
 ];
 
 const INSPIRATION_TIPS = [
   {
     emoji: "🌿",
-    title: "Woodland Dual Tones",
-    text: "Pair a rich green with a contrasting bright colour — think fern & sunflower, or moss & wild rose.",
+    title: "Green Leads the Way",
+    text: "Our primary colour is a dark, leafy green — think forest, olive & sage. Lead with it and you can't go wrong.",
   },
   {
-    emoji: "☀️",
-    title: "Bright Summer Vibes",
-    text: "Don't be shy! This is a celebration — the bolder and more colourful, the better.",
+    emoji: "🏺",
+    title: "A Terracotta Warmth",
+    text: "Pair the greens with a saturated terracotta — that earthy rust is the heart of our palette.",
   },
   {
     emoji: "🎨",
-    title: "Mix & Match",
-    text: "Pick two or three colours that make you happy. There's no wrong answer (except beige).",
+    title: "Warm It Up",
+    text: "Layer in the supporting tones — chestnut browns, mustard yellows and deep burgundy all sit beautifully together.",
   },
   {
     emoji: "👗",
@@ -63,10 +62,10 @@ export default function DressCodePage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
           >
-            Colourful 🌈
+            Colourful
           </motion.p>
           <p className="font-heading text-lg text-bark-light max-w-xl mx-auto">
-            We want a sea of colour! Think bright summer woodland tones.
+            We want a sea of colour! Think leafy greens & warm terracotta, with browns, mustards & burgundy to finish.
           </p>
         </motion.div>
 

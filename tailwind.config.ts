@@ -16,27 +16,42 @@ const config: Config = {
           300: "#D9D7CB",
         },
         ivy: {
-          DEFAULT: "#7A5B30",
-          dark: "#523D1E",
-          light: "#96743A",
+          DEFAULT: "#3E5E34",
+          dark: "#263A1E",
+          light: "#557B45",
         },
         leaf: {
-          DEFAULT: "#8B6830",
-          light: "#A88040",
-          pale: "#C0985A",
+          DEFAULT: "#5F7E3F",
+          light: "#7E9C57",
+          pale: "#B9CCA1",
+        },
+        emerald: {
+          DEFAULT: "#3E5E34",
+          dark: "#263A1E",
+          light: "#557B45",
+        },
+        terracotta: {
+          DEFAULT: "#C4552B",
+          light: "#DB7648",
+          dark: "#9C3D1C",
+        },
+        brown: {
+          DEFAULT: "#6B4A2B",
+          light: "#8A6440",
+          dark: "#4E3520",
         },
         accent: {
-          orange: "#D4760A",
-          "orange-light": "#E8941E",
-          burgundy: "#722F37",
-          yellow: "#E6B422",
+          orange: "#C4552B",
+          "orange-light": "#DB7648",
+          burgundy: "#7A2E3A",
+          yellow: "#DDA22B",
           red: "#9B2335",
         },
         gold: {
-          dark: "#A88734",
-          DEFAULT: "#C9A84C",
-          light: "#D4B96A",
-          pale: "#E8D5A0",
+          dark: "#6F5122",
+          DEFAULT: "#9C7833",
+          light: "#C29A48",
+          pale: "#E2CE9C",
         },
         parchment: {
           DEFAULT: "#E8E6DA",
@@ -51,11 +66,13 @@ const config: Config = {
       },
       backgroundImage: {
         "art-nouveau-gradient":
-          "linear-gradient(135deg, #523D1E 0%, #7A5B30 30%, #96743A 70%, #8B6830 100%)",
+          "linear-gradient(135deg, #263A1E 0%, #3E5E34 30%, #557B45 70%, #5F7E3F 100%)",
         "gold-shimmer":
-          "linear-gradient(90deg, #A88734, #C9A84C, #D4B96A, #C9A84C, #A88734)",
+          "linear-gradient(90deg, #6F5122, #9C7833, #C29A48, #9C7833, #6F5122)",
         "parchment-gradient":
           "linear-gradient(180deg, #EAE8DC 0%, #E2E0D4 50%, #D9D7CB 100%)",
+        "jewel-gradient":
+          "linear-gradient(135deg, #263A1E 0%, #3E5E34 45%, #C4552B 100%)",
       },
       animation: {
         shimmer: "shimmer 3s ease-in-out infinite",

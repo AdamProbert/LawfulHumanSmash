@@ -18,42 +18,50 @@
 
 /* ── CSS Custom Properties ─────────────────────────────── */
 :root {
-  /* Primary palette — warm browns inspired by invite */
-  --ivy: #7A5B30;
-  --ivy-dark: #523D1E;
-  --ivy-light: #96743A;
-  --leaf: #8B6830;
-  --leaf-light: #A88040;
-  --orange: #D4760A;
-  --orange-light: #E8941E;
+  /* Primary palette — rich olive-leaf green */
+  --ivy: #3E5E34;
+  --ivy-dark: #263A1E;
+  --ivy-light: #557B45;
+  --leaf: #5F7E3F;
+  --leaf-light: #7E9C57;
   --mayds-leaf-green: #73a859;
   --madys-letter-green: #12651c;
 
-  /* Secondary palette */
-  --burgundy: #722F37;
-  --yellow: #E6B422;
+  /* Secondary accent — saturated terracotta */
+  --terracotta: #C4552B;
+  --terracotta-light: #DB7648;
+  --terracotta-deep: #9C3D1C;
+  --orange: #C4552B;
+  --orange-light: #DB7648;
+
+  /* Tertiary palette — browns, yellows, burgundy */
+  --burgundy: #7A2E3A;
+  --yellow: #DDA22B;
   --red: #9B2335;
+  --brown: #6B4A2B;
+  --brown-light: #8A6440;
+  --brown-dark: #4E3520;
 
-  /* Gold accents */
-  --gold-dark: #A88734;
-  --gold: #C9A84C;
-  --gold-light: #D4B96A;
-  --gold-pale: #E8D5A0;
+  /* Metallic accent — warm brass / antique brown (was gold) */
+  --gold-dark: #6F5122;
+  --gold: #9C7833;
+  --gold-light: #C29A48;
+  --gold-pale: #E2CE9C;
 
-  /* Neutrals */
+  /* Neutrals — original warm beige */
   --ivory: #EAE8DC;
   --ivory-mid: #E2E0D4;
   --ivory-dark: #D9D7CB;
   --parchment: #E2E0D4;
   --parchment-dark: #D5D0C0;
-  --bark: #4A3728;
-  --bark-light: #6B5344;
+  --bark: #283121;
+  --bark-light: #56604A;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(74, 53, 32, 0.08);
-  --shadow-md: 0 4px 12px rgba(74, 53, 32, 0.12);
-  --shadow-lg: 0 8px 30px rgba(74, 53, 32, 0.16);
-  --shadow-gold: 0 4px 20px rgba(201, 168, 76, 0.25);
+  --shadow-sm: 0 1px 3px rgba(38, 58, 30, 0.08);
+  --shadow-md: 0 4px 12px rgba(38, 58, 30, 0.12);
+  --shadow-lg: 0 8px 30px rgba(38, 58, 30, 0.18);
+  --shadow-gold: 0 4px 20px rgba(156, 120, 51, 0.28);
 }
 
 /* ── Base Reset & Typography ───────────────────────────── */
@@ -147,9 +155,9 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 1;
   }
 
-  /* ── Gold Gradient Text ────────────────────────────────── */
+  /* ── Heading / Title Colour (dark leafy green) ─────────── */
   .text-gold-gradient {
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+    background: linear-gradient(135deg, var(--ivy-dark), var(--ivy-dark));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -175,7 +183,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--ivy), var(--gold), var(--ivy), transparent);
+    background: linear-gradient(90deg, transparent, var(--ivy), var(--gold), var(--terracotta), transparent);
   }
 
   /* ── Art Nouveau Button (Primary) ──────────────────────── */
@@ -432,8 +440,8 @@ h1, h2, h3, h4, h5, h6 {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M10 110 C10 80, 20 50, 40 30 C50 20, 65 15, 80 12' fill='none' stroke='%237A5B30' stroke-width='1'/%3E%3Cpath d='M40 30 C35 22, 28 18, 24 20 C28 24, 34 28, 40 30' fill='none' stroke='%237A5B30' stroke-width='0.7'/%3E%3Cpath d='M55 22 C58 14, 62 10, 68 12 C64 16, 58 20, 55 22' fill='none' stroke='%237A5B30' stroke-width='0.7'/%3E%3Cpath d='M60 20 C64 28, 62 38, 58 44' fill='none' stroke='%237A5B30' stroke-width='0.5'/%3E%3Cpath d='M58 44 C56 48, 54 50, 56 52' fill='none' stroke='%237A5B30' stroke-width='0.4'/%3E%3Cpath d='M30 55 C24 48, 20 38, 24 30' fill='none' stroke='%237A5B30' stroke-width='0.6'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M10 110 C10 80, 20 50, 40 30 C50 20, 65 15, 80 12' fill='none' stroke='%233E5E34' stroke-width='1'/%3E%3Cpath d='M40 30 C35 22, 28 18, 24 20 C28 24, 34 28, 40 30' fill='none' stroke='%233E5E34' stroke-width='0.7'/%3E%3Cpath d='M55 22 C58 14, 62 10, 68 12 C64 16, 58 20, 55 22' fill='none' stroke='%233E5E34' stroke-width='0.7'/%3E%3Cpath d='M60 20 C64 28, 62 38, 58 44' fill='none' stroke='%233E5E34' stroke-width='0.5'/%3E%3Cpath d='M58 44 C56 48, 54 50, 56 52' fill='none' stroke='%233E5E34' stroke-width='0.4'/%3E%3Cpath d='M30 55 C24 48, 20 38, 24 30' fill='none' stroke='%233E5E34' stroke-width='0.6'/%3E%3C/svg%3E");
   background-size: 120px 120px;
   pointer-events: none;
 }
@@ -553,8 +561,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .splash-bg {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(122, 91, 48, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 50%, rgba(201, 168, 76, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 50%, rgba(62, 94, 52, 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(196, 85, 43, 0.08) 0%, transparent 60%),
     linear-gradient(180deg, var(--ivory) 0%, var(--ivory-mid) 40%, var(--ivory-dark) 100%);
   min-height: 100vh;
 }
