@@ -6,12 +6,8 @@ import BookPage from "@/components/BookPage";
 
 export default function ItineraryPage() {
   return (
-    <BookChapter>
+    <BookChapter title="Itinerary">
       <BookPage>
-        <h1 className="font-display text-3xl sm:text-4xl text-gold-gradient mb-6">
-          Itinerary
-        </h1>
-
         <div className="text-6xl mb-4">🔮</div>
 
         <h2 className="font-heading text-2xl text-ivy-dark mb-3">Coming Soon</h2>

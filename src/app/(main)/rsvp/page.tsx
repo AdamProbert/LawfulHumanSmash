@@ -108,13 +108,10 @@ export default function RSVPPage() {
   };
 
   return (
-    <BookChapter>
+    <BookChapter title="RSVP">
       <BookPage>
         {/* Header */}
         <div className="text-center mb-4">
-          <h1 className="font-display text-3xl sm:text-4xl text-gold-gradient mb-1">
-            RSVP
-          </h1>
           <p className="font-heading text-sm text-bark-light">
             Please respond by{" "}
             <span className="text-accent-burgundy">January 1st, 2027</span>
@@ -150,11 +147,8 @@ export default function RSVPPage() {
                   exit={{ opacity: 0, scaleY: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                  <div className="parchment-scroll p-8 sm:p-10">
-                    {/* Scroll top curl */}
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-6 bg-parchment-dark rounded-full border border-gold/40" />
-
-                    <div className="text-center space-y-6 pt-4">
+                  <div>
+                    <div className="text-center space-y-6">
                       <div>
                         <h2 className="font-heading text-2xl text-ivy-dark mb-2">
                           Your Invitation Code
@@ -220,10 +214,8 @@ export default function RSVPPage() {
                   animate={{ opacity: 1, scaleY: 1 }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                  <div className="parchment-scroll p-8 sm:p-10">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-6 bg-parchment-dark rounded-full border border-gold/40" />
-
-                    <div className="space-y-8 pt-4">
+                  <div>
+                    <div className="space-y-8">
                       {/* Greeting */}
                       <div className="text-center">
                         <h2 className="font-heading text-2xl text-ivy-dark mb-1">
@@ -362,7 +354,7 @@ export default function RSVPPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <div className="parchment-scroll p-8 sm:p-10 text-center">
+                  <div className="text-center">
                     <div className="space-y-6">
                       <motion.div
                         className="text-6xl"

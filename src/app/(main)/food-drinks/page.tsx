@@ -61,12 +61,9 @@ export default function FoodDrinksPage() {
   }, [fetchDrinks]);
 
   return (
-    <BookChapter>
+    <BookChapter title="Food & Drinks">
       {/* Page 1 — food trucks */}
       <BookPage>
-        <h1 className="font-display text-3xl sm:text-4xl text-gold-gradient mb-1">
-          Food &amp; Drinks
-        </h1>
         <p className="font-heading text-sm text-bark-light max-w-xs mx-auto mb-5">
           Three incredible food trucks and a bar stocked by your votes
         </p>

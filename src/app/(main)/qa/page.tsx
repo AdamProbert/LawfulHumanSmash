@@ -87,32 +87,24 @@ export default function QAPage() {
   };
 
   return (
-    <BookChapter>
+    <BookChapter title="Q&A">
       {/* Page 1 — browse questions */}
       <BookPage>
-        <h1 className="font-display text-3xl sm:text-4xl text-gold-gradient mb-1">
-          Q&amp;A
-        </h1>
-        <p className="font-heading text-sm text-bark-light max-w-xs mx-auto mb-4">
-          Browse below, or ask your own on the next page →
-        </p>
-
-        <div className="flex flex-wrap justify-center gap-2 mb-4">
+        <div className="filter-strip mb-5">
           {CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`pill-nouveau !text-xs ${
+              className={`filter-chip ${
                 activeCategory === cat.id ? "active" : ""
               }`}
             >
-              <span className="mr-1">{cat.emoji}</span>
               {cat.label}
             </button>
           ))}
         </div>
 
-        <div className="space-y-3 max-w-xs mx-auto text-left">
+        <div className="max-w-xs mx-auto text-left">
           {loading ? (
             <div className="text-center py-8">
               <div className="text-3xl">🌿</div>
@@ -130,28 +122,24 @@ export default function QAPage() {
               </p>
             </div>
           ) : (
-            filteredQuestions.map((q) => (
-              <div key={q.id} className="card-nouveau p-4">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-lg">
-                    {CATEGORIES.find((c) => c.id === q.category)?.emoji || "❓"}
-                  </span>
-                  <span className="font-heading text-sm text-ivy-dark">
-                    {q.name}
-                  </span>
-                </div>
-                <p className="font-heading text-base text-bark mb-2">
+            filteredQuestions.map((q, i) => (
+              <div key={q.id}>
+                {i > 0 && <div className="qa-divider" />}
+                <p className="font-heading text-xs tracking-[0.15em] uppercase text-gold-dark mb-1">
+                  {q.name}
+                </p>
+                <p className="font-heading text-base text-ivy-dark mb-1">
                   {q.question}
                 </p>
                 {q.answer && (
-                  <div className="pl-3 border-l-2 border-gold/40">
+                  <>
                     <p className="font-body text-sm text-bark-light italic">
                       {q.answer}
                     </p>
                     <p className="font-body text-xs text-gold-dark mt-1">
                       — Adam &amp; Mady
                     </p>
-                  </div>
+                  </>
                 )}
               </div>
             ))

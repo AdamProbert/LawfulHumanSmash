@@ -57,18 +57,10 @@ const RECOMMENDED_PLACES = [
 
 export default function AccommodationPage() {
   return (
-    <BookChapter>
+    <BookChapter title="Accommodation">
       {/* Page 1 — the venue */}
       <BookPage>
-        <h1 className="font-display text-3xl sm:text-4xl text-gold-gradient mb-1">
-          Accommodation
-        </h1>
-        <p className="font-heading text-sm text-bark-light max-w-xs mx-auto mb-4">
-          Where to rest your head before and after the celebrations
-        </p>
-
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-gold/10 rounded-full border border-gold/30 mb-2">
-          <span>⭐</span>
           <span className="font-heading text-xs tracking-wider uppercase text-gold-dark">
             The Venue
           </span>
@@ -106,50 +98,45 @@ export default function AccommodationPage() {
         </a>
       </BookPage>
 
-      {/* Pages 2–3 — recommended places, three per page */}
-      {[0, 3].map((start) => (
-        <BookPage key={start}>
-          <h2 className="font-heading text-2xl text-ivy-dark mb-1">
-            Where to Stay
-          </h2>
-          <p className="font-body text-sm text-bark-light mb-4">
-            We&apos;ve scouted the area so you don&apos;t have to
-          </p>
-
-          <div className="space-y-3 max-w-xs mx-auto text-left">
-            {RECOMMENDED_PLACES.slice(start, start + 3).map((place) => (
-              <div key={place.name} className="card-nouveau p-4">
-                <div className="flex items-start justify-between mb-1">
-                  <h3 className="font-heading text-base text-ivy-dark">
-                    {place.name}
-                  </h3>
-                  <span className="font-body text-sm text-gold-dark">
-                    {place.priceRange}
-                  </span>
-                </div>
-                <p className="font-body text-sm text-bark-light mb-2">
-                  {place.description}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="font-body text-xs text-leaf flex items-center gap-1">
-                    📍 {place.distance}
-                  </span>
-                  <a
-                    href={place.bookingUrl}
-                    className="font-heading text-xs text-gold-dark hover:text-gold transition-colors underline underline-offset-4 decoration-gold/30"
-                  >
-                    Book now →
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </BookPage>
-      ))}
-
-      {/* Page 4 — area map */}
+      {/* Page 2 — all recommended places on one scroll */}
       <BookPage>
-        <h3 className="font-heading text-2xl text-ivy-dark mb-4">📍 Area Map</h3>
+        <h2 className="font-heading text-2xl text-ivy-dark mb-4">
+          Where to Stay
+        </h2>
+
+        <div className="space-y-3 max-w-[15rem] mx-auto text-left">
+          {RECOMMENDED_PLACES.map((place) => (
+            <div key={place.name} className="card-nouveau p-3.5">
+              <div className="flex items-start justify-between mb-1">
+                <h3 className="font-heading text-base text-ivy-dark">
+                  {place.name}
+                </h3>
+                <span className="font-body text-sm text-gold-dark">
+                  {place.priceRange}
+                </span>
+              </div>
+              <p className="font-body text-xs text-bark-light mb-2">
+                {place.description}
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="font-body text-xs text-leaf flex items-center gap-1">
+                  📍 {place.distance}
+                </span>
+                <a
+                  href={place.bookingUrl}
+                  className="font-heading text-xs text-gold-dark hover:text-gold transition-colors underline underline-offset-4 decoration-gold/30"
+                >
+                  Book now →
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </BookPage>
+
+      {/* Page 3 — area map */}
+      <BookPage>
+        <h2 className="font-heading text-2xl text-ivy-dark mb-4">📍 Area Map</h2>
         <div className="w-full max-w-xs mx-auto h-64 rounded-lg bg-gradient-to-br from-leaf/5 to-ivy/5 flex items-center justify-center border border-gold/20">
           <div className="text-center">
             <p className="text-4xl mb-2">🗺️</p>

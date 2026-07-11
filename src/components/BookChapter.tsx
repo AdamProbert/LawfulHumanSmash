@@ -18,7 +18,13 @@ import { CHAPTERS } from "@/lib/chapters";
  * keyboard. Flipping past the last/first page turns to the neighbouring
  * chapter — like reading through a book.
  */
-export default function BookChapter({ children }: { children: ReactNode }) {
+export default function BookChapter({
+  title,
+  children,
+}: {
+  title?: React.ReactNode;
+  children: ReactNode;
+}) {
   const pages = Children.toArray(children);
   const count = pages.length;
 
@@ -86,7 +92,7 @@ export default function BookChapter({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className="book-chapter"
+      className={`book-chapter ${title ? "book-chapter--titled" : ""}`}
       onTouchStart={(e) =>
         (touchStart.current = {
           x: e.touches[0].clientX,
@@ -103,6 +109,14 @@ export default function BookChapter({ children }: { children: ReactNode }) {
         touchStart.current = null;
       }}
     >
+      {title && (
+        <div className="book-title">
+          <h1 className="font-display text-3xl sm:text-4xl text-gold-gradient">
+            {title}
+          </h1>
+        </div>
+      )}
+
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={page}

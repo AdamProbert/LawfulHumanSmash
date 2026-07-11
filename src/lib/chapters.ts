@@ -8,8 +8,7 @@ export const CHAPTERS: Chapter[] = [
   { href: "/tldr", label: "Details" },
   { href: "/rsvp", label: "RSVP" },
   { href: "/qa", label: "Q&A" },
-  { href: "/accommodation", label: "Stay" },
+  { href: "/accommodation", label: "Accommodation" },
   { href: "/food-drinks", label: "Food & Drinks" },
-  { href: "/dress-code", label: "Dress Code" },
   { href: "/itinerary", label: "Itinerary" },
 ];

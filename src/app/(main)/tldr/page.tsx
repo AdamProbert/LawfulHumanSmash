@@ -1,19 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import Leonard from "@/components/Leonard";
 import BookChapter from "@/components/BookChapter";
 import BookPage from "@/components/BookPage";
 
 export default function TLDRPage() {
   return (
-    <BookChapter>
-      {/* Page 1 — the essentials */}
+    <BookChapter title="Important Details">
       <BookPage>
-        <h1 className="font-display text-3xl sm:text-4xl text-gold-gradient mb-1">
-          Important Details
-        </h1>
-        <p className="font-heading text-sm text-bark-light mb-6">
+        <p className="font-heading text-sm text-bark-light mb-5">
           Everything you need to know
         </p>
 
@@ -71,26 +65,6 @@ export default function TLDRPage() {
               January 1st, 2027
             </p>
           </div>
-        </div>
-      </BookPage>
-
-      {/* Page 2 — Leonard's nudge */}
-      <BookPage>
-        <p className="font-display text-2xl text-gold-gradient mb-4">
-          Don&apos;t be shy…
-        </p>
-        <Link href="/rsvp" className="group cursor-pointer inline-block">
-          <Leonard
-            size={150}
-            showSpeech
-            speechText="Don't forget to RSVP! 🐾"
-            animate
-          />
-        </Link>
-        <div className="mt-6">
-          <Link href="/rsvp" className="btn-nouveau">
-            RSVP Now
-          </Link>
         </div>
       </BookPage>
     </BookChapter>
