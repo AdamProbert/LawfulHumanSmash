@@ -3,22 +3,20 @@
 import { useState, useEffect, useCallback } from "react";
 import BookChapter from "@/components/BookChapter";
 import BookPage from "@/components/BookPage";
+import { readCookie, RSVP_CODE_COOKIE } from "@/lib/cookies";
+import { QUESTION_CATEGORIES } from "@/lib/categories";
 
 interface Question {
   id: string;
-  name: string;
   question: string;
   answer: string | null;
   category: string;
-  isAnswered: boolean;
   createdAt: string;
 }
 
 const CATEGORIES = [
   { id: "all", label: "All", emoji: "✨" },
-  { id: "accommodation", label: "Accommodation", emoji: "🏡" },
-  { id: "whimsy", label: "Whimsy", emoji: "🦋" },
-  { id: "pets", label: "Pets", emoji: "🐾" },
+  ...QUESTION_CATEGORIES.filter((c) => c.id !== "uncategorized"),
 ];
 
 export default function QAPage() {
@@ -26,11 +24,13 @@ export default function QAPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [loading, setLoading] = useState(true);
 
+  // Identity — pulled from a cached RSVP code when available.
+  const [rsvpName, setRsvpName] = useState<string | null>(null);
+
   // Form state
   const [formName, setFormName] = useState("");
   const [formEmail, setFormEmail] = useState("");
   const [formQuestion, setFormQuestion] = useState("");
-  const [formCategory, setFormCategory] = useState("whimsy");
   const [submitting, setSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
@@ -50,9 +50,27 @@ export default function QAPage() {
     fetchQuestions();
   }, [fetchQuestions]);
 
+  // If they've already RSVP'd, use that party's name/email instead of asking again.
+  useEffect(() => {
+    const code = readCookie(RSVP_CODE_COOKIE);
+    if (!code) return;
+
+    (async () => {
+      try {
+        const res = await fetch(`/api/rsvp/verify?code=${code}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        const firstGuest = data.party?.guests?.[0];
+        if (firstGuest) setRsvpName(firstGuest.name);
+        if (data.party?.email) setFormEmail(data.party.email);
+      } catch {
+        // Silently fall back to the manual name field.
+      }
+    })();
+  }, []);
+
   const filteredQuestions = questions.filter(
-    (q) =>
-      q.isAnswered && (activeCategory === "all" || q.category === activeCategory)
+    (q) => activeCategory === "all" || q.category === activeCategory
   );
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,19 +82,16 @@ export default function QAPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: formName,
+          name: rsvpName || formName,
           email: formEmail || null,
           question: formQuestion,
-          category: formCategory,
         }),
       });
 
       if (res.ok) {
         setSubmitSuccess(true);
         setFormName("");
-        setFormEmail("");
         setFormQuestion("");
-        setFormCategory("whimsy");
         setTimeout(() => setSubmitSuccess(false), 4000);
       }
     } catch (err) {
@@ -104,7 +119,7 @@ export default function QAPage() {
           ))}
         </div>
 
-        <div className="max-w-xs mx-auto text-left">
+        <div className="text-left">
           {loading ? (
             <div className="text-center py-8">
               <div className="text-3xl">🌿</div>
@@ -125,9 +140,6 @@ export default function QAPage() {
             filteredQuestions.map((q, i) => (
               <div key={q.id}>
                 {i > 0 && <div className="qa-divider" />}
-                <p className="font-heading text-xs tracking-[0.15em] uppercase text-gold-dark mb-1">
-                  {q.name}
-                </p>
                 <p className="font-heading text-base text-ivy-dark mb-1">
                   {q.question}
                 </p>
@@ -160,26 +172,30 @@ export default function QAPage() {
             </p>
           </div>
         ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-3 max-w-xs mx-auto text-left"
-          >
+          <form onSubmit={handleSubmit} className="space-y-3 text-left">
             <h3 className="font-heading text-xl text-ivy-dark text-center mb-2">
               Ask Us Anything
             </h3>
 
-            <div>
-              <label className="font-heading text-xs tracking-wider uppercase text-gold-dark block mb-1">
-                Your Name *
-              </label>
-              <input
-                type="text"
-                required
-                className="input-nouveau"
-                value={formName}
-                onChange={(e) => setFormName(e.target.value)}
-              />
-            </div>
+            {rsvpName ? (
+              <p className="font-body text-sm text-bark-light text-center">
+                Asking as <span className="text-gold-dark">{rsvpName}</span>{" "}
+                — kept internal, never shown publicly.
+              </p>
+            ) : (
+              <div>
+                <label className="font-heading text-xs tracking-wider uppercase text-gold-dark block mb-1">
+                  Your Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  className="input-nouveau"
+                  value={formName}
+                  onChange={(e) => setFormName(e.target.value)}
+                />
+              </div>
+            )}
 
             <div>
               <label className="font-heading text-xs tracking-wider uppercase text-gold-dark block mb-1">
@@ -191,23 +207,6 @@ export default function QAPage() {
                 value={formEmail}
                 onChange={(e) => setFormEmail(e.target.value)}
               />
-            </div>
-
-            <div>
-              <label className="font-heading text-xs tracking-wider uppercase text-gold-dark block mb-1">
-                Category
-              </label>
-              <select
-                className="select-nouveau"
-                value={formCategory}
-                onChange={(e) => setFormCategory(e.target.value)}
-              >
-                {CATEGORIES.filter((c) => c.id !== "all").map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.emoji} {c.label}
-                  </option>
-                ))}
-              </select>
             </div>
 
             <div>
@@ -236,3 +235,4 @@ export default function QAPage() {
     </BookChapter>
   );
 }
+

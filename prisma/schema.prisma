@@ -7,13 +7,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Party {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  email     String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  guests    Guest[]
+
+  @@map("parties")
+}
+
 model Guest {
   id                  String      @id @default(cuid())
-  code                String      @unique
+  partyId             String      @map("party_id")
+  party               Party       @relation(fields: [partyId], references: [id])
   name                String
-  email               String?
   attending           Boolean?
-  plusOneName          String?     @map("plus_one_name")
   dietaryRequirements String?     @map("dietary_requirements")
   rsvpSubmittedAt     DateTime?   @map("rsvp_submitted_at")
   createdAt           DateTime    @default(now()) @map("created_at")
@@ -29,7 +39,7 @@ model Question {
   email      String?
   question   String
   answer     String?
-  category   String
+  category   String   @default("uncategorized")
   isAnswered Boolean  @default(false) @map("is_answered")
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")

@@ -37,24 +37,30 @@ async function main() {
   }
   console.log(`  🍸 Seeded ${drinks.length} drink options`);
 
-  // --- Sample Guests (replace with your real guest list) ---
+  // --- Sample Parties (replace with your real guest list) ---
   const codes = new Set<string>();
-  const sampleGuests = [
-    "Adam Probert",
-    "Mady",
-    "Test Guest One",
-    "Test Guest Two",
-    "Test Guest Three",
+  const sampleParties = [
+    { email: "adam@example.com", guestNames: ["Adam Probert", "Mady"] },
+    { email: "guest.one@example.com", guestNames: ["Test Guest One"] },
+    {
+      email: "guest.family@example.com",
+      guestNames: ["Test Guest Two", "Test Guest Three", "Little Guest"],
+    },
   ];
 
-  for (const name of sampleGuests) {
+  for (const { email, guestNames } of sampleParties) {
     const code = generateUniqueCode(codes);
-    await prisma.guest.upsert({
+    const party = await prisma.party.upsert({
       where: { code },
       update: {},
-      create: { name, code },
+      create: { code, email },
     });
-    console.log(`  🎟️  Guest: ${name} → Code: ${code}`);
+    for (const name of guestNames) {
+      await prisma.guest.create({ data: { name, partyId: party.id } });
+    }
+    console.log(
+      `  🎟️  Party: ${guestNames.join(", ")} → Code: ${code}`
+    );
   }
 
   // --- Sample Q&A ---

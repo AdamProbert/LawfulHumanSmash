@@ -3,7 +3,8 @@ import { prisma } from "@/lib/prisma";
 
 /**
  * GET /api/questions
- * Fetch all questions. Only answered ones are shown publicly.
+ * Publicly lists answered questions only. Asker name/email are internal —
+ * never returned here.
  * Query params: ?category=accommodation (optional filter)
  */
 export async function GET(request: NextRequest) {
@@ -12,9 +13,17 @@ export async function GET(request: NextRequest) {
   try {
     const questions = await prisma.question.findMany({
       where: {
+        isAnswered: true,
         ...(category && category !== "all" ? { category } : {}),
       },
-      orderBy: [{ isAnswered: "desc" }, { createdAt: "desc" }],
+      select: {
+        id: true,
+        question: true,
+        answer: true,
+        category: true,
+        createdAt: true,
+      },
+      orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json({ questions });
@@ -29,23 +38,20 @@ export async function GET(request: NextRequest) {
 
 /**
  * POST /api/questions
- * Submit a new question.
+ * Submit a new question. The name is logged internally (e.g. from a cached
+ * RSVP) but is never shown on the public Q&A page. Category defaults to
+ * "uncategorized" until an admin assigns one.
  *
- * Body: {
- *   name: string,
- *   email?: string,
- *   question: string,
- *   category: string
- * }
+ * Body: { name: string, email?: string, question: string }
  */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, question, category } = body;
+    const { name, email, question } = body;
 
-    if (!name || !question || !category) {
+    if (!name || !question) {
       return NextResponse.json(
-        { error: "Missing required fields: name, question, category" },
+        { error: "Missing required fields: name and question" },
         { status: 400 }
       );
     }
@@ -55,7 +61,6 @@ export async function POST(request: NextRequest) {
         name,
         email: email || null,
         question,
-        category,
       },
     });
 

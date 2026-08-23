@@ -35,3 +35,13 @@ Mady Feedback:
 - Itinary
     - Add in the first version
     - get rid of leonard again!
+
+## Progress
+
+- ✅ Overall (nav position, vertical scroll, desktop banner) — Leonard easter egg was added then explicitly dropped per later request
+- ✅ RSVP (wizard, numeric pad, party/guest model, cookie caching)
+- ✅ Q&A (space fix, category dropped, admin at /secretgarden, RSVP-name logging, email notifications)
+- ⬜ Venue — new page: 1st page of Accommodation content, a Google map, and a "directions bulletin board" warning about the tight road for big cars
+- ⬜ Accommodation — trim down to just "where to stay", link out to booking.com/Airbnb area maps within a 10-mile radius
+- ⬜ Itinerary — build out the first real version, remove Leonard
+

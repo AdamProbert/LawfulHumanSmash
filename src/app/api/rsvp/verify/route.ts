@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 /**
  * GET /api/rsvp/verify?code=1234
- * Verify a guest's 4-digit invitation code.
+ * Verify an invitation code and return the party with its named guests.
  */
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
@@ -16,25 +16,33 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const guest = await prisma.guest.findUnique({
+    const party = await prisma.party.findUnique({
       where: { code },
       select: {
         id: true,
-        name: true,
         code: true,
-        attending: true,
-        rsvpSubmittedAt: true,
+        email: true,
+        guests: {
+          select: {
+            id: true,
+            name: true,
+            attending: true,
+            dietaryRequirements: true,
+            rsvpSubmittedAt: true,
+            drinkVotes: { select: { drinkId: true } },
+          },
+        },
       },
     });
 
-    if (!guest) {
+    if (!party) {
       return NextResponse.json(
         { error: "Code not found. Please check your invitation and try again." },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ guest });
+    return NextResponse.json({ party });
   } catch (error) {
     console.error("Error verifying code:", error);
     return NextResponse.json(
@@ -43,3 +51,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+

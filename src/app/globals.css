@@ -663,12 +663,14 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 100% 100%;
 }
 
-/* Content stage sits inside the frame's clear centre; clips overflow */
+/* Content stage sits inside the frame's clear centre; clips overflow.
+   Left/right insets clear the vine artwork's widest inward bulge (~7.3%
+   of the book's width) with a safety margin so content never touches it. */
 .book-stage {
   position: absolute;
   top: clamp(2.75rem, 7.5vh, 4rem);
-  left: clamp(1.85rem, 8vw, 2.75rem);
-  right: clamp(1.85rem, 8vw, 2.75rem);
+  left: clamp(2.25rem, 11vw, 3.25rem);
+  right: clamp(2.25rem, 11vw, 3.25rem);
   bottom: clamp(4.75rem, 12vh, 6rem);
   z-index: 10;
   overflow: hidden;
@@ -729,8 +731,8 @@ h1, h2, h3, h4, h5, h6 {
 /* Bottom chapter strip — sits on the book's own background, inside the frame */
 .bottom-nav {
   position: absolute;
-  left: clamp(1.5rem, 7vw, 2.5rem);
-  right: clamp(1.5rem, 7vw, 2.5rem);
+  left: clamp(2rem, 11vw, 3rem);
+  right: clamp(2rem, 11vw, 3rem);
   bottom: clamp(0.4rem, 1.2vh, 0.66rem);
   z-index: 30;
 }
