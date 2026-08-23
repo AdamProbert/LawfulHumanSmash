@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cinzel_Decorative, Playfair_Display, Cormorant_Garamond } from "next/font/google";
+import DesktopWarningBanner from "@/components/DesktopWarningBanner";
 import "./globals.css";
 
 const cinzelDecorative = Cinzel_Decorative({
@@ -42,7 +43,10 @@ export default function RootLayout({
       lang="en"
       className={`${cinzelDecorative.variable} ${playfair.variable} ${cormorant.variable}`}
     >
-      <body className="bg-vine-pattern">{children}</body>
+      <body className="bg-vine-pattern">
+        <DesktopWarningBanner />
+        {children}
+      </body>
     </html>
   );
 }

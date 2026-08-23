@@ -27,7 +27,11 @@ export default function SplashPage() {
         >
           {/* Wedding Invite Image with overlaid button */}
           <motion.div
-            className="relative h-[calc(100vh-2rem)]"
+            className="relative"
+            style={{
+              width: "min(92vw, calc((100vh - 2rem) * 770 / 1024))",
+              aspectRatio: "770 / 1024",
+            }}
             initial={{ opacity: 0, y: 30, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
@@ -35,10 +39,9 @@ export default function SplashPage() {
             <Image
               src="/wedding-invite.png"
               alt="Adam & Maddison are getting married! 10-07-2027, Tall John's House"
-              width={770}
-              height={1024}
+              fill
               priority
-              className="h-full w-auto object-contain"
+              className="object-contain"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
 
