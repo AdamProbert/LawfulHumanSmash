@@ -49,7 +49,7 @@
   --gold-pale: #E2CE9C;
 
   /* Neutrals — original warm beige */
-  --ivory: #EAE8DC;
+  --ivory: #f9f4d8;
   --ivory-mid: #E2E0D4;
   --ivory-dark: #D9D7CB;
   --parchment: #E2E0D4;
@@ -657,11 +657,10 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   z-index: 20;
   pointer-events: none;
-  background-image: url("/border2.png");
+  background-image: url("/Wedding-website-border.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  filter: hue-rotate(58deg) saturate(0.85) brightness(0.9);
 }
 
 /* Content stage sits inside the frame's clear centre; clips overflow */

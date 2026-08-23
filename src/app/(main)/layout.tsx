@@ -11,7 +11,7 @@ export default function MainLayout({
         {/* The turning content */}
         <div className="book-stage">{children}</div>
 
-        {/* Fixed ornamental frame (border2.png), never moves */}
+        {/* Fixed ornamental frame, never moves */}
         <div className="book-frame" aria-hidden />
 
         {/* Chapter selector */}
