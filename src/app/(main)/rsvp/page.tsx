@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import BookChapter from "@/components/BookChapter";
 import BookPage from "@/components/BookPage";
@@ -25,6 +26,15 @@ interface DrinkOption {
 const CODE_COOKIE_MAX_AGE = 60 * 60 * 24 * 180; // 180 days
 
 export default function RSVPPage() {
+  return (
+    <Suspense fallback={null}>
+      <RSVPWizard />
+    </Suspense>
+  );
+}
+
+function RSVPWizard() {
+  const searchParams = useSearchParams();
   const [step, setStep] = useState<WizardStep>("code");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
@@ -36,9 +46,11 @@ export default function RSVPPage() {
   const [guests, setGuests] = useState<GuestState[]>([]);
   const [drinkOptions, setDrinkOptions] = useState<DrinkOption[]>([]);
 
-  // Skip the code step entirely if we already know it from a previous visit.
+  // A code in the URL (e.g. from an emailed link) wins over a cached cookie,
+  // so the code step is skipped entirely whenever either is available.
   useEffect(() => {
-    const cached = readCookie(RSVP_CODE_COOKIE);
+    const fromLink = searchParams.get("code");
+    const cached = fromLink || readCookie(RSVP_CODE_COOKIE);
     if (cached && cached.length === 4) {
       setCode(cached);
       verifyCode(cached);

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { sendRsvpThankYouEmail } from "@/lib/email";
 
 interface GuestRSVP {
   guestId: string;
@@ -44,6 +45,15 @@ export async function POST(request: NextRequest) {
       data: { email: email || null },
     });
 
+    const guestNames = new Map<string, string>(
+      (
+        await prisma.guest.findMany({
+          where: { partyId },
+          select: { id: true, name: true },
+        })
+      ).map((g): [string, string] => [g.id, g.name])
+    );
+
     for (const g of guests) {
       if (typeof g.guestId !== "string" || typeof g.attending !== "boolean") {
         continue;
@@ -68,6 +78,23 @@ export async function POST(request: NextRequest) {
             data: { guestId: g.guestId, drinkId },
           });
         }
+      }
+    }
+
+    if (email) {
+      try {
+        await sendRsvpThankYouEmail(
+          email,
+          guests
+            .filter((g): g is GuestRSVP => typeof g.guestId === "string")
+            .map((g) => ({
+              name: guestNames.get(g.guestId) || "Guest",
+              attending: g.attending,
+            })),
+          party.code
+        );
+      } catch (emailError) {
+        console.error("Failed to send RSVP thank-you email:", emailError);
       }
     }
 
