@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cinzel_Decorative, Playfair_Display, Cormorant_Garamond } from "next/font/google";
+import { Cinzel_Decorative, Playfair_Display, Merriweather } from "next/font/google";
 import DesktopWarningBanner from "@/components/DesktopWarningBanner";
 import "./globals.css";
 
@@ -17,10 +17,10 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
+const merriweather = Merriweather({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-cormorant",
+  weight: ["300", "400", "700", "900"],
+  variable: "--font-merriweather",
   display: "swap",
 });
 
@@ -41,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cinzelDecorative.variable} ${playfair.variable} ${cormorant.variable}`}
+      className={`${cinzelDecorative.variable} ${playfair.variable} ${merriweather.variable}`}
     >
       <body className="bg-vine-pattern">
         <DesktopWarningBanner />

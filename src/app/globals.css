@@ -80,7 +80,7 @@ html {
 body {
   background: var(--ivory);
   color: var(--bark);
-  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-merriweather), Merriweather, Georgia, serif;
   font-size: 18px;
   line-height: 1.7;
   min-height: 100vh;

@@ -7,16 +7,16 @@ export default function TLDRPage() {
   return (
     <BookChapter title="Important Details">
       <BookPage>
-        <p className="font-heading text-sm text-bark-light mb-5">
+        <p className="font-body text-sm text-bark-light mb-5">
           Everything you need to know
         </p>
 
         <div className="space-y-3">
           <div>
-            <p className="font-heading text-xs tracking-[0.2em] uppercase text-gold-dark mb-1">
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-gold-dark mb-1">
               When
             </p>
-            <p className="font-heading text-xl text-accent-burgundy">
+            <p className="font-body text-xl text-accent-burgundy">
               July 10th, 2027
             </p>
           </div>
@@ -26,10 +26,10 @@ export default function TLDRPage() {
           </div>
 
           <div>
-            <p className="font-heading text-xs tracking-[0.2em] uppercase text-gold-dark mb-1">
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-gold-dark mb-1">
               Where
             </p>
-            <p className="font-heading text-xl text-accent-burgundy">
+            <p className="font-body text-xl text-accent-burgundy">
               Tall Johns House
             </p>
             <a
@@ -47,10 +47,10 @@ export default function TLDRPage() {
           </div>
 
           <div>
-            <p className="font-heading text-xs tracking-[0.2em] uppercase text-gold-dark mb-1">
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-gold-dark mb-1">
               Dress Code
             </p>
-            <p className="font-heading text-xl text-accent-burgundy">COLOURFUL</p>
+            <p className="font-body text-xl text-accent-burgundy">COLOURFUL</p>
           </div>
 
           <div className="divider-nouveau !my-2">
@@ -58,10 +58,10 @@ export default function TLDRPage() {
           </div>
 
           <div>
-            <p className="font-heading text-xs tracking-[0.2em] uppercase text-gold-dark mb-1">
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-gold-dark mb-1">
               RSVP By
             </p>
-            <p className="font-heading text-xl text-accent-burgundy">
+            <p className="font-body text-xl text-accent-burgundy">
               January 1st, 2027
             </p>
           </div>

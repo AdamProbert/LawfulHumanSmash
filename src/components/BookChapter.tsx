@@ -1,6 +1,7 @@
 "use client";
 
 import { Children, ReactNode, useCallback, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { CHAPTERS } from "@/lib/chapters";
 
@@ -60,8 +61,11 @@ export default function BookChapter({
   }, [goChapter]);
 
   return (
-    <div
+    <motion.div
       className={`book-chapter ${title ? "book-chapter--titled" : ""}`}
+      initial={{ opacity: 0, scaleY: 0, originY: 0 }}
+      animate={{ opacity: 1, scaleY: 1 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       onTouchStart={(e) =>
         (touchStart.current = {
           x: e.touches[0].clientX,
@@ -91,7 +95,7 @@ export default function BookChapter({
           <div key={i}>{p}</div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

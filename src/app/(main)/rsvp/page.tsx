@@ -199,7 +199,7 @@ function RSVPWizard() {
                 initial={{ opacity: 0, scaleY: 0, originY: 0 }}
                 animate={{ opacity: 1, scaleY: 1 }}
                 exit={{ opacity: 0, scaleY: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <div className="text-center space-y-6">
                   <div>
@@ -267,7 +267,7 @@ function RSVPWizard() {
                 key="attendance-step"
                 initial={{ opacity: 0, scaleY: 0, originY: 0 }}
                 animate={{ opacity: 1, scaleY: 1 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <div className="space-y-6">
                   <div className="text-center">
@@ -335,7 +335,7 @@ function RSVPWizard() {
                 key="details-step"
                 initial={{ opacity: 0, scaleY: 0, originY: 0 }}
                 animate={{ opacity: 1, scaleY: 1 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <div className="space-y-8">
                   <div className="text-center">
@@ -413,7 +413,7 @@ function RSVPWizard() {
                 key="email-step"
                 initial={{ opacity: 0, scaleY: 0, originY: 0 }}
                 animate={{ opacity: 1, scaleY: 1 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <div className="space-y-6">
                   <div className="text-center">
@@ -463,7 +463,7 @@ function RSVPWizard() {
                 key="success-step"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <div className="text-center space-y-6">
                   <motion.div

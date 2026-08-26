@@ -62,7 +62,7 @@ const config: Config = {
       fontFamily: {
         display: ["'Rivanna'", "serif"],
         heading: ["'Rivanna'", "serif"],
-        body: ["var(--font-cormorant)", "serif"],
+        body: ["var(--font-merriweather)", "Merriweather", "serif"],
       },
       backgroundImage: {
         "art-nouveau-gradient":

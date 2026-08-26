@@ -1,6 +1,14 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is required to send email.");
+  }
+
+  return new Resend(apiKey);
+}
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://lawful-human-smash.vercel.app";
@@ -143,7 +151,7 @@ export async function sendQuestionAnsweredEmail(
   question: string,
   answer: string
 ) {
-  await resend.emails.send({
+  await getResendClient().emails.send({
     from: "Adam & Mady <wedding@adamprobert.com>",
     to,
     replyTo: "wedding@adamprobert.com",
@@ -165,7 +173,7 @@ export async function sendRsvpThankYouEmail(
     .join("\n");
   const rsvpLink = `${SITE_URL}/rsvp?code=${code}`;
 
-  await resend.emails.send({
+  await getResendClient().emails.send({
     from: "Adam & Mady <wedding@adamprobert.com>",
     to,
     replyTo: "wedding@adamprobert.com",
