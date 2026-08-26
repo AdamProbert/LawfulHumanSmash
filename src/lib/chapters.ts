@@ -7,8 +7,9 @@ export interface Chapter {
 export const CHAPTERS: Chapter[] = [
   { href: "/tldr", label: "Details" },
   { href: "/rsvp", label: "RSVP" },
-  { href: "/qa", label: "Q&A" },
+  { href: "/venue", label: "Venue" },
   { href: "/accommodation", label: "Accommodation" },
   { href: "/food-drinks", label: "Food & Drinks" },
   { href: "/itinerary", label: "Itinerary" },
+  { href: "/qa", label: "Q&A" },
 ];
