@@ -1,17 +1,17 @@
 RSVP email:
 - For the date, go with format; July 10th 2027 (notice the casing)
 > **DONE.** The date now lives in a single `WEDDING_DATE` constant in
-> [email.ts](src/lib/email.ts) set to exactly `July 10th 2027` — no comma, capital J,
+> [email.ts](src/lib/email.ts) set to exactly `July 10th 2027`: no comma, capital J,
 > lowercase ordinal. Both places that print it use the constant: the shell header and
 > the "We can't wait to celebrate with you on ..." line, so they can't drift apart.
 > **On the casing:** the header's date line had `text-transform:uppercase`, which was
 > rendering it as `JULY 10TH 2027`. I removed that so it reads `July 10th 2027` as
 > written. The small uppercase labels elsewhere ("You asked", "Our answer") are
-> untouched — they're section labels, not the date.
+> untouched; they're section labels, not the date.
 
 Questions answered email:
 - For the date, go with format; July 10th 2027 (notice the casing)
-> **DONE.** Same `WEDDING_DATE` constant — this email uses the shared shell header, so
+> **DONE.** Same `WEDDING_DATE` constant. This email uses the shared shell header, so
 > it picks up the change automatically.
 
 - Remove emoji at end of the question answered line
@@ -38,7 +38,7 @@ Question asked notification email.
 >   still saved and the guest still gets their success screen; the failure just lands in
 >   the server log.
 > - It reuses the normal email shell but signs off "Sent automatically by the wedding
->   site." instead of "With love, Adam & Mady" — `emailShell` gained an optional
+>   site." instead of "With love, Adam & Mady". `emailShell` gained an optional
 >   sign-off argument for that. The guest-facing emails are unchanged.
 
 ---
@@ -55,4 +55,4 @@ Open questions / things I did not touch:
 - **The notification goes out on every question,** with no batching or rate limit. Fine
   for a wedding; worth knowing if someone spams the form.
 - **Not verified against a real inbox.** Typecheck and lint are clean, but nothing was
-  actually sent — that needs a `RESEND_API_KEY` and a live submission.
+  actually sent; that needs a `RESEND_API_KEY` and a live submission.

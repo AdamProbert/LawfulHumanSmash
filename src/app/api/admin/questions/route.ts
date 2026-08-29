@@ -4,7 +4,7 @@ import { isAdmin } from "@/lib/adminAuth";
 
 /**
  * GET /api/admin/questions
- * Full question list (name, email, category, answer) — admin only.
+ * Full question list (name, email, category, answer). Admin only.
  */
 export async function GET(request: NextRequest) {
   if (!isAdmin(request)) {

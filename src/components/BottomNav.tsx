@@ -8,8 +8,8 @@ import { setNavDirection } from "@/lib/navDirection";
  * Foot of the book: the previous and next chapter by name, with a dot for
  * every chapter in between.
  *
- * The dots carry the two things the old scrolling strip of labels could not —
- * how many chapters there are, and which one you are on — while the flanking
+ * The dots carry the two things the old scrolling strip of labels could not:
+ * how many chapters there are, and which one you are on, while the flanking
  * names make turning a page something you can see and tap, not just a gesture
  * you have to guess at.
  */

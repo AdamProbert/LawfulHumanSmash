@@ -10,7 +10,7 @@ export default function DesktopWarningBanner() {
   return (
     <div className="desktop-warning hidden lg:flex">
       <p>
-        This site is built for mobile — grab your phone for the full
+        This site is built for mobile, grab your phone for the full
         experience.
       </p>
       <button

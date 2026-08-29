@@ -10,7 +10,7 @@ import BookPage from "@/components/BookPage";
 const WEDDING_DAY = new Date(2027, 6, 10); // 10 July 2027, local time
 
 type Slot = {
-  /** Minutes past midnight — drives the "now" marker on the day itself. */
+  /** Minutes past midnight, driving the "now" marker on the day itself. */
   at: number;
   time: string;
   title: string;
@@ -63,7 +63,7 @@ const SET_LIST: Slot[] = [
     kind: "act",
     tone: "dusk",
     billing: "Set one",
-    description: "Settle back in — the first band takes over.",
+    description: "Settle back in, the first band takes over.",
   },
   {
     at: 19 * 60 + 30,
@@ -115,7 +115,7 @@ function daysUntilWedding(now: Date) {
   return Math.round((WEDDING_DAY.getTime() - today.getTime()) / 86_400_000);
 }
 
-/** Index of the slot currently under way — only meaningful on the day. */
+/** Index of the slot currently under way; only meaningful on the day. */
 function currentSlot(now: Date) {
   if (daysUntilWedding(now) !== 0) return -1;
   const mins = now.getHours() * 60 + now.getMinutes();

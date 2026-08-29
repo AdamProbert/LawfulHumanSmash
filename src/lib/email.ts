@@ -13,7 +13,7 @@ function getResendClient() {
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://lawful-human-smash.vercel.app";
 
-/** Notification inbox for Adam & Mady — where guest activity lands. */
+/** Notification inbox for Adam & Mady, where guest activity lands. */
 const NOTIFY_EMAIL = "15barberryrise@gmail.com";
 
 /** Wedding date, in the one casing and format the emails use. */

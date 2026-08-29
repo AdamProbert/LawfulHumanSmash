@@ -9,7 +9,7 @@ const SEEN_KEY = "lhs.swipeHintSeen";
 /**
  * One-time nudge teaching the page-turn gesture.
  *
- * Only touch visitors see it — a mouse and keyboard have the chapter strip and
+ * Only touch visitors see it; a mouse and keyboard have the chapter strip and
  * the arrow keys, so the word "swipe" would just be wrong there. It marks
  * itself seen as soon as it appears rather than when it fades, so a visitor who
  * navigates away mid-hint is not shown it again.
@@ -20,7 +20,7 @@ export default function SwipeHint() {
   const pathname = usePathname();
   const startPath = useRef(pathname);
 
-  // The moment they turn a page — by swipe, arrow or dot — the hint has done
+  // The moment they turn a page, by swipe, arrow or dot, the hint has done
   // its job, and carrying it over onto the next chapter would just read as a
   // sticky bit of furniture. This layout outlives the route change, so the
   // component is still here to notice.

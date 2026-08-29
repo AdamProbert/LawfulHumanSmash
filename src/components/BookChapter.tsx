@@ -20,7 +20,7 @@ import {
 /**
  * Stacks its <BookPage> children in a single vertically-scrolling column.
  * A horizontal trackpad swipe, touch swipe, the on-screen arrows or the
- * left/right keyboard arrows move to the neighbouring chapter — vertical
+ * left/right keyboard arrows move to the neighbouring chapter; vertical
  * scrolling is left untouched for reading the current chapter's content.
  */
 export default function BookChapter({

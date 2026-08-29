@@ -14,7 +14,7 @@ interface ArtNouveauFrameProps {
 
 /**
  * Art Nouveau ornamental frame with flowing botanical vines,
- * drooping bell flowers, and scrollwork — inspired by the wedding invite.
+ * drooping bell flowers, and scrollwork, inspired by the wedding invite.
  */
 export default function ArtNouveauFrame({
   children,
@@ -81,7 +81,7 @@ export default function ArtNouveauFrame({
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * Top center ornament — fan/palmette with scrollwork
+ * Top center ornament: fan/palmette with scrollwork
  * Inspired by the shell motif at the top of the invite
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function TopOrnament({ className }: { className?: string }) {
@@ -142,7 +142,7 @@ function TopOrnament({ className }: { className?: string }) {
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * Corner vine — flowing vine with drooping bell flowers
+ * Corner vine: flowing vine with drooping bell flowers
  * and large curving leaves, like the invite's wisteria corners
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function CornerVine({ className }: { className?: string }) {
@@ -313,7 +313,7 @@ function CornerVine({ className }: { className?: string }) {
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * Bottom scrollwork — ornate curling scrolls
+ * Bottom scrollwork: ornate curling scrolls
  * Inspired by the bottom flourishes of the invite
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function BottomScroll({ className }: { className?: string }) {

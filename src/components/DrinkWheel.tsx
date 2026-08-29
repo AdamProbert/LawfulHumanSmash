@@ -145,7 +145,7 @@ export default function DrinkWheel({ drinks, size = 320 }: DrinkWheelProps) {
 
       {totalVotes === 0 && (
         <p className="font-body text-bark-light text-center italic">
-          No votes yet — be the first to vote via the RSVP page!
+          No votes yet, be the first to vote via the RSVP page!
         </p>
       )}
     </div>

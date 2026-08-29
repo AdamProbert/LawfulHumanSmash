@@ -10,14 +10,14 @@ const FOOD_TRUCKS = [
     name: "Meet and Greek",
     emoji: "🥙",
     description:
-      "Authentic Greek street food — think juicy gyros, crispy halloumi wraps, and loaded mezze plates.",
+      "Authentic Greek street food: think juicy gyros, crispy halloumi wraps, and loaded mezze plates.",
     tags: ["Greek", "Street Food", "Veggie Options"],
   },
   {
     name: "The Bearded Taco",
     emoji: "🌮",
     description:
-      "Bold, flavourful tacos with creative fillings. From slow-cooked brisket to jackfruit — there's something for everyone.",
+      "Bold, flavourful tacos with creative fillings. From slow-cooked brisket to jackfruit, there's something for everyone.",
     tags: ["Mexican", "Tacos", "Vegan Options"],
   },
   {
@@ -62,7 +62,7 @@ export default function FoodDrinksPage() {
 
   return (
     <BookChapter title="Food & Drinks">
-      {/* Page 1 — food trucks */}
+      {/* Page 1: food trucks */}
       <BookPage>
         <div className="space-y-3 max-w-xs mx-auto text-left">
           {FOOD_TRUCKS.map((truck) => (
@@ -88,13 +88,13 @@ export default function FoodDrinksPage() {
         </div>
       </BookPage>
 
-      {/* Page 2 — drinks vote */}
+      {/* Page 2: drinks vote */}
       <BookPage>
         <h2 className="font-heading text-2xl text-ivy-dark mb-2">
           The Drinks Vote
         </h2>
         <p className="font-body text-sm text-bark-light max-w-xs mx-auto mb-4">
-          Pick your top 3 drinks when you RSVP — we&apos;ll stock the bar by the
+          Pick your top 3 drinks when you RSVP and we&apos;ll stock the bar by the
           results.
         </p>
 
@@ -120,14 +120,14 @@ export default function FoodDrinksPage() {
         </p>
       </BookPage>
 
-      {/* Page 3 — dietary note */}
+      {/* Page 3: dietary note */}
       <BookPage>
         <h3 className="font-heading text-2xl text-ivy-dark mb-3">
           Dietary Requirements
         </h3>
         <p className="font-body text-base text-bark-light max-w-xs mx-auto">
           Please let us know about any dietary requirements or allergies when
-          you RSVP. Our food trucks can accommodate most needs — we want
+          you RSVP. Our food trucks can accommodate most needs, we want
           everyone to eat well!
         </p>
       </BookPage>

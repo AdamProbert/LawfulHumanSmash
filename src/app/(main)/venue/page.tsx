@@ -34,7 +34,7 @@ const AREA_SEARCH_LINKS = [
 export default function VenuePage() {
   return (
     <BookChapter title="The Venue">
-      {/* Page 1 — Venue overview & aerial photo */}
+      {/* Page 1: Venue overview & aerial photo */}
       <BookPage>
         <h2 className="font-body text-2xl sm:text-3xl text-ivy-dark mb-3">
           {FEATURED_VENUE.name}
@@ -72,7 +72,7 @@ export default function VenuePage() {
         </a>
       </BookPage>
 
-      {/* Page 2 — Interactive Map */}
+      {/* Page 2: Interactive Map */}
       <BookPage>
         <p className="font-body text-xs text-bark-light/80 max-w-xs mx-auto mb-3">
           Located in Powys, Wales within Bannau Brycheiniog (Brecon Beacons National Park).
@@ -93,7 +93,7 @@ export default function VenuePage() {
 
       </BookPage>
 
-      {/* Page 3 — Where to stay */}
+      {/* Page 3: Where to stay */}
       <BookPage>
         <h2 className="font-body text-2xl sm:text-3xl text-ivy-dark mb-2">
           Find Your Stay
@@ -125,7 +125,7 @@ export default function VenuePage() {
         </div>
       </BookPage>
 
-      {/* Page 4 — Directions & Driving Bulletin */}
+      {/* Page 4: Directions & Driving Bulletin */}
       <BookPage>
         <h2 className="font-heading text-2xl text-ivy-dark mb-3">
           Driving &amp; Directions

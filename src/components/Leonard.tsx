@@ -11,7 +11,7 @@ interface LeonardProps {
 }
 
 /**
- * Leonard — The Dignified Corgi
+ * Leonard, The Dignified Corgi
  * A stylised SVG corgi with bow tie, used as the site mascot.
  * Can optionally show a speech bubble and gentle floating animation.
  */
@@ -135,7 +135,7 @@ export default function Leonard({
         <ellipse cx="135" cy="82" rx="5" ry="6" fill="#3D2317" />
         <circle cx="133" cy="80" r="2" fill="white" opacity="0.8" />
 
-        {/* Eyebrows (slightly raised — distinguished) */}
+        {/* Eyebrows (slightly raised, distinguished) */}
         <path d="M96 72 C100 69, 108 69, 112 72" stroke="#D49520" strokeWidth="1.5" fill="none" />
         <path d="M128 72 C132 69, 140 69, 144 72" stroke="#D49520" strokeWidth="1.5" fill="none" />
 

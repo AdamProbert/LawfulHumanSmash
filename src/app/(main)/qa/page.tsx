@@ -24,7 +24,7 @@ export default function QAPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [loading, setLoading] = useState(true);
 
-  // Identity — pulled from a cached RSVP code when available.
+  // Identity, pulled from a cached RSVP code when available.
   const [rsvpName, setRsvpName] = useState<string | null>(null);
 
   // Form state
@@ -103,7 +103,7 @@ export default function QAPage() {
 
   return (
     <BookChapter title="Q&A">
-      {/* Page 1 — browse questions */}
+      {/* Page 1: browse questions */}
       <BookPage>
         <div className="filter-strip mb-5">
           {CATEGORIES.map((cat) => (
@@ -148,7 +148,7 @@ export default function QAPage() {
                       {q.answer}
                     </p>
                     <p className="font-body text-xs text-gold-dark mt-1">
-                      — Adam &amp; Mady
+                      - Adam &amp; Mady
                     </p>
                   </>
                 )}
@@ -158,7 +158,7 @@ export default function QAPage() {
         </div>
       </BookPage>
 
-      {/* Page 2 — ask a question */}
+      {/* Page 2: ask a question */}
       <BookPage>
         {submitSuccess ? (
           <div className="py-8">

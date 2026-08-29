@@ -4,7 +4,7 @@ import { sendQuestionAskedNotificationEmail } from "@/lib/email";
 
 /**
  * GET /api/questions
- * Publicly lists answered questions only. Asker name/email are internal —
+ * Publicly lists answered questions only. Asker name/email are internal and
  * never returned here.
  * Query params: ?category=accommodation (optional filter)
  */
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Notify us so we can go and answer it. A mail failure must not fail the
-    // guest's submission — the question is already saved.
+    // guest's submission; the question is already saved.
     try {
       await sendQuestionAskedNotificationEmail({ name, email, question });
     } catch (emailError) {

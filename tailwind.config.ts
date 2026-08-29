@@ -60,7 +60,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        // `display` is the fancy face — reserved for chapter/page headings only.
+        // `display` is the fancy face, reserved for chapter/page headings only.
         display: ["'Rivanna'", "serif"],
         // Everything else, headings included, uses the simple body face.
         heading: ["var(--font-merriweather)", "Merriweather", "serif"],

@@ -12,13 +12,13 @@
 }
 
 /* ═══════════════════════════════════════════════════════
-   LAWFUL HUMAN SMASH — Art Nouveau Wedding Theme
+   LAWFUL HUMAN SMASH: Art Nouveau Wedding Theme
    Adam & Mady · July 10th, 2027 · Tall Johns House
    ═══════════════════════════════════════════════════════ */
 
 /* ── CSS Custom Properties ─────────────────────────────── */
 :root {
-  /* Primary palette — rich olive-leaf green */
+  /* Primary palette: rich olive-leaf green */
   --ivy: #3E5E34;
   --ivy-dark: #263A1E;
   --ivy-light: #557B45;
@@ -27,14 +27,14 @@
   --mayds-leaf-green: #73a859;
   --madys-letter-green: #12651c;
 
-  /* Secondary accent — saturated terracotta */
+  /* Secondary accent: saturated terracotta */
   --terracotta: #C4552B;
   --terracotta-light: #DB7648;
   --terracotta-deep: #9C3D1C;
   --orange: #C4552B;
   --orange-light: #DB7648;
 
-  /* Tertiary palette — browns, yellows, burgundy */
+  /* Tertiary palette: browns, yellows, burgundy */
   --burgundy: #7A2E3A;
   --yellow: #DDA22B;
   --red: #9B2335;
@@ -42,13 +42,13 @@
   --brown-light: #8A6440;
   --brown-dark: #4E3520;
 
-  /* Metallic accent — warm brass / antique brown (was gold) */
+  /* Metallic accent: warm brass / antique brown (was gold) */
   --gold-dark: #6F5122;
   --gold: #9C7833;
   --gold-light: #C29A48;
   --gold-pale: #E2CE9C;
 
-  /* Neutrals — original warm beige */
+  /* Neutrals: original warm beige */
   --ivory: #f9f4d8;
   --ivory-mid: #E2E0D4;
   --ivory-dark: #D9D7CB;
@@ -568,7 +568,7 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 100vh;
 }
 
-/* Splash page with invite image — matches PNG background */
+/* Splash page with invite image, matches PNG background */
 .splash-invite-bg {
   background: var(--ivory);
   min-height: 100vh;
@@ -626,7 +626,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ═══════════════════════════════════════════════════════
-   BOOK SHELL — fixed frame + horizontal page turning
+   BOOK SHELL: fixed frame + horizontal page turning
    ═══════════════════════════════════════════════════════ */
 
 .book-shell {
@@ -641,7 +641,7 @@ h1, h2, h3, h4, h5, h6 {
     var(--ivory-dark);
 }
 
-/* The "book" — a portrait page, full-bleed on phones, centred on desktop */
+/* The "book", a portrait page, full-bleed on phones, centred on desktop */
 .book {
   position: relative;
   width: min(100vw, 30rem);
@@ -651,7 +651,7 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
-/* Fixed ornamental border — never scrolls or moves */
+/* Fixed ornamental border, never scrolls or moves */
 .book-frame {
   position: absolute;
   inset: 0;
@@ -777,7 +777,7 @@ h1, h2, h3, h4, h5, h6 {
   padding-bottom: 2.75rem;
 }
 
-/* Bottom chapter strip — sits on the book's own background, inside the frame.
+/* Bottom chapter strip, sitting on the book's own background, inside the frame.
    Previous and next chapter by name, with one dot per chapter between them. */
 .bottom-nav {
   position: absolute;
@@ -838,7 +838,7 @@ h1, h2, h3, h4, h5, h6 {
   white-space: nowrap;
 }
 
-/* One dot per chapter — the count and the current position at a glance */
+/* One dot per chapter: the count and the current position at a glance */
 .bottom-nav-dots {
   flex: 0 0 auto;
   display: flex;
@@ -865,7 +865,7 @@ h1, h2, h3, h4, h5, h6 {
 .bottom-nav-dot:hover {
   background-color: var(--gold-light);
 }
-/* The current chapter stretches into a bar — legible even to a passing glance */
+/* The current chapter stretches into a bar, legible even to a passing glance */
 .bottom-nav-dot.active {
   width: 1.05rem;
   background-color: var(--ivy);
@@ -893,7 +893,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.1em;
 }
 
-/* Q&A category filter chips — styled like the chapter strip */
+/* Q&A category filter chips, styled like the chapter strip */
 .filter-strip {
   display: flex;
   flex-wrap: wrap;
@@ -990,7 +990,7 @@ h1, h2, h3, h4, h5, h6 {
   /* Two layers: the day→night gradient, sized by --wash-fade to the length of
      the set list, and below it flat night filling the rest of the page. The
      gradient ends fully dark so the join between them is invisible. A single
-     stretched gradient won't do — its stops would drift with the page height. */
+     stretched gradient won't do; its stops would drift with the page height. */
   background-image:
     linear-gradient(
       to bottom,
@@ -1025,7 +1025,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0;
 }
 
-/* The rule itself — runs the full height of the bill. */
+/* The rule itself runs the full height of the bill. */
 .setlist-rows::before {
   content: "";
   position: absolute;

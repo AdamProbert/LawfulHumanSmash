@@ -76,7 +76,7 @@ async function main() {
       name: "Cousin Sarah",
       question: "Can I bring my dog?",
       category: "pets",
-      answer: "We'd love that! Well-behaved dogs are welcome — Leonard insists on meeting them all.",
+      answer: "We'd love that! Well-behaved dogs are welcome. Leonard insists on meeting them all.",
       isAnswered: true,
     },
     {
