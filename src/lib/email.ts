@@ -32,7 +32,6 @@ function emailShell(bodyHtml: string) {
           <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="max-width:480px; width:100%; background-color:#f9f4d8; border:1px solid #E2CE9C; border-radius:4px; overflow:hidden;">
             <tr>
               <td style="background-color:#263A1E; padding:24px 32px; text-align:center;">
-                <span style="font-size:28px;">🌿</span>
                 <h1 style="margin:8px 0 0; color:#f9f4d8; font-size:20px; letter-spacing:0.05em; font-weight:normal;">
                   Adam &amp; Mady
                 </h1>
@@ -67,7 +66,7 @@ function questionAnsweredHtml(question: string, answer: string) {
 
   return emailShell(`
     <p style="margin:0 0 24px; color:#3E5E34; font-size:18px; text-align:center;">
-      Your question has been answered! 💌
+      Your question has been answered
     </p>
 
     <p style="margin:0 0 6px; color:#9C7833; font-size:11px; letter-spacing:0.12em; text-transform:uppercase;">
@@ -115,7 +114,7 @@ function rsvpThankYouHtml(guests: RsvpGuestSummary[], code: string) {
         <td style="padding:8px 0; text-align:right; font-size:13px; border-bottom:1px solid #E2E0D4; color:${
           g.attending ? "#3E5E34" : "#9C3D1C"
         };">
-          ${g.attending ? "Joyfully accepted ✨" : "Regretfully declined"}
+          ${g.attending ? "Joyfully accepted" : "Regretfully declined"}
         </td>
       </tr>`
     )
@@ -123,7 +122,7 @@ function rsvpThankYouHtml(guests: RsvpGuestSummary[], code: string) {
 
   return emailShell(`
     <p style="margin:0 0 12px; color:#3E5E34; font-size:18px; text-align:center;">
-      ${anyAttending ? "Thanks for your RSVP! 🎉" : "Thanks for letting us know 💛"}
+      ${anyAttending ? "Thanks for your RSVP!" : "Thanks for letting us know"}
     </p>
     <p style="margin:0 0 24px; color:#56604A; font-size:14px; text-align:center;">
       ${

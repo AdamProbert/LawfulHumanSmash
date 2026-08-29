@@ -80,8 +80,7 @@ export default function DrinkWheel({ drinks, size = 320 }: DrinkWheelProps) {
           style={{ width: size * 0.35, height: size * 0.35 }}
         >
           <div className="flex flex-col items-center justify-center h-full">
-            <span className="text-2xl">🍸</span>
-            <span className="font-heading text-xs text-bark-light mt-1">
+            <span className="font-heading text-xs text-bark-light">
               {totalVotes} vote{totalVotes !== 1 ? "s" : ""}
             </span>
           </div>

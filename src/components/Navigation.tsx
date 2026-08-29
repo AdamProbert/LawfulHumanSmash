@@ -9,7 +9,6 @@ const NAV_ITEMS = [
   { href: "/tldr", label: "Important Details" },
   { href: "/rsvp", label: "RSVP" },
   { href: "/qa", label: "Q&A" },
-  { href: "/accommodation", label: "Accommodation" },
   { href: "/food-drinks", label: "Food & Drinks" },
   { href: "/dress-code", label: "Dress Code" },
   { href: "/itinerary", label: "Itinerary" },
@@ -26,7 +25,6 @@ export default function Navigation() {
           <div className="flex items-center justify-between h-16">
             {/* Logo / Home */}
             <Link href="/tldr" className="flex items-center gap-2 group">
-              <span className="text-gold text-xl">🌿</span>
               <span className="font-display text-lg text-ivy-dark group-hover:text-gold-dark transition-colors">
                 A<span className="text-gold mx-1">&amp;</span>M
               </span>

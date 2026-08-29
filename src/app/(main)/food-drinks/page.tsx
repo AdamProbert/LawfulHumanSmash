@@ -64,10 +64,6 @@ export default function FoodDrinksPage() {
     <BookChapter title="Food & Drinks">
       {/* Page 1 — food trucks */}
       <BookPage>
-        <p className="font-heading text-sm text-bark-light max-w-xs mx-auto mb-5">
-          Three incredible food trucks and a bar stocked by your votes
-        </p>
-
         <div className="space-y-3 max-w-xs mx-auto text-left">
           {FOOD_TRUCKS.map((truck) => (
             <div key={truck.name} className="card-nouveau p-4">
@@ -99,13 +95,12 @@ export default function FoodDrinksPage() {
         </h2>
         <p className="font-body text-sm text-bark-light max-w-xs mx-auto mb-4">
           Pick your top 3 drinks when you RSVP — we&apos;ll stock the bar by the
-          results. 🗳️
+          results.
         </p>
 
         {loadingDrinks ? (
           <div className="py-10">
-            <div className="text-4xl">🍸</div>
-            <p className="font-body text-sm text-bark-light mt-3">
+            <p className="font-body text-sm text-bark-light">
               Loading drink votes…
             </p>
           </div>
@@ -127,7 +122,6 @@ export default function FoodDrinksPage() {
 
       {/* Page 3 — dietary note */}
       <BookPage>
-        <div className="text-5xl mb-4">🌱</div>
         <h3 className="font-heading text-2xl text-ivy-dark mb-3">
           Dietary Requirements
         </h3>

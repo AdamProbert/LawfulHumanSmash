@@ -11,7 +11,7 @@ export default function DesktopWarningBanner() {
     <div className="desktop-warning hidden lg:flex">
       <p>
         This site is built for mobile — grab your phone for the full
-        experience 📱
+        experience.
       </p>
       <button
         type="button"
