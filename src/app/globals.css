@@ -680,6 +680,40 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  /* The page-turn drag is ours; vertical panning stays the browser's, so
+     reading a long chapter still scrolls at native speed. */
+  touch-action: pan-y;
+}
+
+/* The part of the chapter that follows a swiping finger. Everything the
+   gesture reveals sits outside it, so only the page itself travels. */
+.book-swipe-layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+/* Name of the chapter a drag is heading for, faded up by the drag itself */
+.chapter-peek {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  max-width: 5.5rem;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  pointer-events: none;
+}
+.chapter-peek--next {
+  right: 0.15rem;
+  text-align: right;
+}
+.chapter-peek--prev {
+  left: 0.15rem;
+  text-align: left;
 }
 
 /* Fixed chapter title, framed just below the top border */

@@ -99,8 +99,24 @@ export default function VenuePage() {
           Find Your Stay
         </h2>
 
+        {/* On-site rooms: limited, so it goes first and points at us, not a booking site */}
+        <div className="card-nouveau p-4 max-w-xs mx-auto text-left border-2 border-gold/50 bg-gold/5 mb-4">
+          <h3 className="font-heading text-sm uppercase tracking-wider text-gold-dark font-bold mb-2 pb-2 border-b border-gold/20">
+            Staying On-Site
+          </h3>
+          <p className="font-body text-xs text-bark-light leading-relaxed mb-2">
+            There are a limited number of rooms at Tall Johns House itself, so no
+            need to travel home at the end of the night.
+          </p>
+          <p className="font-body text-xs text-bark-light leading-relaxed">
+            Spaces are very limited. Get in touch with{" "}
+            <strong className="text-ivy-dark">Adam &amp; Mady</strong> to check
+            what&apos;s still available, and we&apos;ll let you know.
+          </p>
+        </div>
+
         <p className="font-body text-xs sm:text-sm text-bark-light max-w-xs mx-auto mb-4">
-          We recommend booking early as the Brecon Beacons area is a popular destination! Here are area search maps centered within 10 miles of Tall Johns House.
+          Otherwise, we recommend booking early as the Brecon Beacons area is a popular destination! Here are area search maps centered within 10 miles of Tall Johns House.
         </p>
 
         <div className="space-y-3 max-w-xs mx-auto text-left">

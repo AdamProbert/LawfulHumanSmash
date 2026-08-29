@@ -25,6 +25,9 @@ interface DrinkOption {
 
 const CODE_COOKIE_MAX_AGE = 60 * 60 * 24 * 180; // 180 days
 
+/** Loose sanity check only; the confirmation email is the real validation. */
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function RSVPPage() {
   return (
     <Suspense fallback={null}>
@@ -146,6 +149,12 @@ function RSVPWizard() {
   };
 
   const submitRSVP = async () => {
+    const trimmedEmail = email.trim();
+    if (!EMAIL_PATTERN.test(trimmedEmail)) {
+      setError("Please enter an email address so we can confirm your RSVP");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -155,7 +164,7 @@ function RSVPWizard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           partyId,
-          email: email || null,
+          email: trimmedEmail,
           guests: guests.map((g) => ({
             guestId: g.id,
             attending: g.attending,
@@ -421,20 +430,29 @@ function RSVPWizard() {
                       Last thing!
                     </h2>
                     <p className="font-body text-bark-light">
-                      Leave us an email so we can keep you in the loop
+                      We&apos;ll send your confirmation here and keep you in the
+                      loop
                     </p>
                   </div>
 
                   <div>
                     <label className="font-heading text-sm tracking-wider uppercase text-gold-dark block mb-2">
-                      Email
+                      Email *
                     </label>
                     <input
                       type="email"
+                      required
+                      autoComplete="email"
                       className="input-nouveau"
                       placeholder="you@example.com"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (error) setError("");
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") submitRSVP();
+                      }}
                     />
                   </div>
 

@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendRsvpThankYouEmail } from "@/lib/email";
 
+/** Loose sanity check only; the confirmation email is the real validation. */
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 interface GuestRSVP {
   guestId: string;
   attending: boolean;
@@ -35,6 +38,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Every RSVP needs a reachable address: it is the only confirmation the
+    // guest gets, and our only way to reach them before the day.
+    const trimmedEmail = (email || "").trim();
+    if (!EMAIL_PATTERN.test(trimmedEmail)) {
+      return NextResponse.json(
+        { error: "Please enter an email address so we can confirm your RSVP" },
+        { status: 400 }
+      );
+    }
+
     const party = await prisma.party.findUnique({ where: { id: partyId } });
     if (!party) {
       return NextResponse.json({ error: "Party not found" }, { status: 404 });
@@ -43,7 +56,7 @@ export async function POST(request: NextRequest) {
     const [, partyGuests] = await Promise.all([
       prisma.party.update({
         where: { id: partyId },
-        data: { email: email || null },
+        data: { email: trimmedEmail },
       }),
       prisma.guest.findMany({
         where: { partyId },
@@ -90,21 +103,19 @@ export async function POST(request: NextRequest) {
       }),
     ]);
 
-    if (email) {
-      try {
-        await sendRsvpThankYouEmail(
-          email,
-          guests
-            .filter((g): g is GuestRSVP => typeof g.guestId === "string")
-            .map((g) => ({
-              name: guestNames.get(g.guestId) || "Guest",
-              attending: g.attending,
-            })),
-          party.code
-        );
-      } catch (emailError) {
-        console.error("Failed to send RSVP thank-you email:", emailError);
-      }
+    try {
+      await sendRsvpThankYouEmail(
+        trimmedEmail,
+        guests
+          .filter((g): g is GuestRSVP => typeof g.guestId === "string")
+          .map((g) => ({
+            name: guestNames.get(g.guestId) || "Guest",
+            attending: g.attending,
+          })),
+        party.code
+      );
+    } catch (emailError) {
+      console.error("Failed to send RSVP thank-you email:", emailError);
     }
 
     return NextResponse.json({ success: true });
