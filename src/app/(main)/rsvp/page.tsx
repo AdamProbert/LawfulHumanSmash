@@ -615,9 +615,6 @@ function RSVPWizard() {
                     >
                       Change my answers
                     </button>
-                    <p className="font-body text-xs text-bark-light">
-                      You can update your RSVP any time before January 1st, 2027
-                    </p>
                   </div>
                 </div>
               </motion.div>

@@ -5,109 +5,16 @@ import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import BookChapter from "@/components/BookChapter";
 import BookPage from "@/components/BookPage";
+import { DEFAULT_SET_LIST, type ItinerarySlot } from "@/lib/itinerary";
+
+/** Stand-in until /api/itinerary answers, and the fallback if it never does. */
+const FALLBACK_SLOTS: ItinerarySlot[] = DEFAULT_SET_LIST.map((slot, i) => ({
+  ...slot,
+  id: `default-${i}`,
+}));
 
 /** Doors open. Everything on this page hangs off it. */
 const WEDDING_DAY = new Date(2027, 6, 10); // 10 July 2027, local time
-
-type Slot = {
-  /** Minutes past midnight, driving the "now" marker on the day itself. */
-  at: number;
-  time: string;
-  title: string;
-  /** Acts get billed large; interstitials sit quietly between them. */
-  kind: "act" | "interstitial";
-  /** Where the row sits in the day→night wash. */
-  tone: "day" | "dusk" | "night";
-  billing?: string;
-  description: string;
-};
-
-const SET_LIST: Slot[] = [
-  {
-    at: 12 * 60 + 30,
-    time: "12:30",
-    title: "Doors",
-    kind: "interstitial",
-    tone: "day",
-    description: "Roll up, say hello, grab a drink and find a spot.",
-  },
-  {
-    at: 13 * 60 + 30,
-    time: "1:30",
-    title: "The Ceremony",
-    kind: "act",
-    tone: "day",
-    billing: "The main event",
-    description: "Seats please.",
-  },
-  {
-    at: 14 * 60,
-    time: "2:00",
-    title: "Chill time",
-    kind: "interstitial",
-    tone: "day",
-    description: "Drinks, games and pictures out on the grounds.",
-  },
-  {
-    at: 15 * 60 + 30,
-    time: "3:30",
-    title: "Lunch & speeches",
-    kind: "interstitial",
-    tone: "day",
-    description: "Food, toasts, and a few words from the usual suspects.",
-  },
-  {
-    at: 18 * 60,
-    time: "6:00",
-    title: "Oceanview",
-    kind: "act",
-    tone: "dusk",
-    billing: "Set one",
-    description: "Settle back in, the first band takes over.",
-  },
-  {
-    at: 19 * 60 + 30,
-    time: "7:30",
-    title: "First dance",
-    kind: "interstitial",
-    tone: "dusk",
-    description: "Ours. Then the floor is all yours.",
-  },
-  {
-    at: 19 * 60 + 40,
-    time: "7:40",
-    title: "Oceanview",
-    kind: "act",
-    tone: "dusk",
-    billing: "Set two",
-    description: "And it gets loud.",
-  },
-  {
-    at: 20 * 60 + 30,
-    time: "8:30",
-    title: "Pizzas",
-    kind: "interstitial",
-    tone: "night",
-    description: "Late-night slices to keep you going.",
-  },
-  {
-    at: 21 * 60,
-    time: "9:00",
-    title: "Democracy Manifest",
-    kind: "act",
-    tone: "night",
-    billing: "Headline",
-    description: "Two sets across two hours. Bring your rocking shoes!",
-  },
-  {
-    at: 23 * 60,
-    time: "11:00",
-    title: "Home time",
-    kind: "interstitial",
-    tone: "night",
-    description: "Last orders and off you go.",
-  },
-];
 
 /** Whole days from today until the wedding; 0 on the day, negative after. */
 function daysUntilWedding(now: Date) {
@@ -116,12 +23,12 @@ function daysUntilWedding(now: Date) {
 }
 
 /** Index of the slot currently under way; only meaningful on the day. */
-function currentSlot(now: Date) {
+function currentSlot(now: Date, slots: ItinerarySlot[]) {
   if (daysUntilWedding(now) !== 0) return -1;
   const mins = now.getHours() * 60 + now.getMinutes();
   let idx = -1;
-  SET_LIST.forEach((slot, i) => {
-    if (mins >= slot.at) idx = i;
+  slots.forEach((slot, i) => {
+    if (mins >= slot.atMinutes) idx = i;
   });
   return idx;
 }
@@ -184,6 +91,30 @@ function DayNightWash({ anchorRef }: { anchorRef: React.RefObject<HTMLElement> }
 export default function ItineraryPage() {
   const listRef = useRef<HTMLDivElement>(null);
 
+  // Editable from /secretgarden, so the running order is fetched rather than
+  // compiled in. The built-in list shows until the fetch lands, and stays put
+  // if it fails, so the page is never blank.
+  const [slots, setSlots] = useState<ItinerarySlot[]>(FALLBACK_SLOTS);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/itinerary");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled && Array.isArray(data.slots) && data.slots.length) {
+          setSlots(data.slots);
+        }
+      } catch {
+        // Keep the fallback running order.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   // Resolved after mount so the server and client don't disagree on "now".
   const [now, setNow] = useState<Date | null>(null);
 
@@ -194,7 +125,7 @@ export default function ItineraryPage() {
   }, []);
 
   const daysToGo = now ? daysUntilWedding(now) : null;
-  const nowIndex = now ? currentSlot(now) : -1;
+  const nowIndex = now ? currentSlot(now, slots) : -1;
 
   return (
     <BookChapter title="Itinerary">
@@ -210,9 +141,9 @@ export default function ItineraryPage() {
 
         <div ref={listRef} className="setlist max-w-sm mx-auto text-left">
           <ol className="setlist-rows font-body">
-            {SET_LIST.map((slot, idx) => (
+            {slots.map((slot, idx) => (
               <motion.li
-                key={slot.time}
+                key={slot.id}
                 className="setlist-row"
                 data-kind={slot.kind}
                 data-tone={slot.tone}

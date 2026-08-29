@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { DEFAULT_SET_LIST } from "../src/lib/itinerary";
 
 const prisma = new PrismaClient();
 
@@ -99,6 +100,17 @@ async function main() {
     await prisma.question.create({ data: q });
   }
   console.log(`  ❓ Seeded ${sampleQuestions.length} sample questions`);
+
+  // --- Itinerary ---
+  // Only on an empty table: re-running the seed must not wipe out a running
+  // order that has since been edited in /secretgarden.
+  const existingSlots = await prisma.itinerarySlot.count();
+  if (existingSlots === 0) {
+    await prisma.itinerarySlot.createMany({ data: DEFAULT_SET_LIST });
+    console.log(`  ⏰ Seeded ${DEFAULT_SET_LIST.length} itinerary slots`);
+  } else {
+    console.log(`  ⏰ Itinerary already has ${existingSlots} slots, left alone`);
+  }
 
   console.log("\n✅ Seeding complete! Your wedding DB is ready.\n");
 }

@@ -41,6 +41,13 @@ model Question {
   answer     String?
   category   String   @default("uncategorized")
   isAnswered Boolean  @default(false) @map("is_answered")
+  /// Hidden questions stay in the admin list but never reach the public Q&A.
+  isHidden   Boolean  @default(false) @map("is_hidden")
+  /// "guest" for anything asked through the site, "admin" for FAQs we wrote
+  /// ourselves. Only guest questions have a real asker to email back.
+  source     String   @default("guest")
+  /// Ascending running order on the public page; ties fall back to createdAt.
+  sortOrder  Int      @default(0) @map("sort_order")
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
@@ -67,4 +74,27 @@ model DrinkVote {
 
   @@unique([guestId, drinkId])
   @@map("drink_votes")
+}
+
+/// One row of the running order on the Itinerary page, editable from
+/// /secretgarden so the day can be re-planned without a deploy.
+model ItinerarySlot {
+  id          String   @id @default(cuid())
+  /// Minutes past midnight. Drives the "Now" marker on the day itself and the
+  /// running order, so it is the sort key rather than the display string.
+  atMinutes   Int      @map("at_minutes")
+  /// Display time exactly as it should be printed, e.g. "1:30".
+  time        String
+  title       String
+  /// "act" gets billed large; "interstitial" sits quietly between the acts.
+  kind        String   @default("interstitial")
+  /// Where the row sits in the day-to-night wash: "day" | "dusk" | "night".
+  tone        String   @default("day")
+  billing     String?
+  description String   @default("")
+  isVisible   Boolean  @default(true) @map("is_visible")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("itinerary_slots")
 }

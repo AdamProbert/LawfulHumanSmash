@@ -2,10 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendQuestionAskedNotificationEmail } from "@/lib/email";
 
+// Answers and visibility are edited from /secretgarden while the site is live,
+// so this must not be prerendered at build time.
+export const dynamic = "force-dynamic";
+
 /**
  * GET /api/questions
- * Publicly lists answered questions only. Asker name/email are internal and
- * never returned here.
+ * Publicly lists answered, unhidden questions only. Asker name/email are
+ * internal and never returned here.
  * Query params: ?category=accommodation (optional filter)
  */
 export async function GET(request: NextRequest) {
@@ -15,6 +19,7 @@ export async function GET(request: NextRequest) {
     const questions = await prisma.question.findMany({
       where: {
         isAnswered: true,
+        isHidden: false,
         ...(category && category !== "all" ? { category } : {}),
       },
       select: {
@@ -24,7 +29,7 @@ export async function GET(request: NextRequest) {
         category: true,
         createdAt: true,
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
     });
 
     return NextResponse.json({ questions });

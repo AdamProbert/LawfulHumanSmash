@@ -1238,3 +1238,220 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   color: var(--bark-light);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   THE SECRET GARDEN (/secretgarden)
+   The admin panel. Dense, plain and desktop-first — it is the
+   one part of the site the guests never see, so it drops the
+   book framing for a wide worktop.
+   ═══════════════════════════════════════════════════════════ */
+
+.admin-shell {
+  min-height: 100vh;
+  padding: 1.5rem 1rem 4rem;
+}
+.admin-inner {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+/* Tab bar. Scrolls sideways on a phone rather than wrapping into
+   a ragged block. */
+.admin-tabs {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+  scrollbar-width: none;
+}
+.admin-tabs::-webkit-scrollbar {
+  display: none;
+}
+.admin-tab {
+  flex: 0 0 auto;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bark-light);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--gold-pale);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.admin-tab:hover {
+  border-color: var(--gold);
+  color: var(--bark);
+}
+/* Two flavours: real tabs in the header use aria-selected, the filter
+   chips inside a tab are toggle buttons and use aria-pressed. */
+.admin-tab[aria-selected="true"],
+.admin-tab[aria-pressed="true"] {
+  background: var(--ivy);
+  border-color: var(--ivy);
+  color: var(--ivory);
+}
+.admin-tab-count {
+  margin-left: 0.4rem;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A single record: a party, a question, a drink, a slot. */
+.admin-card {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--gold-pale);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+.admin-card[data-muted="true"] {
+  opacity: 0.62;
+}
+
+.admin-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+/* Compact form controls. The guest-facing .input-nouveau is sized
+   for thumbs on a phone; a panel with forty rows needs less air. */
+.admin-input {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--bark);
+  background: white;
+  border: 1px solid var(--gold-pale);
+  border-radius: 3px;
+}
+.admin-input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.15);
+}
+
+.admin-btn {
+  padding: 0.4rem 0.85rem;
+  font-family: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  background: var(--ivy);
+  border: 1px solid var(--ivy);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.admin-btn:hover:not(:disabled) {
+  background: var(--ivy-dark);
+}
+.admin-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.admin-btn[data-variant="ghost"] {
+  color: var(--bark-light);
+  background: transparent;
+  border-color: var(--gold-pale);
+}
+.admin-btn[data-variant="ghost"]:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--bark);
+}
+.admin-btn[data-variant="danger"] {
+  color: var(--accent-red, #9b2335);
+  background: transparent;
+  border-color: rgba(155, 35, 53, 0.35);
+}
+.admin-btn[data-variant="danger"]:hover:not(:disabled) {
+  background: rgba(155, 35, 53, 0.08);
+}
+
+/* Status pills: attending / declined / awaiting, hidden, answered. */
+.admin-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.admin-pill[data-status="yes"] {
+  color: var(--ivy-dark);
+  background: rgba(95, 126, 63, 0.16);
+}
+.admin-pill[data-status="no"] {
+  color: #7a2e3a;
+  background: rgba(122, 46, 58, 0.12);
+}
+.admin-pill[data-status="pending"] {
+  color: var(--gold-dark);
+  background: rgba(201, 168, 76, 0.18);
+}
+.admin-pill[data-status="neutral"] {
+  color: var(--bark-light);
+  background: rgba(86, 96, 74, 0.12);
+}
+
+/* Headline numbers across the top of a tab. */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+.admin-stat {
+  padding: 0.7rem 0.8rem;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--gold-pale);
+  border-radius: 4px;
+}
+.admin-stat-value {
+  font-size: 1.5rem;
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--ivy-dark);
+  font-variant-numeric: tabular-nums;
+}
+.admin-stat-label {
+  margin-top: 0.15rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bark-light);
+}
+
+/* The activation code, quoted back to a guest over the phone. */
+.admin-code {
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.22em;
+  color: var(--gold-dark);
+}
+
+/* Horizontal share bar behind each drink's vote count. */
+.admin-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(86, 96, 74, 0.14);
+  overflow: hidden;
+}
+.admin-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease-out;
+}

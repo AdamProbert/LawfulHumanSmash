@@ -24,3 +24,13 @@ export async function POST(request: NextRequest) {
   });
   return res;
 }
+
+/**
+ * DELETE /api/admin/login
+ * Sign out of the admin panel by clearing the session cookie.
+ */
+export async function DELETE() {
+  const res = NextResponse.json({ success: true });
+  res.cookies.set(ADMIN_COOKIE, "", { path: "/", maxAge: 0 });
+  return res;
+}
