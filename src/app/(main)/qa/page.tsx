@@ -122,8 +122,7 @@ export default function QAPage() {
         <div className="text-left">
           {loading ? (
             <div className="text-center py-8">
-              <div className="text-3xl">🌿</div>
-              <p className="font-body text-sm text-bark-light mt-3">
+              <p className="font-body text-sm text-bark-light">
                 Loading questions…
               </p>
             </div>
@@ -163,7 +162,6 @@ export default function QAPage() {
       <BookPage>
         {submitSuccess ? (
           <div className="py-8">
-            <p className="text-4xl mb-4">💌</p>
             <h3 className="font-heading text-xl text-ivy-dark mb-2">
               Question received!
             </h3>

@@ -180,16 +180,16 @@ function RSVPWizard() {
   };
 
   return (
-    <BookChapter title="RSVP">
+    <BookChapter
+      title="RSVP"
+      footnote={
+        <p className="font-body text-xs text-bark-light">
+          Please respond by{" "}
+          <span className="text-accent-burgundy">January 1st, 2027</span>
+        </p>
+      }
+    >
       <BookPage>
-        {/* Header */}
-        <div className="text-center mb-4">
-          <p className="font-heading text-sm text-bark-light">
-            Please respond by{" "}
-            <span className="text-accent-burgundy">January 1st, 2027</span>
-          </p>
-        </div>
-
         <div className="max-w-sm w-full mx-auto">
           <AnimatePresence mode="wait">
             {/* ── Step 1: Enter Code ────────────── */}
@@ -294,7 +294,7 @@ function RSVPWizard() {
                                 : "border-gold/30 text-bark-light hover:border-gold"
                             }`}
                           >
-                            Joyfully Accept ✨
+                            Joyfully Accept
                           </button>
                           <button
                             onClick={() => setAttending(g.id, false)}
@@ -369,7 +369,7 @@ function RSVPWizard() {
 
                         <div>
                           <label className="font-heading text-sm tracking-wider uppercase text-gold-dark block mb-2">
-                            Vote for your top 3 drinks 🍸
+                            Vote for your top 3 drinks
                           </label>
                           <div className="grid grid-cols-2 gap-2">
                             {drinkOptions.map((drink) => {
@@ -466,15 +466,6 @@ function RSVPWizard() {
                 transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <div className="text-center space-y-6">
-                  <motion.div
-                    className="text-6xl"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 200, delay: 0.3 }}
-                  >
-                    {anyAttending ? "🎉" : "💛"}
-                  </motion.div>
-
                   <h2 className="font-heading text-3xl text-ivy-dark">
                     {anyAttending
                       ? "We can't wait to see you!"

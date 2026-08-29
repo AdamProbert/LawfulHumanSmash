@@ -13,9 +13,12 @@ import { CHAPTERS } from "@/lib/chapters";
  */
 export default function BookChapter({
   title,
+  footnote,
   children,
 }: {
   title?: React.ReactNode;
+  /** Small note pinned to the foot of the chapter, above the chapter strip. */
+  footnote?: React.ReactNode;
   children: ReactNode;
 }) {
   const pages = Children.toArray(children);
@@ -62,7 +65,9 @@ export default function BookChapter({
 
   return (
     <motion.div
-      className={`book-chapter ${title ? "book-chapter--titled" : ""}`}
+      className={`book-chapter ${title ? "book-chapter--titled" : ""} ${
+        footnote ? "book-chapter--footnoted" : ""
+      }`}
       initial={{ opacity: 0, scaleY: 0, originY: 0 }}
       animate={{ opacity: 1, scaleY: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
@@ -95,6 +100,8 @@ export default function BookChapter({
           <div key={i}>{p}</div>
         ))}
       </div>
+
+      {footnote && <div className="book-footnote">{footnote}</div>}
     </motion.div>
   );
 }

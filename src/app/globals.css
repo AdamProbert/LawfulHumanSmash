@@ -108,9 +108,11 @@ body {
   color: var(--ivy-dark);
 }
 
-/* ── Headings ──────────────────────────────────────────── */
+/* ── Headings ──────────────────────────────────────────────
+   Only the fixed chapter/page title (.book-title) uses the fancy
+   'Rivanna' face. Every other heading takes the simple body face. */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Rivanna', serif;
+  font-family: var(--font-merriweather), Merriweather, Georgia, serif;
   color: var(--ivy-dark);
   line-height: 1.2;
 }
@@ -202,7 +204,6 @@ h1, h2, h3, h4, h5, h6 {
   /* ── Splash Page Enter Button (scales with viewport) ─── */
   .btn-nouveau-splash {
     @apply relative inline-flex items-center justify-center tracking-wide;
-    font-family: 'Rivanna', serif;
     padding: clamp(0.3rem, 1.2vh, 0.7rem) clamp(1rem, 3.6vh, 2.4rem);
     font-size: clamp(1.4rem, 4vh, 2.4rem);
     line-height: 1.1;
@@ -586,7 +587,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-link {
   @apply relative text-sm tracking-wider uppercase;
-  font-family: 'Rivanna', serif;
   color: var(--ivy);
   transition: color 0.3s;
   padding: 4px 0;
@@ -683,22 +683,55 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Fixed chapter title, framed just below the top border */
+/* Title metrics live on the chapter so the title and the scroll agree.
+   --title-offset drops the title away from the top border; --fade is the
+   short band the scrolling content dissolves across on its way up. */
+.book-chapter--titled {
+  --title-offset: clamp(0.75rem, 2.4vh, 1.4rem);
+  --title-band: clamp(3rem, 17%, 4.75rem);
+  --title-h: calc(var(--title-offset) + var(--title-band));
+  --fade: 0.9rem;
+}
+
 .book-title {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: clamp(3rem, 17%, 4.75rem);
+  height: var(--title-h);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 1rem;
+  padding: var(--title-offset) 1rem 0;
   z-index: 12;
   pointer-events: none;
 }
+/* The one place the fancy face is used. */
+.book-title h1 {
+  font-family: 'Rivanna', serif;
+}
+
+/* Content starts *below* the fade band, so the first line of a page is never
+   caught mid-fade; it only dissolves once scrolled up into the band. */
 .book-chapter--titled .book-scroll {
-  padding-top: clamp(3rem, 17%, 4.75rem);
+  padding-top: calc(var(--title-h) + var(--fade) + 0.4rem);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent var(--title-h),
+    #000 calc(var(--title-h) + var(--fade)),
+    #000 calc(100% - var(--fade)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent var(--title-h),
+    #000 calc(var(--title-h) + var(--fade)),
+    #000 calc(100% - var(--fade)),
+    transparent 100%
+  );
 }
 
 /* Holds every BookPage of the current chapter, stacked and scrolling vertically */
@@ -728,6 +761,22 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
+/* Note pinned to the foot of a chapter, sitting over the scrolling content */
+.book-footnote {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 12;
+  padding: 0.85rem 1rem 0.15rem;
+  text-align: center;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--ivory) 55%, transparent);
+}
+.book-chapter--footnoted .book-scroll {
+  padding-bottom: 2.75rem;
+}
+
 /* Bottom chapter strip — sits on the book's own background, inside the frame */
 .bottom-nav {
   position: absolute;
@@ -754,7 +803,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 .bottom-nav-link {
   flex: 0 0 auto;
-  font-family: "Rivanna", serif;
   font-size: 0.72rem;
   letter-spacing: 0.03em;
   white-space: nowrap;
@@ -780,7 +828,6 @@ h1, h2, h3, h4, h5, h6 {
   gap: 0.4rem;
 }
 .filter-chip {
-  font-family: "Rivanna", serif;
   font-size: 0.72rem;
   letter-spacing: 0.03em;
   white-space: nowrap;
@@ -830,7 +877,6 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0.75rem 1.5rem;
   background: var(--ivy-dark);
   color: var(--ivory);
-  font-family: "Rivanna", serif;
   font-size: 0.9rem;
   box-shadow: var(--shadow-md);
 }

@@ -10,23 +10,33 @@ const FEATURED_VENUE = {
   description:
     "Our wedding venue! A stunning Georgian manor house nestled in the heart of the Brecon Beacons countryside. This is where the ceremony, celebrations, and magic happen.",
   url: "https://www.talljohnshouse.com/",
-  googleMapsUrl: "https://maps.google.com/?q=Tall+Johns+House,+Brecon+LD3+7PX",
   embedMapUrl:
     "https://maps.google.com/maps?q=Tall+Johns+House,+Brecon+LD3+7PX&t=&z=8&ie=UTF8&iwloc=&output=embed",
 };
+
+const AREA_SEARCH_LINKS = [
+  {
+    name: "Airbnb Map (10-Mile Radius)",
+    description:
+      "Find cosy cottages, converted barns, and self-catering stays near Llangorse & Brecon.",
+    url: "https://www.airbnb.co.uk/s/LD3-7PX/homes",
+    cta: "Search Airbnb →",
+  },
+  {
+    name: "Booking.com (10-Mile Radius)",
+    description:
+      "Explore hotels, country inns, and bed & breakfasts close to Tall Johns House.",
+    url: "https://www.booking.com/searchresults.html?ss=Tall+Johns+House%2C+Brecon%2C+Wales%2C+United+Kingdom",
+    cta: "Search Booking.com →",
+  },
+];
 
 export default function VenuePage() {
   return (
     <BookChapter title="The Venue">
       {/* Page 1 — Venue overview & aerial photo */}
       <BookPage>
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-gold/10 rounded-full border border-gold/30 mb-2">
-          <span className="font-heading text-xs tracking-wider uppercase text-gold-dark">
-            Tall Johns House
-          </span>
-        </div>
-
-        <h2 className="font-display text-2xl sm:text-3xl text-ivy-dark mb-3">
+        <h2 className="font-body text-2xl sm:text-3xl text-ivy-dark mb-3">
           {FEATURED_VENUE.name}
         </h2>
 
@@ -45,7 +55,7 @@ export default function VenuePage() {
         </div>
 
         <p className="font-body text-xs text-leaf mt-2 font-medium">
-          📍 {FEATURED_VENUE.location}
+          {FEATURED_VENUE.location}
         </p>
 
         <p className="font-body text-sm text-bark-light max-w-xs mx-auto mt-2">
@@ -64,9 +74,6 @@ export default function VenuePage() {
 
       {/* Page 2 — Interactive Map */}
       <BookPage>
-        <h2 className="font-heading text-2xl text-ivy-dark mb-2">
-          📍 Interactive Map
-        </h2>
         <p className="font-body text-xs text-bark-light/80 max-w-xs mx-auto mb-3">
           Located in Powys, Wales within Bannau Brycheiniog (Brecon Beacons National Park).
         </p>
@@ -84,26 +91,49 @@ export default function VenuePage() {
           />
         </div>
 
-        <a
-          href={FEATURED_VENUE.googleMapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-nouveau inline-flex text-xs"
-        >
-          Open in Google Maps 🗺️
-        </a>
       </BookPage>
 
-      {/* Page 3 — Directions & Driving Bulletin */}
+      {/* Page 3 — Where to stay */}
+      <BookPage>
+        <h2 className="font-body text-2xl sm:text-3xl text-ivy-dark mb-2">
+          Find Your Stay
+        </h2>
+
+        <p className="font-body text-xs sm:text-sm text-bark-light max-w-xs mx-auto mb-4">
+          We recommend booking early as the Brecon Beacons area is a popular destination! Here are area search maps centered within 10 miles of Tall Johns House.
+        </p>
+
+        <div className="space-y-3 max-w-xs mx-auto text-left">
+          {AREA_SEARCH_LINKS.map((link) => (
+            <div key={link.name} className="card-nouveau p-3.5 border-gold/30">
+              <h3 className="font-heading text-sm text-ivy-dark font-bold mb-1">
+                {link.name}
+              </h3>
+              <p className="font-body text-xs text-bark-light mb-3">
+                {link.description}
+              </p>
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-nouveau inline-flex w-full justify-center text-xs py-1.5"
+              >
+                {link.cta}
+              </a>
+            </div>
+          ))}
+        </div>
+      </BookPage>
+
+      {/* Page 4 — Directions & Driving Bulletin */}
       <BookPage>
         <h2 className="font-heading text-2xl text-ivy-dark mb-3">
-          📌 Driving & Directions
+          Driving &amp; Directions
         </h2>
 
         {/* Bulletin Notice Card */}
         <div className="card-nouveau p-4 max-w-xs mx-auto text-left border-2 border-terracotta/40 bg-terracotta/5">
           <div className="flex items-center gap-2 mb-2 pb-2 border-b border-terracotta/20">
-            <span className="text-xl">⚠️</span>
             <h3 className="font-heading text-sm uppercase tracking-wider text-terracotta font-bold">
               Tight Road Notice for Large Cars
             </h3>
@@ -118,7 +148,7 @@ export default function VenuePage() {
           </p>
 
           <div className="bg-sage-light/60 p-2.5 rounded border border-gold/30 text-xs text-ivy-dark">
-            <strong className="block text-ivy-dark mb-1 font-heading">💡 Recommended Route:</strong>
+            <strong className="block text-ivy-dark mb-1 font-heading">Recommended Route:</strong>
             Stick to the main <strong>A40 or A438</strong> towards Llangorse / Llanfihangel Tal-y-llyn rather than shortcutting down unclassified lanes.
           </div>
         </div>
@@ -127,7 +157,7 @@ export default function VenuePage() {
         <div className="mt-4 space-y-2 max-w-xs mx-auto text-left">
           <div className="card-nouveau p-3 text-xs">
             <span className="font-heading font-semibold text-ivy-dark block mb-0.5">
-              🅿️ On-Site Parking
+              On-Site Parking
             </span>
             <p className="text-bark-light">
               Ample free parking is available directly on-site in the venue courtyard.
@@ -136,7 +166,7 @@ export default function VenuePage() {
 
           <div className="card-nouveau p-3 text-xs">
             <span className="font-heading font-semibold text-ivy-dark block mb-0.5">
-              🚆 Train & Taxi
+              Train &amp; Taxi
             </span>
             <p className="text-bark-light">
               Nearest station: <strong>Abergavenny</strong> (~25-30 min taxi ride). We recommend booking taxis in advance!

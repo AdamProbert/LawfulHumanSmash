@@ -1,21 +1,7 @@
 import type { Metadata } from "next";
-import { Cinzel_Decorative, Playfair_Display, Merriweather } from "next/font/google";
+import { Merriweather } from "next/font/google";
 import DesktopWarningBanner from "@/components/DesktopWarningBanner";
 import "./globals.css";
-
-const cinzelDecorative = Cinzel_Decorative({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-  variable: "--font-cinzel-decorative",
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-playfair",
-  display: "swap",
-});
 
 const merriweather = Merriweather({
   subsets: ["latin"],
@@ -41,7 +27,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cinzelDecorative.variable} ${playfair.variable} ${merriweather.variable}`}
+      className={merriweather.variable}
     >
       <body className="bg-vine-pattern">
         <DesktopWarningBanner />

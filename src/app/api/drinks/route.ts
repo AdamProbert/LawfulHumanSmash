@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+// Vote counts change while the site is live. Without this, Next prerenders this
+// handler at build time and every guest is served the counts frozen at deploy.
+export const dynamic = "force-dynamic";
+
 /**
  * GET /api/drinks
  * Fetch all drink options with their vote counts.
