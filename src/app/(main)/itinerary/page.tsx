@@ -48,7 +48,7 @@ const SCHEDULE = [
   {
     time: "9:00",
     title: "Rock band",
-    description: "Two hours of it. Bring your dancing shoes.",
+    description: "Two sets across two hours. Bring your rocking shoes!",
   },
   {
     time: "11:00",
@@ -72,7 +72,7 @@ export default function ItineraryPage() {
         </h2>
 
         <p className="font-body text-xs text-bark-light/80 max-w-xs mx-auto mb-4">
-          Roughly, anyway — all subject to change as the day runs away with us.
+          Roughly, anyway - all subject to change as the day runs away with us.
         </p>
 
         {/* Timeline */}
