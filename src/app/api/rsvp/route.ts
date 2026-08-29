@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendRsvpThankYouEmail } from "@/lib/email";
+import {
+  sendRsvpNotificationEmail,
+  sendRsvpThankYouEmail,
+} from "@/lib/email";
 
 /** Loose sanity check only; the confirmation email is the real validation. */
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -53,19 +56,47 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Party not found" }, { status: 404 });
     }
 
-    const [, partyGuests] = await Promise.all([
+    // Names for the drinks this party voted for, so the notification email can
+    // spell them out rather than listing opaque ids.
+    const votedDrinkIds = Array.from(
+      new Set(
+        guests.flatMap((g) =>
+          Array.isArray(g.drinkVotes) ? g.drinkVotes.slice(0, 3) : []
+        )
+      )
+    );
+
+    const [, partyGuests, drinkOptions] = await Promise.all([
       prisma.party.update({
         where: { id: partyId },
         data: { email: trimmedEmail },
       }),
       prisma.guest.findMany({
         where: { partyId },
-        select: { id: true, name: true },
+        select: { id: true, name: true, rsvpSubmittedAt: true },
       }),
+      votedDrinkIds.length
+        ? prisma.drinkOption.findMany({
+            where: { id: { in: votedDrinkIds } },
+            select: { id: true, name: true, emoji: true },
+          })
+        : Promise.resolve([]),
     ]);
 
     const guestNames = new Map<string, string>(
       partyGuests.map((g): [string, string] => [g.id, g.name])
+    );
+
+    // Read before the transaction below stamps a fresh rsvpSubmittedAt on
+    // everyone: any existing stamp means this party is changing an answer
+    // rather than replying for the first time.
+    const previousSubmission = partyGuests
+      .map((g) => g.rsvpSubmittedAt)
+      .filter((d): d is Date => d !== null)
+      .sort((a, b) => b.getTime() - a.getTime())[0];
+
+    const drinkLabels = new Map<string, string>(
+      drinkOptions.map((d): [string, string] => [d.id, `${d.emoji} ${d.name}`])
     );
 
     // One round trip for the whole party rather than 3–4 per guest in series.
@@ -103,19 +134,43 @@ export async function POST(request: NextRequest) {
       }),
     ]);
 
-    try {
-      await sendRsvpThankYouEmail(
-        trimmedEmail,
-        guests
-          .filter((g): g is GuestRSVP => typeof g.guestId === "string")
-          .map((g) => ({
-            name: guestNames.get(g.guestId) || "Guest",
-            attending: g.attending,
-          })),
-        party.code
+    const guestSummaries = validGuests.map((g) => ({
+      name: guestNames.get(g.guestId) || "Guest",
+      attending: g.attending,
+      dietaryRequirements: g.attending ? g.dietaryRequirements || null : null,
+      // Mirrors the votes actually stored above, same three-vote cap.
+      drinks:
+        g.attending && Array.isArray(g.drinkVotes)
+          ? g.drinkVotes
+              .slice(0, 3)
+              .map((id) => drinkLabels.get(id))
+              .filter((label): label is string => Boolean(label))
+          : [],
+    }));
+
+    // Both emails are best-effort: the RSVP itself is already saved, so a mail
+    // failure must not fail the request or block the other message.
+    const [thankYouResult, notificationResult] = await Promise.allSettled([
+      sendRsvpThankYouEmail(trimmedEmail, guestSummaries, party.code),
+      sendRsvpNotificationEmail({
+        code: party.code,
+        email: trimmedEmail,
+        guests: guestSummaries,
+        previouslySubmittedAt: previousSubmission ?? null,
+      }),
+    ]);
+
+    if (thankYouResult.status === "rejected") {
+      console.error(
+        "Failed to send RSVP thank-you email:",
+        thankYouResult.reason
       );
-    } catch (emailError) {
-      console.error("Failed to send RSVP thank-you email:", emailError);
+    }
+    if (notificationResult.status === "rejected") {
+      console.error(
+        "Failed to send RSVP notification email:",
+        notificationResult.reason
+      );
     }
 
     return NextResponse.json({ success: true });

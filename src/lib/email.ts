@@ -252,3 +252,169 @@ export async function sendQuestionAskedNotificationEmail(
     html: questionAskedHtml(details),
   });
 }
+
+interface RsvpNotificationGuest extends RsvpGuestSummary {
+  dietaryRequirements?: string | null;
+  /** Display labels for the drinks this guest voted for, already emoji-prefixed. */
+  drinks?: string[];
+}
+
+interface RsvpNotificationDetails {
+  code: string;
+  email: string;
+  guests: RsvpNotificationGuest[];
+  /** When this party last replied, or null if this is their first RSVP. */
+  previouslySubmittedAt?: Date | null;
+}
+
+/** Formats a past submission date for the "previously replied" line. */
+function formatSubmittedAt(date: Date) {
+  return date.toLocaleString("en-GB", {
+    dateStyle: "long",
+    timeStyle: "short",
+    timeZone: "Europe/London",
+  });
+}
+
+function rsvpNotificationHtml({
+  code,
+  email,
+  guests,
+  previouslySubmittedAt,
+}: RsvpNotificationDetails) {
+  const attendingCount = guests.filter((g) => g.attending).length;
+  const decliningCount = guests.length - attendingCount;
+  const isAmendment = Boolean(previouslySubmittedAt);
+
+  const rows = guests
+    .map(
+      (g) => `
+      <tr>
+        <td style="padding:8px 0; color:#283121; font-size:15px; border-bottom:1px solid #E2E0D4;">
+          ${escapeHtml(g.name)}
+          ${
+            g.dietaryRequirements
+              ? `<br /><span style="color:#9C7833; font-size:11px; letter-spacing:0.08em; text-transform:uppercase;">Dietary</span>
+                 <span style="color:#56604A; font-size:12px; font-style:italic;">${escapeHtml(
+                   g.dietaryRequirements
+                 )}</span>`
+              : ""
+          }
+          ${
+            g.drinks && g.drinks.length
+              ? `<br /><span style="color:#9C7833; font-size:11px; letter-spacing:0.08em; text-transform:uppercase;">Drinks</span>
+                 <span style="color:#56604A; font-size:12px;">${g.drinks
+                   .map(escapeHtml)
+                   .join(", ")}</span>`
+              : ""
+          }
+        </td>
+        <td style="padding:8px 0; text-align:right; vertical-align:top; font-size:13px; border-bottom:1px solid #E2E0D4; color:${
+          g.attending ? "#3E5E34" : "#9C3D1C"
+        };">
+          ${g.attending ? "Attending" : "Not attending"}
+        </td>
+      </tr>`
+    )
+    .join("");
+
+  return emailShell(
+    `
+    <p style="margin:0 0 16px; text-align:center;">
+      <span style="display:inline-block; padding:5px 14px; border-radius:999px; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; background-color:${
+        isAmendment ? "#C4552B" : "#3E5E34"
+      }; color:#f9f4d8;">
+        ${isAmendment ? "Amended RSVP" : "New RSVP"}
+      </span>
+    </p>
+
+    <p style="margin:0 0 12px; color:#3E5E34; font-size:18px; text-align:center;">
+      ${
+        isAmendment
+          ? "A party has changed their RSVP"
+          : "A new RSVP has come in"
+      }
+    </p>
+    <p style="margin:0 0 8px; color:#56604A; font-size:14px; text-align:center;">
+      ${attendingCount} attending${
+        decliningCount ? `, ${decliningCount} not attending` : ""
+      }
+    </p>
+    <p style="margin:0 0 24px; color:#56604A; font-size:13px; text-align:center; font-style:italic;">
+      ${
+        previouslySubmittedAt
+          ? `These answers replace the ones they sent on ${escapeHtml(
+              formatSubmittedAt(previouslySubmittedAt)
+            )}.`
+          : "This is their first reply."
+      }
+    </p>
+
+    <p style="margin:0 0 6px; color:#9C7833; font-size:11px; letter-spacing:0.12em; text-transform:uppercase;">
+      Party code
+    </p>
+    <p style="margin:0 0 20px; color:#283121; font-size:16px;">
+      ${escapeHtml(code)}
+    </p>
+
+    <p style="margin:0 0 6px; color:#9C7833; font-size:11px; letter-spacing:0.12em; text-transform:uppercase;">
+      Contact email
+    </p>
+    <p style="margin:0 0 20px; color:#283121; font-size:16px;">
+      ${escapeHtml(email)}
+    </p>
+
+    <p style="margin:0 0 6px; color:#9C7833; font-size:11px; letter-spacing:0.12em; text-transform:uppercase;">
+      Their responses
+    </p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      ${rows}
+    </table>
+
+    <p style="margin:28px 0 0; text-align:center;">
+      <a href="${SITE_URL}/secretgarden" style="display:inline-block; background-color:#3E5E34; color:#f9f4d8; text-decoration:none; padding:12px 28px; border-radius:4px; font-size:14px; letter-spacing:0.05em;">
+        See it in the Secret Garden
+      </a>
+    </p>
+  `,
+    "Sent automatically by the wedding site."
+  );
+}
+
+/** Tells Adam &amp; Mady that a party has submitted their RSVP. */
+export async function sendRsvpNotificationEmail(
+  details: RsvpNotificationDetails
+) {
+  const { code, email, guests, previouslySubmittedAt } = details;
+  const attendingCount = guests.filter((g) => g.attending).length;
+  const isAmendment = Boolean(previouslySubmittedAt);
+  const summary = guests
+    .map((g) => {
+      const lines = [`${g.name}: ${g.attending ? "Attending" : "Not attending"}`];
+      if (g.dietaryRequirements) {
+        lines.push(`  Dietary: ${g.dietaryRequirements}`);
+      }
+      if (g.drinks && g.drinks.length) {
+        lines.push(`  Drinks: ${g.drinks.join(", ")}`);
+      }
+      return lines.join("\n");
+    })
+    .join("\n\n");
+
+  await getResendClient().emails.send({
+    from: "Adam & Mady <wedding@adamprobert.com>",
+    to: NOTIFY_EMAIL,
+    replyTo: email,
+    subject: `${isAmendment ? "Amended" : "New"} RSVP from ${
+      guests[0]?.name || code
+    } (${attendingCount}/${guests.length} attending)`,
+    text: `${
+      previouslySubmittedAt
+        ? `AMENDED RSVP - replaces their answers from ${formatSubmittedAt(
+            previouslySubmittedAt
+          )}`
+        : "NEW RSVP - their first reply"
+    }\n\nParty code: ${code}\nContact email: ${email}\n\n${summary}\n\nSee it: ${SITE_URL}/secretgarden`,
+    html: rsvpNotificationHtml(details),
+  });
+}

@@ -17,6 +17,16 @@ interface GuestState {
   drinkVotes: string[];
 }
 
+/** Shape of a guest as returned by GET /api/rsvp/verify. */
+interface VerifiedGuest {
+  id: string;
+  name: string;
+  attending: boolean | null;
+  dietaryRequirements: string | null;
+  rsvpSubmittedAt: string | null;
+  drinkVotes: { drinkId: string }[];
+}
+
 interface DrinkOption {
   id: string;
   name: string;
@@ -68,7 +78,12 @@ function RSVPWizard() {
     setError("");
 
     try {
-      const res = await fetch(`/api/rsvp/verify?code=${codeValue}`);
+      // The two calls are independent, so they go out together. Fetching them in
+      // sequence doubled the blank-screen wait for guests arriving with a code.
+      const [res, drinksRes] = await Promise.all([
+        fetch(`/api/rsvp/verify?code=${codeValue}`),
+        fetch("/api/drinks?counts=0"),
+      ]);
       const data = await res.json();
 
       if (!res.ok) {
@@ -77,31 +92,33 @@ function RSVPWizard() {
         return;
       }
 
-      const drinksRes = await fetch("/api/drinks");
       const drinksData = await drinksRes.json();
+
+      const partyGuests: VerifiedGuest[] = data.party.guests;
 
       setPartyId(data.party.id);
       setEmail(data.party.email || "");
       setGuests(
-        data.party.guests.map(
-          (g: {
-            id: string;
-            name: string;
-            attending: boolean | null;
-            dietaryRequirements: string | null;
-            drinkVotes: { drinkId: string }[];
-          }) => ({
-            id: g.id,
-            name: g.name,
-            attending: g.attending,
-            dietaryRequirements: g.dietaryRequirements || "",
-            drinkVotes: g.drinkVotes.map((v) => v.drinkId),
-          })
-        )
+        partyGuests.map((g) => ({
+          id: g.id,
+          name: g.name,
+          attending: g.attending,
+          dietaryRequirements: g.dietaryRequirements || "",
+          drinkVotes: g.drinkVotes.map((v) => v.drinkId),
+        }))
       );
       setDrinkOptions(drinksData.drinks || []);
       writeCookie(RSVP_CODE_COOKIE, codeValue, CODE_COOKIE_MAX_AGE);
-      setStep("attendance");
+
+      // A party that has already responded lands on its summary rather than
+      // being walked back through the wizard. Submitting stamps every guest in
+      // one transaction, so a party is either wholly answered or not; a partial
+      // stamp would mean an interrupted submit, and those guests finish the
+      // wizard instead.
+      const alreadySubmitted =
+        partyGuests.length > 0 &&
+        partyGuests.every((g) => Boolean(g.rsvpSubmittedAt));
+      setStep(alreadySubmitted ? "success" : "attendance");
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -146,6 +163,14 @@ function RSVPWizard() {
     }
     setError("");
     setStep(anyAttending ? "details" : "email");
+  };
+
+  // Back to the first question, not the code step: they are already verified,
+  // and their existing answers stay loaded so the wizard is prefilled. Resubmitting
+  // overwrites the same guest rows, so a second pass is an edit, not a duplicate.
+  const editRSVP = () => {
+    setError("");
+    setStep("attendance");
   };
 
   const submitRSVP = async () => {
@@ -200,6 +225,19 @@ function RSVPWizard() {
     >
       <BookPage>
         <div className="max-w-sm w-full mx-auto">
+          {/* Guests arriving with a cached or emailed code wait on the network
+              before any step can render, so they get a cue rather than a blank
+              page. Gated on `loading` too, so the no-code path never flashes it,
+              and kept outside AnimatePresence so its exit can't make the next
+              step wait. */}
+          {checkingCookie && loading && (
+            <div className="text-center py-10">
+              <p className="font-body text-sm text-bark-light">
+                Finding your invitation…
+              </p>
+            </div>
+          )}
+
           <AnimatePresence mode="wait">
             {/* ── Step 1: Enter Code ────────────── */}
             {step === "code" && !checkingCookie && (
@@ -475,7 +513,7 @@ function RSVPWizard() {
               </motion.div>
             )}
 
-            {/* ── Step 5: Success ────────────── */}
+            {/* ── Step 5: Summary ────────────── */}
             {step === "success" && (
               <motion.div
                 key="success-step"
@@ -483,18 +521,104 @@ function RSVPWizard() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
               >
-                <div className="text-center space-y-6">
-                  <h2 className="font-heading text-3xl text-ivy-dark">
-                    {anyAttending
-                      ? "We can't wait to see you!"
-                      : "We'll miss you!"}
-                  </h2>
+                <div className="space-y-8">
+                  <div className="text-center space-y-3">
+                    <h2 className="font-heading text-3xl text-ivy-dark">
+                      {anyAttending
+                        ? "We can't wait to see you!"
+                        : "We'll miss you!"}
+                    </h2>
+                    <p className="font-body text-bark-light">
+                      {anyAttending
+                        ? "Here's what we have for your party. See you on July 10th!"
+                        : "Thank you for letting us know. Here's what we have on record."}
+                    </p>
+                  </div>
 
-                  <p className="font-body text-lg text-bark-light">
-                    {anyAttending
-                      ? "Your RSVP has been received. See you on July 10th!"
-                      : "Thank you for letting us know. You'll be missed!"}
-                  </p>
+                  <div className="space-y-5">
+                    {guests.map((g) => (
+                      <div
+                        key={g.id}
+                        className="border border-gold/25 rounded-art p-4 space-y-3"
+                      >
+                        <div className="flex items-baseline justify-between gap-3">
+                          <p className="font-heading text-base text-ivy-dark">
+                            {g.name}
+                          </p>
+                          <span
+                            className={`font-heading text-xs tracking-wider uppercase whitespace-nowrap ${
+                              g.attending ? "text-leaf" : "text-accent-burgundy"
+                            }`}
+                          >
+                            {g.attending ? "Attending" : "Not attending"}
+                          </span>
+                        </div>
+
+                        {/* Dietary notes and drinks are only collected from, and
+                            only meaningful for, guests who are coming. */}
+                        {g.attending && (
+                          <>
+                            <div>
+                              <p className="font-heading text-xs tracking-wider uppercase text-gold-dark mb-1">
+                                Dietary Requirements
+                              </p>
+                              <p className="font-body text-sm text-bark">
+                                {g.dietaryRequirements.trim() || "None given"}
+                              </p>
+                            </div>
+
+                            <div>
+                              <p className="font-heading text-xs tracking-wider uppercase text-gold-dark mb-1">
+                                Drink Votes
+                              </p>
+                              {g.drinkVotes.length > 0 ? (
+                                <ul className="font-body text-sm text-bark space-y-0.5">
+                                  {g.drinkVotes.map((id) => {
+                                    const drink = drinkOptions.find(
+                                      (d) => d.id === id
+                                    );
+                                    return (
+                                      <li key={id}>
+                                        <span className="mr-2">
+                                          {drink?.emoji}
+                                        </span>
+                                        {drink?.name || "Unknown drink"}
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              ) : (
+                                <p className="font-body text-sm text-bark">
+                                  No votes cast
+                                </p>
+                              )}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="text-center space-y-1">
+                    <p className="font-heading text-xs tracking-wider uppercase text-gold-dark">
+                      Confirmation sent to
+                    </p>
+                    <p className="font-body text-sm text-bark break-all">
+                      {email}
+                    </p>
+                  </div>
+
+                  <div className="text-center pt-1 space-y-3">
+                    <button
+                      onClick={editRSVP}
+                      className="btn-nouveau-outline"
+                    >
+                      Change my answers
+                    </button>
+                    <p className="font-body text-xs text-bark-light">
+                      You can update your RSVP any time before January 1st, 2027
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             )}

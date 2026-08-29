@@ -58,6 +58,13 @@ const config: Config = {
           light: "#F0EEE3",
           dark: "#D9D7CB",
         },
+        // Body ink. Kept in sync with --bark / --bark-light in globals.css:
+        // body inherits from the variables, utilities come from here. Literal
+        // hex rather than var() so opacity modifiers (text-bark-light/60) work.
+        bark: {
+          DEFAULT: "#283121",
+          light: "#56604A",
+        },
       },
       fontFamily: {
         // `display` is the fancy face, reserved for chapter/page headings only.
