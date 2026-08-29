@@ -40,46 +40,55 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Party not found" }, { status: 404 });
     }
 
-    await prisma.party.update({
-      where: { id: partyId },
-      data: { email: email || null },
-    });
+    const [, partyGuests] = await Promise.all([
+      prisma.party.update({
+        where: { id: partyId },
+        data: { email: email || null },
+      }),
+      prisma.guest.findMany({
+        where: { partyId },
+        select: { id: true, name: true },
+      }),
+    ]);
 
     const guestNames = new Map<string, string>(
-      (
-        await prisma.guest.findMany({
-          where: { partyId },
-          select: { id: true, name: true },
-        })
-      ).map((g): [string, string] => [g.id, g.name])
+      partyGuests.map((g): [string, string] => [g.id, g.name])
     );
 
-    for (const g of guests) {
-      if (typeof g.guestId !== "string" || typeof g.attending !== "boolean") {
-        continue;
-      }
+    // One round trip for the whole party rather than 3–4 per guest in series.
+    const validGuests = guests.filter(
+      (g) =>
+        typeof g.guestId === "string" && typeof g.attending === "boolean"
+    );
+    const submittedAt = new Date();
 
-      await prisma.guest.update({
-        where: { id: g.guestId },
-        data: {
-          attending: g.attending,
-          dietaryRequirements: g.attending
-            ? g.dietaryRequirements || null
-            : null,
-          rsvpSubmittedAt: new Date(),
-        },
-      });
-
-      await prisma.drinkVote.deleteMany({ where: { guestId: g.guestId } });
-
-      if (g.attending && Array.isArray(g.drinkVotes)) {
-        for (const drinkId of g.drinkVotes.slice(0, 3)) {
-          await prisma.drinkVote.create({
-            data: { guestId: g.guestId, drinkId },
-          });
-        }
-      }
-    }
+    await prisma.$transaction([
+      ...validGuests.map((g) =>
+        prisma.guest.update({
+          where: { id: g.guestId },
+          data: {
+            attending: g.attending,
+            dietaryRequirements: g.attending
+              ? g.dietaryRequirements || null
+              : null,
+            rsvpSubmittedAt: submittedAt,
+          },
+        })
+      ),
+      prisma.drinkVote.deleteMany({
+        where: { guestId: { in: validGuests.map((g) => g.guestId) } },
+      }),
+      prisma.drinkVote.createMany({
+        data: validGuests.flatMap((g) =>
+          g.attending && Array.isArray(g.drinkVotes)
+            ? g.drinkVotes
+                .slice(0, 3)
+                .map((drinkId) => ({ guestId: g.guestId, drinkId }))
+            : []
+        ),
+        skipDuplicates: true,
+      }),
+    ]);
 
     if (email) {
       try {

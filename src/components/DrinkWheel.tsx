@@ -74,6 +74,36 @@ export default function DrinkWheel({ drinks, size = 320 }: DrinkWheelProps) {
         animate={{ rotate: 0, scale: 1, opacity: 1 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
       >
+        {/* Per-segment emoji, sat on the ring between the hub and the rim.
+            The conic-gradient starts at 12 o'clock and runs clockwise, so a
+            segment's mid-angle maps to (sin, -cos) around the centre. Skipped
+            for slivers too narrow to hold a glyph. */}
+        {segments
+          .filter((seg) => seg.percentage >= 6)
+          .map((seg) => {
+            const mid = ((seg.startAngle + seg.endAngle) / 2) * (Math.PI / 180);
+            const radius = size * 0.35;
+            return (
+              <motion.span
+                key={seg.id}
+                className="absolute z-10 leading-none pointer-events-none select-none"
+                style={{
+                  left: size / 2 + radius * Math.sin(mid),
+                  top: size / 2 - radius * Math.cos(mid),
+                  transform: "translate(-50%, -50%)",
+                  fontSize: Math.max(14, size * 0.085),
+                  filter: "drop-shadow(0 1px 2px rgba(38, 58, 30, 0.35))",
+                }}
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.9, duration: 0.35 }}
+                aria-hidden
+              >
+                {seg.emoji}
+              </motion.span>
+            );
+          })}
+
         {/* Center label */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-center"
