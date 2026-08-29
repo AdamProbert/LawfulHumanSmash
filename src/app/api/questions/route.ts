@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { sendQuestionAskedNotificationEmail } from "@/lib/email";
 
 /**
  * GET /api/questions
@@ -63,6 +64,14 @@ export async function POST(request: NextRequest) {
         question,
       },
     });
+
+    // Notify us so we can go and answer it. A mail failure must not fail the
+    // guest's submission — the question is already saved.
+    try {
+      await sendQuestionAskedNotificationEmail({ name, email, question });
+    } catch (emailError) {
+      console.error("Failed to send question notification email:", emailError);
+    }
 
     return NextResponse.json({ question: newQuestion }, { status: 201 });
   } catch (error) {

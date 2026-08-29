@@ -13,6 +13,12 @@ function getResendClient() {
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://lawful-human-smash.vercel.app";
 
+/** Notification inbox for Adam & Mady — where guest activity lands. */
+const NOTIFY_EMAIL = "15barberryrise@gmail.com";
+
+/** Wedding date, in the one casing and format the emails use. */
+const WEDDING_DATE = "July 10th 2027";
+
 /** Escapes text dropped into the HTML email body. */
 function escapeHtml(value: string) {
   return value
@@ -21,7 +27,7 @@ function escapeHtml(value: string) {
     .replace(/>/g, "&gt;");
 }
 
-function emailShell(bodyHtml: string) {
+function emailShell(bodyHtml: string, signOff = "With love,<br />Adam &amp; Mady") {
   return `
 <!DOCTYPE html>
 <html>
@@ -36,8 +42,8 @@ function emailShell(bodyHtml: string) {
                 <h1 style="margin:8px 0 0; color:#f9f4d8; font-size:20px; letter-spacing:0.05em; font-weight:normal;">
                   Adam &amp; Mady
                 </h1>
-                <p style="margin:4px 0 0; color:#C29A48; font-size:13px; letter-spacing:0.08em; text-transform:uppercase;">
-                  July 10th, 2027
+                <p style="margin:4px 0 0; color:#C29A48; font-size:13px; letter-spacing:0.08em;">
+                  ${WEDDING_DATE}
                 </p>
               </td>
             </tr>
@@ -49,7 +55,7 @@ function emailShell(bodyHtml: string) {
             <tr>
               <td style="padding:16px 32px 28px; text-align:center; border-top:1px solid #E2CE9C;">
                 <p style="margin:16px 0 0; color:#56604A; font-size:13px;">
-                  With love,<br />Adam &amp; Mady
+                  ${signOff}
                 </p>
               </td>
             </tr>
@@ -67,7 +73,7 @@ function questionAnsweredHtml(question: string, answer: string) {
 
   return emailShell(`
     <p style="margin:0 0 24px; color:#3E5E34; font-size:18px; text-align:center;">
-      Your question has been answered! 💌
+      Your question has been answered
     </p>
 
     <p style="margin:0 0 6px; color:#9C7833; font-size:11px; letter-spacing:0.12em; text-transform:uppercase;">
@@ -128,7 +134,7 @@ function rsvpThankYouHtml(guests: RsvpGuestSummary[], code: string) {
     <p style="margin:0 0 24px; color:#56604A; font-size:14px; text-align:center;">
       ${
         anyAttending
-          ? "We can't wait to celebrate with you on July 10th, 2027."
+          ? `We can't wait to celebrate with you on ${WEDDING_DATE}.`
           : "You'll be missed, but we appreciate you letting us know."
       }
     </p>
@@ -180,5 +186,70 @@ export async function sendRsvpThankYouEmail(
     subject: anyAttending ? "Thanks for your RSVP!" : "Thanks for letting us know",
     text: `${summary}\n\nView or update your RSVP: ${rsvpLink}`,
     html: rsvpThankYouHtml(guests, code),
+  });
+}
+
+interface QuestionAskedDetails {
+  name: string;
+  email?: string | null;
+  question: string;
+}
+
+function questionAskedHtml({ name, email, question }: QuestionAskedDetails) {
+  const asker = email
+    ? `${escapeHtml(name)} &lt;${escapeHtml(email)}&gt;`
+    : escapeHtml(name);
+  const q = escapeHtml(question).replace(/\n/g, "<br />");
+
+  return emailShell(
+    `
+    <p style="margin:0 0 24px; color:#3E5E34; font-size:18px; text-align:center;">
+      Someone has asked a question
+    </p>
+
+    <p style="margin:0 0 6px; color:#9C7833; font-size:11px; letter-spacing:0.12em; text-transform:uppercase;">
+      From
+    </p>
+    <p style="margin:0 0 20px; color:#283121; font-size:16px;">
+      ${asker}
+    </p>
+
+    <p style="margin:0 0 6px; color:#9C7833; font-size:11px; letter-spacing:0.12em; text-transform:uppercase;">
+      They asked
+    </p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#E2E0D4; border-left:3px solid #C4552B; border-radius:2px;">
+      <tr>
+        <td style="padding:16px 18px; color:#283121; font-size:15px; line-height:1.6;">
+          ${q}
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin:28px 0 0; text-align:center;">
+      <a href="${SITE_URL}/secretgarden" style="display:inline-block; background-color:#3E5E34; color:#f9f4d8; text-decoration:none; padding:12px 28px; border-radius:4px; font-size:14px; letter-spacing:0.05em;">
+        Answer it in the Secret Garden
+      </a>
+    </p>
+  `,
+    "Sent automatically by the wedding site."
+  );
+}
+
+/**
+ * Tells Adam &amp; Mady that a guest has asked a new question, linking straight
+ * to the Secret Garden admin page so it can be answered.
+ */
+export async function sendQuestionAskedNotificationEmail(
+  details: QuestionAskedDetails
+) {
+  const { name, email, question } = details;
+
+  await getResendClient().emails.send({
+    from: "Adam & Mady <wedding@adamprobert.com>",
+    to: NOTIFY_EMAIL,
+    replyTo: email || "wedding@adamprobert.com",
+    subject: `New question from ${name}`,
+    text: `${name}${email ? ` <${email}>` : ""} asked:\n${question}\n\nAnswer it: ${SITE_URL}/secretgarden`,
+    html: questionAskedHtml(details),
   });
 }
