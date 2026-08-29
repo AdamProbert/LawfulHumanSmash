@@ -94,7 +94,7 @@ export default function FoodDrinksPage() {
           The Drinks Vote
         </h2>
         <p className="font-body text-sm text-bark-light max-w-xs mx-auto mb-4">
-          Pick your top 3 drinks when you RSVP and we'll try our best to make sure everyone is catered for!
+          Pick your top 3 drinks when you RSVP and we&apos;ll try our best to make sure everyone is catered for!
         </p>
 
         {loadingDrinks ? (
