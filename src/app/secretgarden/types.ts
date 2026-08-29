@@ -6,7 +6,6 @@ export interface AdminQuestion {
   email: string | null;
   question: string;
   answer: string | null;
-  category: string;
   isAnswered: boolean;
   isHidden: boolean;
   /** "guest" if asked through the site, "admin" if we wrote it ourselves. */

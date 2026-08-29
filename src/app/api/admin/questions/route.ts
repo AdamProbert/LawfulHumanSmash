@@ -9,7 +9,7 @@ const ADMIN_AUTHOR = "Adam & Mady";
 
 /**
  * GET /api/admin/questions
- * Full question list (name, email, category, answer, visibility). Admin only.
+ * Full question list (name, email, answer, visibility). Admin only.
  * Unanswered guest questions float to the top: they are the work queue.
  */
 export async function GET(request: NextRequest) {
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
  * offers to email an asker back, and it goes live immediately if it has an
  * answer.
  *
- * Body: { question: string, answer?: string, category?: string, isHidden?: boolean }
+ * Body: { question: string, answer?: string, isHidden?: boolean }
  */
 export async function POST(request: NextRequest) {
   if (!isAdmin(request)) {
@@ -66,7 +66,6 @@ export async function POST(request: NextRequest) {
         email: null,
         question,
         answer: answer || null,
-        category: body.category || "uncategorized",
         isAnswered: answer.length > 0,
         isHidden: Boolean(body.isHidden),
         source: "admin",

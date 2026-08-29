@@ -5,7 +5,7 @@ import { sendQuestionAnsweredEmail } from "@/lib/email";
 
 /**
  * PATCH /api/admin/questions/:id
- * Body: any subset of { question, category, answer, isHidden }.
+ * Body: any subset of { question, answer, isHidden }.
  * Setting a non-empty answer marks the question answered and, if a guest asked
  * it and left an email, sends them a notification the first time.
  */
@@ -19,7 +19,7 @@ export async function PATCH(
 
   try {
     const body = await request.json();
-    const { question, category, answer, isHidden } = body;
+    const { question, answer, isHidden } = body;
 
     const existing = await prisma.question.findUnique({
       where: { id: params.id },
@@ -41,7 +41,6 @@ export async function PATCH(
         ...(question !== undefined && String(question).trim()
           ? { question: String(question).trim() }
           : {}),
-        ...(category !== undefined ? { category } : {}),
         ...(answerTouched ? { answer, isAnswered: willBeAnswered } : {}),
         ...(isHidden !== undefined ? { isHidden: Boolean(isHidden) } : {}),
       },

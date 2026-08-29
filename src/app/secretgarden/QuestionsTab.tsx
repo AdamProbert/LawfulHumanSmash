@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { QUESTION_CATEGORIES } from "@/lib/categories";
 import type { AdminQuestion } from "./types";
 import { Empty, Pill, Stat, formatDateTime } from "./ui";
 
@@ -17,12 +16,11 @@ const FILTERS: { id: Filter; label: string }[] = [
 
 interface Draft {
   question: string;
-  category: string;
   answer: string;
 }
 
 function draftOf(q: AdminQuestion): Draft {
-  return { question: q.question, category: q.category, answer: q.answer || "" };
+  return { question: q.question, answer: q.answer || "" };
 }
 
 /**
@@ -45,9 +43,6 @@ export default function QuestionsTab({
   // Composer for our own Q&A entries.
   const [newQuestion, setNewQuestion] = useState("");
   const [newAnswer, setNewAnswer] = useState("");
-  const [newCategory, setNewCategory] = useState(
-    QUESTION_CATEGORIES[1]?.id || "uncategorized"
-  );
   const [adding, setAdding] = useState(false);
 
   const stats = useMemo(
@@ -137,11 +132,7 @@ export default function QuestionsTab({
       const res = await fetch("/api/admin/questions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question: newQuestion,
-          answer: newAnswer,
-          category: newCategory,
-        }),
+        body: JSON.stringify({ question: newQuestion, answer: newAnswer }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -186,26 +177,13 @@ export default function QuestionsTab({
           value={newAnswer}
           onChange={(e) => setNewAnswer(e.target.value)}
         />
-        <div className="flex flex-wrap gap-2 items-center">
-          <select
-            className="admin-input w-auto"
-            value={newCategory}
-            onChange={(e) => setNewCategory(e.target.value)}
-          >
-            {QUESTION_CATEGORIES.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.emoji} {c.label}
-              </option>
-            ))}
-          </select>
-          <button
-            type="submit"
-            className="admin-btn"
-            disabled={adding || !newQuestion.trim()}
-          >
-            {adding ? "Adding…" : "Add"}
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="admin-btn"
+          disabled={adding || !newQuestion.trim()}
+        >
+          {adding ? "Adding…" : "Add"}
+        </button>
       </form>
 
       <div className="admin-tabs mt-4">
@@ -234,9 +212,7 @@ export default function QuestionsTab({
               [q.id]: { ...draft, ...changes },
             }));
           const dirty =
-            draft.question !== q.question ||
-            draft.category !== q.category ||
-            draft.answer !== (q.answer || "");
+            draft.question !== q.question || draft.answer !== (q.answer || "");
           // A first answer to a guest who left an address triggers an email.
           const willEmail =
             q.source !== "admin" &&
@@ -283,25 +259,12 @@ export default function QuestionsTab({
               />
 
               <div className="flex flex-wrap gap-2 items-center">
-                <select
-                  className="admin-input w-auto"
-                  value={draft.category}
-                  onChange={(e) => update({ category: e.target.value })}
-                >
-                  {QUESTION_CATEGORIES.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.emoji} {c.label}
-                    </option>
-                  ))}
-                </select>
-
                 <button
                   className="admin-btn"
                   disabled={busyId === q.id || !dirty}
                   onClick={() =>
                     patch(q.id, {
                       question: draft.question,
-                      category: draft.category,
                       answer: draft.answer,
                     })
                   }

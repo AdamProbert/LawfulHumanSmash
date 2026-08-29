@@ -382,7 +382,7 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 8px 8px 0 0;
   }
 
-  /* ── Category Pill ─────────────────────────────────────── */
+  /* ── Tag Pill ──────────────────────────────────────────── */
   .pill-nouveau {
     @apply inline-flex items-center px-4 py-1.5 text-sm font-heading rounded-full transition-all duration-300 cursor-pointer;
     border: 1px solid var(--gold-pale);
@@ -943,33 +943,6 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.1em;
 }
 
-/* Q&A category filter chips, styled like the chapter strip */
-.filter-strip {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.4rem;
-}
-.filter-chip {
-  font-size: 0.72rem;
-  letter-spacing: 0.03em;
-  white-space: nowrap;
-  color: var(--ivy);
-  padding: 0.3rem 0.95rem;
-  border-radius: 999px;
-  background: rgba(234, 232, 220, 0.9);
-  border: 1px solid var(--gold-pale);
-  transition: all 0.25s;
-  cursor: pointer;
-}
-.filter-chip:hover {
-  color: var(--terracotta);
-}
-.filter-chip.active {
-  color: var(--ivory);
-  background: var(--ivy);
-}
-
 /* Multicoloured partition between Q&A messages */
 .qa-divider {
   height: 2px;
@@ -1454,4 +1427,60 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   border-radius: 999px;
   transition: width 0.4s ease-out;
+}
+
+/* The activation code as an editable field: same monospace, spaced look as
+   the read-only .admin-code so a party's code does not appear to change
+   character when it becomes editable. */
+.admin-code-input {
+  width: 6rem;
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  font-size: 1rem;
+  letter-spacing: 0.18em;
+  color: var(--gold-dark);
+}
+
+/* The code reel: digits churning while the server draws a party code, each
+   one landing in turn. Sized to match .admin-code-input exactly so the box
+   does not resize at the moment it becomes editable. */
+.admin-code-reel {
+  display: inline-flex;
+  gap: 0.15rem;
+  width: 6rem;
+  padding: 0.45rem 0.6rem;
+  background: white;
+  border: 1px solid var(--gold-pale);
+  border-radius: 3px;
+}
+.admin-code-digit {
+  flex: 1;
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--bark-light);
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+/* A digit that has landed: full weight, and a brief nudge so the eye catches
+   which one just settled. */
+.admin-code-digit[data-landed="true"] {
+  color: var(--gold-dark);
+  opacity: 1;
+  animation: codeDigitLand 0.28s ease-out;
+}
+@keyframes codeDigitLand {
+  0% {
+    transform: translateY(-35%);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-code-digit[data-landed="true"] {
+    animation: none;
+  }
 }

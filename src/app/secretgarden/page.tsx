@@ -192,7 +192,9 @@ export default function SecretGardenPage() {
           ))}
         </div>
 
-        {tab === "guests" && <GuestsTab parties={parties} />}
+        {tab === "guests" && (
+          <GuestsTab parties={parties} setParties={setParties} />
+        )}
         {tab === "questions" && (
           <QuestionsTab questions={questions} setQuestions={setQuestions} />
         )}

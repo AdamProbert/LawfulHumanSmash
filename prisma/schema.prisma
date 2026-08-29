@@ -39,7 +39,6 @@ model Question {
   email      String?
   question   String
   answer     String?
-  category   String   @default("uncategorized")
   isAnswered Boolean  @default(false) @map("is_answered")
   /// Hidden questions stay in the admin list but never reach the public Q&A.
   isHidden   Boolean  @default(false) @map("is_hidden")

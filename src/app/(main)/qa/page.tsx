@@ -4,24 +4,16 @@ import { useState, useEffect, useCallback } from "react";
 import BookChapter from "@/components/BookChapter";
 import BookPage from "@/components/BookPage";
 import { readCookie, RSVP_CODE_COOKIE } from "@/lib/cookies";
-import { QUESTION_CATEGORIES } from "@/lib/categories";
 
 interface Question {
   id: string;
   question: string;
   answer: string | null;
-  category: string;
   createdAt: string;
 }
 
-const CATEGORIES = [
-  { id: "all", label: "All", emoji: "✨" },
-  ...QUESTION_CATEGORIES.filter((c) => c.id !== "uncategorized"),
-];
-
 export default function QAPage() {
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [activeCategory, setActiveCategory] = useState("all");
   const [loading, setLoading] = useState(true);
 
   // Identity, pulled from a cached RSVP code when available.
@@ -69,10 +61,6 @@ export default function QAPage() {
     })();
   }, []);
 
-  const filteredQuestions = questions.filter(
-    (q) => activeCategory === "all" || q.category === activeCategory
-  );
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
@@ -105,20 +93,6 @@ export default function QAPage() {
     <BookChapter title="Q&A">
       {/* Page 1: browse questions */}
       <BookPage>
-        <div className="filter-strip mb-5">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`filter-chip ${
-                activeCategory === cat.id ? "active" : ""
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
         <div className="text-left">
           {loading ? (
             <div className="text-center py-8">
@@ -126,17 +100,17 @@ export default function QAPage() {
                 Loading questions…
               </p>
             </div>
-          ) : filteredQuestions.length === 0 ? (
+          ) : questions.length === 0 ? (
             <div className="text-center py-8">
               <p className="font-heading text-base text-bark-light">
-                No answered questions here yet!
+                No answered questions yet!
               </p>
               <p className="font-body text-sm text-bark-light/60 mt-1">
                 Be the first to ask →
               </p>
             </div>
           ) : (
-            filteredQuestions.map((q, i) => (
+            questions.map((q, i) => (
               <div key={q.id}>
                 {i > 0 && <div className="qa-divider" />}
                 <p className="font-heading text-base text-ivy-dark mb-1">

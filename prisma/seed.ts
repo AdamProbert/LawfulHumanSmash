@@ -90,28 +90,24 @@ async function main() {
     {
       name: "Uncle Bob",
       question: "Is there parking at the venue?",
-      category: "accommodation",
       answer: "Yes! Tall Johns House has free parking on-site.",
       isAnswered: true,
     },
     {
       name: "Cousin Sarah",
       question: "Can I bring my dog?",
-      category: "pets",
       answer: "We'd love that! Well-behaved dogs are welcome. Leonard insists on meeting them all.",
       isAnswered: true,
     },
     {
       name: "Friend Dave",
       question: "What's the nearest airport?",
-      category: "accommodation",
       answer: null,
       isAnswered: false,
     },
     {
       name: "Auntie Em",
       question: "Will there be dancing?",
-      category: "whimsy",
       answer: "Absolutely. We have a DJ and a dance floor. Bring your moves!",
       isAnswered: true,
     },

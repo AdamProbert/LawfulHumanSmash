@@ -10,23 +10,15 @@ export const dynamic = "force-dynamic";
  * GET /api/questions
  * Publicly lists answered, unhidden questions only. Asker name/email are
  * internal and never returned here.
- * Query params: ?category=accommodation (optional filter)
  */
-export async function GET(request: NextRequest) {
-  const category = request.nextUrl.searchParams.get("category");
-
+export async function GET() {
   try {
     const questions = await prisma.question.findMany({
-      where: {
-        isAnswered: true,
-        isHidden: false,
-        ...(category && category !== "all" ? { category } : {}),
-      },
+      where: { isAnswered: true, isHidden: false },
       select: {
         id: true,
         question: true,
         answer: true,
-        category: true,
         createdAt: true,
       },
       orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
@@ -45,8 +37,7 @@ export async function GET(request: NextRequest) {
 /**
  * POST /api/questions
  * Submit a new question. The name is logged internally (e.g. from a cached
- * RSVP) but is never shown on the public Q&A page. Category defaults to
- * "uncategorized" until an admin assigns one.
+ * RSVP) but is never shown on the public Q&A page.
  *
  * Body: { name: string, email?: string, question: string }
  */
