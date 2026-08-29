@@ -178,7 +178,6 @@ export default function QAPage() {
             {rsvpName ? (
               <p className="font-body text-sm text-bark-light text-center">
                 Asking as <span className="text-gold-dark">{rsvpName}</span>{" "}
-                — kept internal, never shown publicly.
               </p>
             ) : (
               <div>

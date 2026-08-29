@@ -1,9 +1,21 @@
 "use client";
 
-import { Children, ReactNode, useCallback, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import {
+  Children,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { CHAPTERS } from "@/lib/chapters";
+import {
+  clearNavDirection,
+  getNavDirection,
+  setNavDirection,
+} from "@/lib/navDirection";
 
 /**
  * Stacks its <BookPage> children in a single vertically-scrolling column.
@@ -29,6 +41,21 @@ export default function BookChapter({
 
   const chapterIndex = CHAPTERS.findIndex((c) => c.href === pathname);
 
+  // Read once, during the first render, so the entry animation below knows
+  // which way this chapter was turned to. Deliberately not state: it must not
+  // change after mount, or the page would re-animate mid-read.
+  const [enterFrom] = useState(getNavDirection);
+  const reduceMotion = useReducedMotion();
+
+  // A browser back/forward leaves whatever the last tap set behind. Clearing it
+  // on the way past means the chapter it lands on gets the neutral reveal
+  // rather than a slide pointing the wrong way.
+  useEffect(() => {
+    const onPop = () => clearNavDirection();
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
   const goChapter = useCallback(
     (delta: number) => {
       if (cooldown.current) return;
@@ -36,6 +63,7 @@ export default function BookChapter({
         delta > 0 ? CHAPTERS[chapterIndex + 1] : CHAPTERS[chapterIndex - 1];
       if (!neighbour) return;
       cooldown.current = true;
+      setNavDirection(delta > 0 ? 1 : -1);
       router.push(neighbour.href);
       window.setTimeout(() => (cooldown.current = false), 480);
     },
@@ -68,8 +96,17 @@ export default function BookChapter({
       className={`book-chapter ${title ? "book-chapter--titled" : ""} ${
         footnote ? "book-chapter--footnoted" : ""
       }`}
-      initial={{ opacity: 0, scaleY: 0, originY: 0 }}
-      animate={{ opacity: 1, scaleY: 1 }}
+      /* Turned to from a neighbour: slide in from the side it came from, so
+         the gesture and the movement agree. Landed on cold: the original
+         opening-the-book reveal. */
+      initial={
+        reduceMotion
+          ? { opacity: 0 }
+          : enterFrom === 0
+          ? { opacity: 0, scaleY: 0, originY: 0 }
+          : { opacity: 0, x: enterFrom > 0 ? 46 : -46 }
+      }
+      animate={{ opacity: 1, scaleY: 1, x: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
       onTouchStart={(e) =>
         (touchStart.current = {
