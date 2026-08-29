@@ -201,45 +201,22 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
   }
 
-  /* ── Splash Page Enter Button (scales with viewport) ─── */
-  .btn-nouveau-splash {
-    @apply relative inline-flex items-center justify-center tracking-wide;
-    padding: clamp(0.3rem, 1.2vh, 0.7rem) clamp(1rem, 3.6vh, 2.4rem);
-    font-size: clamp(1.4rem, 4vh, 2.4rem);
-    line-height: 1.1;
-    color: var(--ivory);
-    background: linear-gradient(175deg, var(--mayds-leaf-green), #689d4d);
-    border: 2px solid var(--madys-letter-green);
-    border-radius: 8px;
-    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    cursor: pointer;
+  /* ── Splash Page tap cue ──────────────────────────────
+     The invite card is the button, so nothing here needs to line up
+     with a slot in the artwork. */
+  .splash-tap-cue {
+    @apply flex items-center justify-center gap-2;
+    font-size: clamp(0.72rem, 1.9vh, 0.95rem);
+    letter-spacing: 0.06em;
+    color: var(--bark-light);
+    pointer-events: none;
   }
-  .btn-nouveau-splash::before {
-    content: "";
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
-    border-radius: inherit;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s;
+  .splash-tap-cue-mark {
+    color: var(--gold);
+    font-size: 1.15em;
+    line-height: 1;
   }
-  .btn-nouveau-splash:hover {
-    background: linear-gradient(135deg, var(--ivy-light), var(--leaf));
-    box-shadow: var(--shadow-gold);
-    transform: translateY(-1px);
-  }
-  .btn-nouveau-splash:hover::before {
-    opacity: 1;
-  }
-  .btn-nouveau-splash:active {
-    transform: translateY(0);
-  }
+
   .btn-nouveau::before {
     content: "";
     position: absolute;
@@ -571,7 +548,46 @@ h1, h2, h3, h4, h5, h6 {
 /* Splash page with invite image, matches PNG background */
 .splash-invite-bg {
   background: var(--ivory);
-  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* The whole invitation is the enter control. Its box is locked to the PNG's
+   own 2480x3303 ratio so the artwork fills it edge to edge at every size, and
+   the height budget subtracts the page padding, gap and tap cue below it. */
+.splash-invite-card {
+  --splash-chrome: 7rem;
+  position: relative;
+  display: block;
+  width: min(92vw, calc((100svh - var(--splash-chrome)) * 2480 / 3303));
+  aspect-ratio: 2480 / 3303;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background: none;
+  border-radius: 12px;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.splash-invite-card:hover {
+  transform: scale(1.015);
+  filter: drop-shadow(var(--shadow-gold));
+}
+.splash-invite-card:active {
+  transform: scale(0.995);
+}
+.splash-invite-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 6px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash-invite-card {
+    transition: none;
+  }
+  .splash-invite-card:hover,
+  .splash-invite-card:active {
+    transform: none;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
