@@ -33,7 +33,7 @@ const AREA_SEARCH_LINKS = [
 
 // Example drive avoiding Llangynidr Bridge, via the A470 / A40
 const EXAMPLE_ROUTE_URL =
-  "https://www.google.com/maps/dir/Coryton,+Cardiff+CF14+7EF/Tall+John's+House,+Llangasty+Tal-y-llyn,+Brecon+LD3+7PX/@51.6950228,-3.5003711,10.25z/data=!4m14!4m13!1m5!1m1!1s0x486e1bbad59abc45:0xfbe3932497363a9d!2m2!1d-3.239561!2d51.525244!1m5!1m1!1s0x486e2c0df5415cd3:0x9265dc8b56ada3a6!2m2!1d-3.2567319!2d51.9093132!5i1?entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D";
+  "https://maps.app.goo.gl/mqrtzhpHbgMFJ1xu7";
 
 export default function VenuePage() {
   return (
@@ -109,7 +109,7 @@ export default function VenuePage() {
             Staying On-Site
           </h3>
           <p className="font-body text-xs text-bark-light leading-relaxed mb-2">
-            There are a limited number of rooms available at Tall John's House itself.
+            There are a limited number of rooms available at Tall John&apos;s House itself.
           </p>
           <p className="font-body text-xs text-bark-light leading-relaxed">
             Get in touch with{" "}

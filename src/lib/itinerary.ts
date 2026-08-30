@@ -37,12 +37,12 @@ export const SLOT_TONES: { id: SlotTone; label: string }[] = [
 export const DEFAULT_SET_LIST: Omit<ItinerarySlot, "id">[] = [
   {
     atMinutes: 12 * 60 + 30,
-    time: "12:30",
-    title: "Doors",
+    time: "12:30-13:00",
+    title: "Arrival",
     kind: "interstitial",
     tone: "day",
     billing: null,
-    description: "Roll up, say hello, grab a drink and find a spot.",
+    description: "Arrival between 12:30 and 13:00.",
     isVisible: true,
   },
   {

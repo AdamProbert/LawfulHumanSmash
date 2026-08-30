@@ -13,7 +13,7 @@ const FALLBACK_SLOTS: ItinerarySlot[] = DEFAULT_SET_LIST.map((slot, i) => ({
   id: `default-${i}`,
 }));
 
-/** Doors open. Everything on this page hangs off it. */
+/** Wedding date. Everything on this page hangs off it. */
 const WEDDING_DAY = new Date(2027, 6, 10); // 10 July 2027, local time
 
 /** Whole days from today until the wedding; 0 on the day, negative after. */

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, type ClipboardEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import BookChapter from "@/components/BookChapter";
@@ -125,6 +125,46 @@ function RSVPWizard() {
       setLoading(false);
       setCheckingCookie(false);
     }
+  };
+
+  const focusCodeInput = (index: number) => {
+    const input = document.querySelector<HTMLInputElement>(
+      `[data-code-index="${index}"]`
+    );
+    input?.focus();
+  };
+
+  const applyCodeDigits = (rawValue: string, startIndex: number) => {
+    const digits = rawValue.replace(/\D/g, "");
+    if (!digits) return;
+
+    const next = code.padEnd(4, " ").split("");
+    digits
+      .slice(0, 4 - startIndex)
+      .split("")
+      .forEach((digit, offset) => {
+        next[startIndex + offset] = digit;
+      });
+
+    const nextCode = next.join("").replace(/\s/g, "").slice(0, 4);
+    setCode(nextCode);
+
+    if (nextCode.length === 4) {
+      verifyCode(nextCode);
+      return;
+    }
+
+    window.requestAnimationFrame(() =>
+      focusCodeInput(Math.min(startIndex + digits.length, 3))
+    );
+  };
+
+  const pasteCodeDigits = (
+    event: ClipboardEvent<HTMLInputElement>,
+    startIndex: number
+  ) => {
+    event.preventDefault();
+    applyCodeDigits(event.clipboardData.getData("text"), startIndex);
   };
 
   const setAttending = (guestId: string, attending: boolean) => {
@@ -268,9 +308,15 @@ function RSVPWizard() {
                         autoComplete="one-time-code"
                         maxLength={1}
                         className="w-14 h-16 text-center text-2xl font-heading input-nouveau"
+                        data-code-index={i}
                         value={code[i] || ""}
+                        onPaste={(e) => pasteCodeDigits(e, i)}
                         onChange={(e) => {
                           const val = e.target.value.replace(/\D/g, "");
+                          if (val.length > 1) {
+                            applyCodeDigits(val, i);
+                            return;
+                          }
                           const newCode = code.split("");
                           newCode[i] = val;
                           setCode(newCode.join("").slice(0, 4));
@@ -335,7 +381,7 @@ function RSVPWizard() {
                         <div className="flex gap-3">
                           <button
                             onClick={() => setAttending(g.id, true)}
-                            className={`flex-1 py-2.5 px-3 rounded-art border-2 font-heading text-sm text-center transition-all ${
+                            className={`flex-1 py-2.5 px-3 rounded-lg border-2 font-heading text-sm text-center transition-all ${
                               g.attending === true
                                 ? "border-leaf bg-leaf/10 text-ivy-dark"
                                 : "border-gold/30 text-bark-light hover:border-gold"
@@ -345,7 +391,7 @@ function RSVPWizard() {
                           </button>
                           <button
                             onClick={() => setAttending(g.id, false)}
-                            className={`flex-1 py-2.5 px-3 rounded-art border-2 font-heading text-sm text-center transition-all ${
+                            className={`flex-1 py-2.5 px-3 rounded-lg border-2 font-heading text-sm text-center transition-all ${
                               g.attending === false
                                 ? "border-accent-burgundy bg-accent-burgundy/10 text-accent-burgundy"
                                 : "border-gold/30 text-bark-light hover:border-gold"
@@ -416,7 +462,7 @@ function RSVPWizard() {
 
                         <div>
                           <label className="font-heading text-sm tracking-wider uppercase text-gold-dark block mb-2">
-                            Vote for your favourite drinks
+                            Vote for your favourites
                           </label>
                           <div className="grid grid-cols-2 gap-2">
                             {drinkOptions.map((drink) => {
@@ -539,7 +585,7 @@ function RSVPWizard() {
                     {guests.map((g) => (
                       <div
                         key={g.id}
-                        className="border border-gold/25 rounded-art p-4 space-y-3"
+                        className="border border-gold/25 rounded-lg p-4 space-y-3"
                       >
                         <div className="flex items-baseline justify-between gap-3">
                           <p className="font-heading text-base text-ivy-dark">
@@ -625,4 +671,3 @@ function RSVPWizard() {
     </BookChapter>
   );
 }
-

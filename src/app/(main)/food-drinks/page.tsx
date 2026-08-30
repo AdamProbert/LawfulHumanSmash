@@ -11,21 +11,18 @@ const FOOD_TRUCKS = [
     emoji: "🥙",
     description:
       "Authentic Greek street food: think juicy gyros, crispy halloumi wraps, and loaded mezze plates.",
-    tags: ["Greek", "Street Food", "Veggie Options"],
   },
   {
     name: "The Bearded Taco",
     emoji: "🌮",
     description:
       "Bold, flavourful tacos with creative fillings. From slow-cooked brisket to jackfruit, there's something for everyone.",
-    tags: ["Mexican", "Tacos", "Vegan Options"],
   },
   {
     name: "Emanuel's Pizza",
     emoji: "🍕",
     description:
-      "Wood-fired pizza straight from a converted van. Proper Neapolitan-style with that perfect charred crust.",
-    tags: ["Italian", "Pizza", "Wood-fired"],
+      "Wood-fired pizza in the evening, straight from a converted van. Proper Neapolitan-style with that perfect charred crust.",
   },
 ];
 
@@ -73,16 +70,9 @@ export default function FoodDrinksPage() {
                   {truck.name}
                 </h3>
               </div>
-              <p className="font-body text-sm text-bark-light mb-2">
+              <p className="font-body text-sm text-bark-light">
                 {truck.description}
               </p>
-              <div className="flex flex-wrap gap-1.5">
-                {truck.tags.map((tag) => (
-                  <span key={tag} className="pill-nouveau !text-xs">
-                    {tag}
-                  </span>
-                ))}
-              </div>
             </div>
           ))}
         </div>

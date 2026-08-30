@@ -21,9 +21,6 @@ export default function TLDRPage() {
   return (
     <BookChapter title="Important Details">
       <BookPage>
-        <p className="font-body text-sm text-bark-light mb-5">
-          Everything you need to know
-        </p>
 
         <div className="space-y-3">
           <div>
@@ -34,7 +31,7 @@ export default function TLDRPage() {
               July 10th, 2027
             </p>
             <p className="font-body text-sm text-bark-light mt-1">
-              Doors open 12:30
+              Arrival between 12:30 and 13:00
             </p>
           </div>
 
@@ -47,7 +44,7 @@ export default function TLDRPage() {
               Where
             </p>
             <p className="font-body text-xl text-accent-burgundy">
-              Tall John's House
+              Tall John&apos;s House
             </p>
             <a
               href="https://www.tallJohn'shouse.com/"

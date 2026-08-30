@@ -6,18 +6,19 @@ import { PrismaClient } from "@prisma/client";
  * whenever the menu changes, without dragging the sample guest data with it.
  */
 export const DRINKS = [
-  { name: "Mojito",      emoji: "🌿", color: "#6E9B52" },
-  { name: "IPA",         emoji: "🍺", color: "#C87D2A" },
-  { name: "Lager",       emoji: "🍻", color: "#D9A441" },
-  { name: "Ale",         emoji: "🌾", color: "#8B5A2B" },
-  { name: "White Wine",  emoji: "🥂", color: "#D4B96A" },
-  { name: "Red Wine",    emoji: "🍷", color: "#722F37" },
-  { name: "Prosecco",    emoji: "🍾", color: "#E6B422" },
-  { name: "Cider",       emoji: "🍎", color: "#5C9A38" },
-  { name: "Soft Drinks", emoji: "🥤", color: "#5E8C9B" },
+  { id: "mojito",        name: "Margarita",  emoji: "🍸", color: "#7AA857" },
+  { id: "ipa",           name: "IPA",        emoji: "🍺", color: "#C87D2A" },
+  { id: "lager",         name: "Lager",      emoji: "🍻", color: "#D9A441" },
+  { id: "ale",           name: "Ale",        emoji: "🌾", color: "#8B5A2B" },
+  { id: "white-wine",    name: "White Wine", emoji: "🥂", color: "#D4B96A" },
+  { id: "red-wine",      name: "Red Wine",   emoji: "🍷", color: "#722F37" },
+  { id: "prosecco",      name: "Prosecco",   emoji: "🍾", color: "#E6B422" },
+  { id: "cider",         name: "Cider",      emoji: "🍎", color: "#5C9A38" },
+  { id: "soft-drinks",   name: "Soft Drink", emoji: "🥤", color: "#5E8C9B" },
+  { id: "zero-alcohol",  name: "0% Alcohol", emoji: "🫧", color: "#6A8FB8" },
 ];
 
-const drinkId = (name: string) => name.toLowerCase().replace(/[^a-z]/g, "-");
+const drinkIds = DRINKS.map((d) => d.id);
 
 /**
  * Brings the drink_options table in line with DRINKS: adds what is new,
@@ -30,14 +31,14 @@ const drinkId = (name: string) => name.toLowerCase().replace(/[^a-z]/g, "-");
 export async function seedDrinks(prisma: PrismaClient, force = false) {
   for (const drink of DRINKS) {
     await prisma.drinkOption.upsert({
-      where: { id: drinkId(drink.name) },
+      where: { id: drink.id },
       update: drink,
-      create: { id: drinkId(drink.name), ...drink },
+      create: drink,
     });
   }
 
   const retired = await prisma.drinkOption.findMany({
-    where: { id: { notIn: DRINKS.map((d) => drinkId(d.name)) } },
+    where: { id: { notIn: drinkIds } },
     include: { _count: { select: { votes: true } } },
   });
 

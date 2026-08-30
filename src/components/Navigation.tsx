@@ -124,7 +124,7 @@ export default function Navigation() {
                     July 10th, 2027
                   </p>
                   <p className="font-body text-xs text-bark-light mt-1">
-                    Tall John's House
+                    Tall John&apos;s House
                   </p>
                 </div>
               </div>
