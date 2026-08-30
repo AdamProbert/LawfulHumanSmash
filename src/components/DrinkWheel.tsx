@@ -322,6 +322,7 @@ export default function DrinkWheel({ drinks, size = 320 }: DrinkWheelProps) {
           className="drink-wheel-button"
           onClick={spinWheel}
           onPointerDown={(event) => {
+            event.stopPropagation();
             if (segments.length === 0) return;
             event.currentTarget.setPointerCapture(event.pointerId);
             if (frameRef.current !== null) {
@@ -337,6 +338,7 @@ export default function DrinkWheel({ drinks, size = 320 }: DrinkWheelProps) {
             };
           }}
           onPointerMove={(event) => {
+            event.stopPropagation();
             const drag = dragRef.current;
             if (!drag?.active) return;
             const angle = pointerAngleForEvent(event);
@@ -351,6 +353,7 @@ export default function DrinkWheel({ drinks, size = 320 }: DrinkWheelProps) {
             updateRotation(rotationRef.current + delta);
           }}
           onPointerUp={(event) => {
+            event.stopPropagation();
             const drag = dragRef.current;
             dragRef.current = null;
             if (!drag?.moved) return;
@@ -358,10 +361,15 @@ export default function DrinkWheel({ drinks, size = 320 }: DrinkWheelProps) {
             event.preventDefault();
             startMomentum(velocityRef.current * randomBetween(19, 26));
           }}
-          onPointerCancel={() => {
+          onPointerCancel={(event) => {
+            event.stopPropagation();
             dragRef.current = null;
             startMomentum(velocityRef.current * randomBetween(12, 17));
           }}
+          onTouchStart={(event) => event.stopPropagation()}
+          onTouchMove={(event) => event.stopPropagation()}
+          onTouchEnd={(event) => event.stopPropagation()}
+          onTouchCancel={(event) => event.stopPropagation()}
           disabled={segments.length === 0}
           aria-label="Spin the drinks vote wheel"
           initial={{ rotate: -90, scale: 0.8, opacity: 0 }}
