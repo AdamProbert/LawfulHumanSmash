@@ -50,7 +50,7 @@ async function main() {
     {
       name: "Uncle Bob",
       question: "Is there parking at the venue?",
-      answer: "Yes! Tall Johns House has free parking on-site.",
+      answer: "Yes! Tall John's House has free parking on-site.",
       isAnswered: true,
     },
     {

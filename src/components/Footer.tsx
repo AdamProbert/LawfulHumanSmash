@@ -5,7 +5,7 @@ export default function Footer() {
         {/* Decorative divider */}
         <p className="font-display text-xl text-gold mb-2">Adam &amp; Mady</p>
         <p className="font-heading text-sm text-bark-light tracking-wider">
-          July 10th, 2027 · Tall Johns House
+          July 10th, 2027 · Tall John's House
         </p>
 
         <p className="font-body text-xs text-bark-light/60 mt-6">

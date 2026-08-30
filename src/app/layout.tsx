@@ -13,7 +13,7 @@ const merriweather = Merriweather({
 export const metadata: Metadata = {
   title: "Adam & Mady | July 10th, 2027",
   description:
-    "You're invited to the wedding of Adam & Mady at Tall Johns House. July 10th, 2027.",
+    "You're invited to the wedding of Adam & Mady at Tall John's House. July 10th, 2027.",
 };
 
 export default function RootLayout({

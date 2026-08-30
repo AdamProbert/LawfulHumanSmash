@@ -5,13 +5,13 @@ import BookChapter from "@/components/BookChapter";
 import BookPage from "@/components/BookPage";
 
 const FEATURED_VENUE = {
-  name: "Tall Johns House",
+  name: "Tall John's House",
   location: "Llangorse, Brecon, LD3 7PX",
   description:
     "She's a beaut! A stunning Georgian manor house nestled in the heart of the Brecon Beacons countryside.",
-  url: "https://www.talljohnshouse.com/",
+  url: "https://www.tallJohn'shouse.com/",
   embedMapUrl:
-    "https://maps.google.com/maps?q=Tall+Johns+House,+Brecon+LD3+7PX&t=&z=8&ie=UTF8&iwloc=&output=embed",
+    "https://maps.google.com/maps?q=Tall+John's+House,+Brecon+LD3+7PX&t=&z=8&ie=UTF8&iwloc=&output=embed",
 };
 
 const AREA_SEARCH_LINKS = [
@@ -25,7 +25,7 @@ const AREA_SEARCH_LINKS = [
   {
     name: "Booking.com",
     description:
-      "Explore hotels, country inns, and bed & breakfasts close to Tall Johns House.",
+      "Explore hotels, country inns, and bed & breakfasts close to Tall John's House.",
     url: "https://www.booking.com/searchresults.en-gb.html?aid=304142&ss=Llangynidr%2C+Powys%2C+United+Kingdom&efdco=1&lang=en-gb&src=index&dest_id=-2601629&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=en&ac_suggestion_list_length=4&search_selected=true&checkin=2027-07-10&checkout=2027-07-11&group_adults=2&no_rooms=1&group_children=0&nflt=oos%3D1%3Bprice%3DGBP-min-200-1",
     cta: "Search Booking.com",
   },
@@ -47,7 +47,7 @@ export default function VenuePage() {
         <div className="relative w-full max-w-xs mx-auto h-44 rounded-lg overflow-hidden border border-gold/30 shadow-md">
           <Image
             src="/dji_fly_20230607_162016_74_1686151222973_photo_optimized.webp"
-            alt="Aerial view of Tall Johns House and grounds"
+            alt="Aerial view of Tall John's House and grounds"
             fill
             className="object-cover"
             sizes="20rem"
@@ -84,7 +84,7 @@ export default function VenuePage() {
 
         <div className="w-full max-w-xs mx-auto h-56 rounded-lg overflow-hidden border border-gold/30 shadow-inner bg-sage/20 relative mb-3">
           <iframe
-            title="Tall Johns House Google Map"
+            title="Tall John's House Google Map"
             src={FEATURED_VENUE.embedMapUrl}
             width="100%"
             height="100%"
@@ -109,7 +109,7 @@ export default function VenuePage() {
             Staying On-Site
           </h3>
           <p className="font-body text-xs text-bark-light leading-relaxed mb-2">
-            There are a limited number of rooms available at Tall Johns House itself.
+            There are a limited number of rooms available at Tall John's House itself.
           </p>
           <p className="font-body text-xs text-bark-light leading-relaxed">
             Get in touch with{" "}
@@ -119,7 +119,7 @@ export default function VenuePage() {
         </div>
 
         <p className="font-body text-xs sm:text-sm text-bark-light max-w-xs mx-auto mb-4">
-          Otherwise, we recommend booking early as the Brecon Beacons area is a popular destination! Here are some useful links for finding accomodation within a few miles of the venue.
+          Otherwise, we recommend booking early as the Brecon Beacons are a popular destination! Here are some useful links for finding accomodation within a few miles of the venue:
         </p>
 
         <div className="space-y-3 max-w-xs mx-auto text-left">

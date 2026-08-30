@@ -416,7 +416,7 @@ function RSVPWizard() {
 
                         <div>
                           <label className="font-heading text-sm tracking-wider uppercase text-gold-dark block mb-2">
-                            Vote for your top 3 drinks
+                            Vote for your favourite drinks
                           </label>
                           <div className="grid grid-cols-2 gap-2">
                             {drinkOptions.map((drink) => {

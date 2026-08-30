@@ -47,10 +47,10 @@ export default function TLDRPage() {
               Where
             </p>
             <p className="font-body text-xl text-accent-burgundy">
-              Tall Johns House
+              Tall John's House
             </p>
             <a
-              href="https://www.talljohnshouse.com/"
+              href="https://www.tallJohn'shouse.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-1 font-body text-sm text-gold-dark hover:text-gold transition-colors underline underline-offset-4 decoration-gold/30"
